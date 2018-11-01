@@ -32,6 +32,9 @@ import { SideBarUserAreaComponent } from '@app/layout/sidebar-user-area.componen
 import { SideBarNavComponent } from '@app/layout/sidebar-nav.component';
 import { SideBarFooterComponent } from '@app/layout/sidebar-footer.component';
 import { RightSideBarComponent } from '@app/layout/right-sidebar.component';
+import { EstudiantesComponent } from './estudiante/estudiante.component';
+import { EditEstudianteComponent } from './estudiante/edit-estudiante/edit-estudiante.component';
+import { CreateEstudianteComponent } from './estudiante/create-estudiante/create-estudiante.component';
 
 @NgModule({
     declarations: [
@@ -52,7 +55,11 @@ import { RightSideBarComponent } from '@app/layout/right-sidebar.component';
         SideBarUserAreaComponent,
         SideBarNavComponent,
         SideBarFooterComponent,
-        RightSideBarComponent
+        RightSideBarComponent,
+        EstudiantesComponent,
+        EditEstudianteComponent,
+        CreateEstudianteComponent
+
     
     ],
     imports: [
