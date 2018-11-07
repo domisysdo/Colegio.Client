@@ -47,13 +47,11 @@ export class LoginService {
 
         if (authenticateResult.accessToken) {
             //Successfully logged in
-            alert(authenticateResult.accessToken);
+
             this.login(authenticateResult.accessToken, authenticateResult.encryptedAccessToken, authenticateResult.expireInSeconds, this.rememberMe);
 
         } else {
             //Unexpected result!
-            alert('error');
-
             this._logService.warn('Unexpected authenticateResult!');
             this._router.navigate(['account/login']);
         }

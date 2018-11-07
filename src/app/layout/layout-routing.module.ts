@@ -30,15 +30,8 @@ const routes: Routes = [
   ],
 
   exports: [ 
-    RouterModule,
-    
-  ], 
-    providers: [
-        AppSessionService,
-        AppUrlService,
-        AppAuthService,
-        AppRouteGuard
-    ]
+    RouterModule
+  ]
 
 })
 

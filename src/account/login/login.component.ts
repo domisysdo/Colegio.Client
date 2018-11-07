@@ -4,6 +4,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { LoginService } from './login.service';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AbpSessionService } from '@abp/session/abp-session.service';
+import { MessageService } from 'abp-ng2-module/dist/src/message/message.service';
 
 @Component({
     templateUrl: './login.component.html',
@@ -19,12 +20,14 @@ export class LoginComponent extends AppComponentBase {
     @ViewChild('cardBody') cardBody: ElementRef;
 
     submitting: boolean = false;
-
+    confirmado: boolean  = false;
     constructor(
         injector: Injector,
         public loginService: LoginService,
+        private _messageService: MessageService,
         private _router: Router,
-        private _sessionService: AbpSessionService
+        private _sessionService: AbpSessionService,
+        
     ) {
         super(injector);
     }
@@ -43,12 +46,23 @@ export class LoginComponent extends AppComponentBase {
         }
 
         return true;
-    }
+    } 
 
     login(): void {
-        this.submitting = true;
-        this.loginService.authenticate(
-            () => this.submitting = false
-        );
+        {
+            alert(this._messageService.confirm(
+                'Se iniciara session',
+                'Estas seguro?',
+                function () {
+                    this.submitting = true;
+                    this.loginService.authenticate(
+                        () => this.submitting = false
+                    );
+                }
+            ));
+
+
+            
+        }
     }
 }
