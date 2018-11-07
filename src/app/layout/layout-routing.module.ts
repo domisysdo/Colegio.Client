@@ -33,13 +33,6 @@ const routes: Routes = [
     RouterModule,
     
   ], 
-    providers: [
-        AppSessionService,
-        AppUrlService,
-        AppAuthService,
-        AppRouteGuard
-    ]
-
 })
 
 export class LayoutRoutingModule { }

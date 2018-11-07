@@ -49,7 +49,6 @@ export class AppSessionService {
                 this._application = result.application;
                 this._user = result.user;
                 this._tenant = result.tenant;
-                
                 resolve(true);
             }, (err) => {
                 reject(err);

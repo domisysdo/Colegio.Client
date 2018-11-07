@@ -16,11 +16,13 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
         private _permissionChecker: PermissionCheckerService,
         private _router: Router,
         private _sessionService: AppSessionService,
-    ) { }
+    ) {
+        // _sessionService.init();
+    }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         if (!this._sessionService.user) {
-            
+            //  alert(this._sessionService.user.userName);
             this._router.navigate(['/account/login']);
             return false;
         }
