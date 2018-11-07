@@ -1,53 +1,33 @@
-import { Component, ViewContainerRef, Injector, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { AppComponentBase } from '@shared/app-component-base';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 
-import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper';
+import { Helpers } from './helpers';
 
 @Component({
-    templateUrl: './app.component.html'
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
-export class AppComponent extends AppComponentBase implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
+  title = 'app';
+  constructor(private router: Router) {}
 
-    private viewContainerRef: ViewContainerRef;
+  ngOnInit() {
+    this.router.events.subscribe(route => {
+      if (route instanceof NavigationStart) {
+        Helpers.setLoading(true);
+        //Helpers.bodyClass('fixed-navbar');
+         Helpers.bodyClass('fixed-layout');
 
-    constructor(
-        injector: Injector
-    ) {
-        super(injector);
-    }
+      }
+      if (route instanceof NavigationEnd) {
+        window.scrollTo(0, 0);
+        Helpers.setLoading(false);
 
-    ngOnInit(): void {
-
-        SignalRAspNetCoreHelper.initSignalR();
-
-        abp.event.on('abp.notifications.received', userNotification => {
-            abp.notifications.showUiNotifyForUserNotification(userNotification);
-
-            //Desktop notification
-            Push.create("AbpZeroTemplate", {
-                body: userNotification.notification.data.message,
-                icon: abp.appPath + 'assets/app-logo-small.png',
-                timeout: 6000,
-                onClick: function () {
-                    window.focus();
-                    this.close();
-                }
-            });
-        });
-    }
-
-    ngAfterViewInit(): void {
-        $.AdminBSB.activateAll();
-        $.AdminBSB.activateDemo();
-    }
-
-    onResize(event) {
-        // exported from $.AdminBSB.activateAll
-        $.AdminBSB.leftSideBar.setMenuHeight();
-        $.AdminBSB.leftSideBar.checkStatuForResize(false);
-
-        // exported from $.AdminBSB.activateDemo
-        $.AdminBSB.demo.setSkinListHeightAndScroll();
-        $.AdminBSB.demo.setSettingListHeightAndScroll();
-    }
+        // Initialize page: handlers ...
+        Helpers.initPage();
+      }
+    });
+  }
 }

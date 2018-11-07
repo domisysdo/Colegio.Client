@@ -1,40 +1,45 @@
-﻿<div class="card" id="LoginArea" [@routerTransition]>
-    <div #cardBody class="body">
-        <form #loginForm="ngForm" id="LoginForm" method="post" novalidate (ngSubmit)="login()">
-            <h4 class="text-center">{{l("LogIn")}}</h4>
+﻿<div class="overlay"></div>
+<div class="cover"></div>
 
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <i class="material-icons">person</i>
-                </span>
-                <div class="form-line">
-                    <input materialInput [(ngModel)]="loginService.authenticateModel.userNameOrEmailAddress" autoFocus class="form-control" type="text" autocomplete="off" placeholder="{{l('UserNameOrEmail')}}" name="userNameOrEmailAddress" required maxlength="255" />
-                </div>
-            </div>
+<div class="inbox login-content">   
+    <div class="ibox m-4" style="box-shadow: none;">
+      
+      <div class="text-center">
+          <span class="auth-head-icon">
+            <i class="la la-user"></i>
+          </span>
+      </div>
+        
+      <form class="ibox-body" id="login-form" action="javascript:;" method="POST" novalidate (ngSubmit)="login()">
+          <h4 class="font-strong text-center mb-5">{{l("Ingresar")}}</h4>
 
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <i class="material-icons">lock</i>
-                </span>
-                <div class="form-line">
-                    <input materialInput type="password" [(ngModel)]="loginService.authenticateModel.password" class="form-control" name="password" placeholder="{{l('Password')}}" required maxlength="32">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-8 p-t-5">
-                    <input type="checkbox"  [(ngModel)]="loginService.rememberMe" name="rememberMe" id="rememberme" class="filled-in chk-col-pink" value="true">
-                    <label for="rememberme">{{l("RememberMe")}}</label>
-                </div>
-                <div class="col-xs-4">
-                    <button id="LoginButton" class="btn btn-block bg-pink waves-effect" type="submit">{{l("LogIn")}}</button>
-                </div>
-            </div>
+          <div class="form-group mb-4">
+            <input class="form-control form-control-inline" [(ngModel)]="loginService.authenticateModel.userNameOrEmailAddress" type="text" placeholder="{{l('Usuario o email')}}" name="userNameOrEmailAddress" required maxlength="255">
+          </div>
 
-            <div class="row m-t-15 m-b--20" *ngIf="isSelfRegistrationAllowed">
-                <div class="col-xs-12">
-                    <a [routerLink]="['../register']">{{l("Register")}}</a>
-                </div>
-            </div>
-        </form>
+          <div class="form-group mb-4">
+            <input type="password" [(ngModel)]="loginService.authenticateModel.password" class="form-control form-control-inline" name="password" placeholder="{{l('Contraseña')}}" required maxlength="32">
+          </div>
+
+          <div class="form-group mb-4">
+              <label for ="rememberme" class="checkbox checkbox-primary">
+                  <input type="checkbox"  [(ngModel)]="loginService.rememberMe" name="rememberMe" id="rememberme" checked>
+              <span class="input-span"></span> Recordarme</label>            
+          </div>
+
+          <div class="form-group mb-4">
+            <button id="LoginButton" class="btn btn-primary btn-rounded btn-block btn-air" type="submit">{{l("Ingresar")}}</button>
+          </div>
+
+          <div class="text-center" *ngIf="isSelfRegistrationAllowed">
+              <div class="col-xs-12">
+                <p>{{l("¿Aún no eres usuario? ")}} <a [routerLink]="['../register']">{{l("Regístrate")}}</a> </p>
+              </div>
+          </div>
+      </form>
     </div>
 </div>
+
+
+
+

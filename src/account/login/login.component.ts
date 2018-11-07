@@ -8,8 +8,10 @@ import { AbpSessionService } from '@abp/session/abp-session.service';
 @Component({
     templateUrl: './login.component.html',
     styleUrls: [
-        './login.component.less'
+        './login.component.less',
+        './login.component.css'
     ],
+
     animations: [accountModuleAnimation()]
 })
 export class LoginComponent extends AppComponentBase {
@@ -28,7 +30,7 @@ export class LoginComponent extends AppComponentBase {
     }
 
     ngAfterViewInit(): void {
-        $(this.cardBody.nativeElement).find('input:first').focus();
+        // $(this.cardBody.nativeElement).find('input:first').focus();
     }
 
     get multiTenancySideIsTeanant(): boolean {

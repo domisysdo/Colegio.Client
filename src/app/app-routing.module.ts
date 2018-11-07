@@ -1,31 +1,18 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { AppComponent } from './app.component';
-import { AppRouteGuard } from '@shared/auth/auth-route-guard';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
-import { UsersComponent } from './users/users.component';
-import { TenantsComponent } from './tenants/tenants.component';
-import { RolesComponent } from 'app/roles/roles.component';
-import { EstudiantesComponent } from './estudiante/estudiante.component';
+import { Routes, RouterModule } from '@angular/router';
+
+const routes: Routes = [
+  {path: '', redirectTo: 'index', pathMatch: 'full'},
+  { 
+    path: '',
+    loadChildren: '../app/layout/layout.module#LayoutModule'
+  }
+];
 
 @NgModule({
-    imports: [
-        RouterModule.forChild([
-            {
-                path: '',
-                component: AppComponent,
-                children: [
-                    { path: 'home', component: HomeComponent,  canActivate: [AppRouteGuard] },
-                    { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
-                    { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
-                    { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
-                    { path: 'estudiante', component: EstudiantesComponent,  data: { permission: 'Pages.Estudiante' }, canActivate: [AppRouteGuard] },                    
-                    { path: 'about', component: AboutComponent }
-                ]
-            }
-        ])
-    ],
-    exports: [RouterModule]
+ 
+  imports: [RouterModule.forChild(routes),
+  ],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

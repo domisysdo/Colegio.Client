@@ -1,48 +1,57 @@
-﻿<div class="card" [@routerTransition]>
-    <div #cardBody class="body">
-        <form #registerForm="ngForm" method="post" novalidate (ngSubmit)="save()">
-            <h4 class="text-center">{{l("Register")}}</h4>
+﻿<div class="page-content fade-in-up" >
+    <div class="col-md-8 col-md-offset-2">
+        <div class="ibox ibox-body">
 
-            <div class="form-group form-float">
-                <div class="form-line">
-                    <input materialInput class="form-control" autoFocus type="text" [(ngModel)]="model.name" name="Name" required maxlength="32" />
-                    <label class="form-label">{{l('Name')}}</label>
+            <div class="ibox-head">
+                <div class="ibox-title">{{l("Registrar nuevo usuario")}}</div>
+            </div>
+
+            <form #registerForm="ngForm" method="post" novalidate (ngSubmit)="save()">
+                <div class="ibox-body">   
+                    <div class="form-group mb-4 row">
+                        <label class="col-sm-2 col-form-label">{{l("Nombres")}}</label>
+                        <div class="col-sm-10">
+                            <input  class="form-control" autoFocus type="text" [(ngModel)]="model.name" name="Name" required maxlength="32" placeholder="Nombres" />
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4 row">
+                        <label class="col-sm-2 col-form-label">{{l("Apellidos")}}</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" [(ngModel)]="model.surname" name="Apellidos" required maxlength="32" placeholder="Apellidos" />
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4 row">
+                        <label class="col-sm-2 col-form-label">{{l("Email")}}</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="email" [(ngModel)]="model.emailAddress" name="EmailAddress" required maxlength="255" pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" placeholder="Email" />
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4 row">
+                        <label class="col-sm-2 col-form-label">{{l("Usuario")}}</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" autocomplete="off" [(ngModel)]="model.userName" name="UserName" required maxlength="32" placeholder="Nombre de usuario" />
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4 row">
+                        <label class="col-sm-2 col-form-label">{{l("Contraseña")}}</label>
+                        <div class="col-sm-10">
+                            <input materialInput class="form-control" type="password" [(ngModel)]="model.password" name="Password" required maxlength="32" placeholder="Contraseña"/>
+                        </div>
+                    </div>
+                    
+                    <div class="ibox-footer row">
+                        <div class="col-sm-12 ml-sm-auto">
+                            <button type="submit" class="btn btn-primary mr-2" [disabled]="!registerForm.form.valid">{{l("Registrar")}}</button>
+                            <button [disabled]="saving" [routerLink]="['../login']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="form-group form-float">
-                <div class="form-line">
-                    <input materialInput class="form-control" type="text" [(ngModel)]="model.surname" name="Surname" required maxlength="32" />
-                    <label class="form-label">{{l('Surname')}}</label>
-                </div>
-            </div>
-
-            <div class="form-group form-float">
-                <div class="form-line">
-                    <input materialInput class="form-control" type="email" [(ngModel)]="model.emailAddress" name="EmailAddress" required maxlength="255" pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" />
-                    <label class="form-label">{{l('EmailAddress')}}</label>
-                </div>
-            </div>
-
-            <div class="form-group form-float">
-                <div class="form-line">
-                    <input materialInput class="form-control" type="text" autocomplete="off" [(ngModel)]="model.userName" name="UserName" required maxlength="32" />
-                    <label class="form-label">{{l('UserName')}}</label>
-                </div>
-            </div>
-
-            <div class="form-group form-float">
-                <div class="form-line">
-                    <input materialInput class="form-control" type="password" [(ngModel)]="model.password" name="Password" required maxlength="32" />
-                    <label class="form-label">{{l('Password')}}</label>
-                </div>
-            </div>
-
-            <div class="form-actions">
-                <button [disabled]="saving" [routerLink]="['../login']" type="button" class="btn btn-default">{{l("Back")}}</button>
-                <button type="submit" class="btn btn-success" [disabled]="!registerForm.form.valid">{{l("Submit")}}</button>
-            </div>
-
-        </form>
+            </form>
+        </div>
     </div>
 </div>
+

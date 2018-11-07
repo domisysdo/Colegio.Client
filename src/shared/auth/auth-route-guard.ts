@@ -20,6 +20,7 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         if (!this._sessionService.user) {
+            
             this._router.navigate(['/account/login']);
             return false;
         }
@@ -49,6 +50,6 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
             return '/app/admin/users';
         }
 
-        return '/app/home';
+        return '/app/dashboard';
     }
 }

@@ -11,7 +11,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/adminca",
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.json",
@@ -30,19 +30,8 @@
                 "output": "/assets/abp"
               }
             ],
-            "styles": [
-              "src/assets/fonts/roboto/roboto.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/simple-line-icons/css/simple-line-icons.css",
-              "node_modules/font-awesome/css/font-awesome.css",
-              "node_modules/famfamfam-flags/dist/sprite/famfamfam-flags.css",
-              "node_modules/toastr/build/toastr.css",
-              "node_modules/node-waves/dist/waves.css",
-              "src/bsb-theme/css/materialize.css",
-              "src/bsb-theme/css/style.css",
-              "src/bsb-theme/css/themes/all-themes.css",
-              "src/shared/core.less"
-            ],
+            "styles": ["src/styles.css"],
+
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/jquery-migrate/dist/jquery-migrate.min.js",
@@ -75,12 +64,33 @@
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.blockUI.js",
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js",
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js",
-              "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js",
-              "src/bsb-theme/js/admin.js",
-              "src/bsb-theme/js/demo.js",
-              "src/bsb-theme/js/jquery.validate.js"
+              "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js",              
+              {
+                "input": "node_modules/popper.js/dist/umd/popper.min.js"
+              },
+              {
+                "input": "node_modules/bootstrap/dist/js/bootstrap.min.js"
+              },
+              {
+                "input": "node_modules/metismenu/dist/metisMenu.min.js"
+              },
+              {
+                "input":
+                  "node_modules/jquery-slimscroll/jquery.slimscroll.min.js"
+              },
+              {
+                "input":
+                  "node_modules/jquery-validation/dist/jquery.validate.min.js"
+              },
+              {
+                "input": "node_modules/chart.js/dist/Chart.min.js"
+              },
+              {
+                "input": "src/assets/js/app.js"
+              }
             ]
           },
+
           "configurations": {
             "production": {
               "optimization": true,
@@ -168,9 +178,33 @@
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js",
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js",
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js",
-              "src/bsb-theme/js/admin.js",
-              "src/bsb-theme/js/demo.js",
-              "src/bsb-theme/js/jquery.validate.js"
+              {
+                "input": "node_modules/jquery/dist/jquery.min.js"
+              },
+              {
+                "input": "node_modules/popper.js/dist/umd/popper.min.js"
+              },
+              {
+                "input": "node_modules/bootstrap/dist/js/bootstrap.min.js"
+              },
+              {
+                "input": "node_modules/metismenu/dist/metisMenu.min.js"
+              },
+              {
+                "input":
+                  "node_modules/jquery-slimscroll/jquery.slimscroll.min.js"
+              },
+              {
+                "input":
+                  "node_modules/jquery-validation/dist/jquery.validate.min.js"
+              },
+              {
+                "input": "node_modules/chart.js/dist/Chart.min.js"
+              },
+              {
+                "input": "src/assets/js/app.js"
+              }
+
             ],
             "styles": [
               "src/assets/fonts/roboto/roboto.css",
