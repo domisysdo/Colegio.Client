@@ -1,0 +1,89 @@
+﻿<div class="page-content fade-in-up" >
+    <div class="col-md-8 offset-md-2">
+        <div class="ibox ibox-body">
+
+            <div class="ibox-head">
+                <div class="ibox-title">{{l("Registrar nuevo rol")}}</div>
+            </div>
+
+            <form #roleForm="ngForm" method="post" novalidate (ngSubmit)="save()">
+                <div class="ibox-body">   
+                    <div class="form-group mb-4 row">
+                        <label class="col-sm-2 col-form-label">{{l("Nombre")}}</label>
+                        <div class="col-sm-10">
+                            <input 
+                                id="rolename" 
+                                class="form-control" 
+                                autoFocus 
+                                type="text" 
+                                [(ngModel)]="role.name" 
+                                name="RoleName" 
+                                required
+                                minlength="2" 
+                                maxlength="32" 
+                                placeholder="Nombre"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4 row">
+                        <label class="col-sm-2 col-form-label">{{l("Nombre para mostrar")}}</label>
+                        <div class="col-sm-10">
+                            <input 
+                                id="diaplayname" 
+                                class="form-control" 
+                                type="text" 
+                                [(ngModel)]="role.diaplayName" 
+                                name="DisplayName" 
+                                required
+                                minlength="2" 
+                                maxlength="32" 
+                                placeholder="Nombre para mostrar"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4 row">
+                        <label class="col-sm-2 col-form-label">{{l("Descripción")}}</label>
+                        <div class="col-sm-10">
+                            <textarea 
+                                id="role-description" 
+                                class="form-control"  
+                                type="text" 
+                                [(ngModel)]="role.description" 
+                                name="Description" 
+                                required
+                                minlength="2" 
+                                maxlength="32" 
+                                placeholder="Descripción"> </textarea>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <h4>Permisos</h4>
+                            <ng-template ngFor let-permission [ngForOf]="permissions.items" let-permissionIndex="index">
+                                <div class="col-sm-6">
+                                    <input 
+                                        type="checkbox" 
+                                        name="permission" 
+                                        value="{{permission.name}}" 
+                                        class="filled-in" 
+                                        id="permission-{{permissionIndex}}" 
+                                        checked="checked"/>
+                                    <label for="permission-{{permissionIndex}}">{{permission.displayName}}</label>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    
+                    <div class="ibox-footer row">
+                        <div class="col-sm-12 ml-sm-auto">
+                            <button type="submit" class="btn btn-primary mr-2" [disabled]="!roleForm.form.valid">{{l("Registrar")}}</button>
+                            <button [disabled]="saving" [routerLink]="['../roles']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

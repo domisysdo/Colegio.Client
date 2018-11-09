@@ -1,26 +1,4 @@
-﻿<!-- <div class="row clearfix" [@routerTransition]>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card main-content">
-            <div class="header">
-                <h2>
-                    {{l('Roles')}}
-                </h2>
-                <ul class="header-dropdown m-r--5">
-                    <i class="fa fa-spin fa-spinner" *ngIf="isTableLoading"></i>
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                        </a>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);" class=" waves-effect <waves-block></waves-block>" (click)="refresh();"><i class="material-icons">refresh</i> Refresh</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <div class="body table-responsive"> -->
-<!-- <div class="page-wrapper"> -->
-    
-<div class="page-heading">
+﻿<div class="page-heading">
     <h1 class="page-title">Mantenimiento de roles</h1>
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -35,16 +13,7 @@
         <div class="ibox-body">
             <h5 class="font-strong mb-4">LISTADO DE ROLES</h5>
             <div class="flexbox mb-4">
-                <div class="flexbox">
-                    <!-- <label class="mb-0 mr-2">Type:</label> -->
-                    <!-- <select class="selectpicker show-tick form-control" id="type-filter" title="Please select" data-style="btn-solid" data-width="150px">
-                        <option value="">All</option>
-                        <option>Shipped</option>
-                        <option>Completed</option>
-                        <option>Pending</option>
-                        <option>Canceled</option>
-                    </select> -->
-                </div>
+                <div class="flexbox"></div>
                 <div class="flexbox">
                     <div class="input-group-icon input-group-icon-left mr-3">
                         <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
@@ -58,68 +27,40 @@
                     </button>
                 </div>
             </div>
-            <!-- <div class="table-responsive row"> -->
-                <table class="table table-bordered table-hover" id="orders-table">
-                    <thead class="thead-default thead-lg">
-                        <tr>
-                            <th>{{l('Nombre')}}</th>
-                            <th>{{l('Descripción')}}</th>
-                            <th style="width: 10%"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let role of roles | paginate: { id: 'server', itemsPerPage: pageSize, currentPage: pageNumber, totalItems: totalItems }">
-                            <td>{{role.name}}</td>
-                            <td>{{role.displayName}}</td>
-                            <!-- <td class="dropdown">
-                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">menu</i>
-                                </a>
-                                
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="javascript:void(0);" class="waves-effect waves-block" (click)="editRole(role)"><i class="material-icons">create</i>Edit</a></li>
-                                    <li><a href="javascript:void(0);" class="waves-effect waves-block" (click)="delete(role)"><i class="material-icons">delete_sweep</i>Delete</a></li>
-                                
-                                </ul>
-                            </td> -->
-                            <td>
-                                <div class="text-center">
-                                    <a class="text-light mr-3 font-16" href="javascript:;" (click)="editRole(role)"><i class="ti-pencil"></i></a>
-                                    <a class="text-light font-16" href="javascript:;"><i (click)="delete(role)" class="ti-trash"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="text-center" *ngIf="totalItems > pageSize">
-                    <pagination-controls
-                        (pageChange)="getDataPage($event)" 
-                        id="server"
-                        previousLabel="Anterior"
-                        nextLabel="Siguiente"
-                        class="paginationStyles"
-                        autoHide="true">
-                        
-                        </pagination-controls>
-                </div>
-
-
-            <!-- </div> -->
-        <!-- </div> -->
-        </div>
-    </div>
-</div>
-                <!-- <div class="text-align: center;" *ngIf="totalItems > pageSize">
-                    <pagination-controls (pageChange)="getDataPage($event)" id="server"></pagination-controls>
-                </div>
-                <button type="button" data-toggle="modal" class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right" (click)="createRole()">
-                    <i class="material-icons">add</i>
-                </button>
+            <table class="table table-bordered table-hover" id="orders-table">
+                <thead class="thead-default thead-lg">
+                    <tr>
+                        <th>{{l('Nombre')}}</th>
+                        <th>{{l('Descripción')}}</th>
+                        <th style="width: 10%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let role of roles | paginate: { id: 'server', itemsPerPage: pageSize, currentPage: pageNumber, totalItems: totalItems }">
+                        <td>{{role.name}}</td>
+                        <td>{{role.displayName}}</td>
+                        <td>
+                            <div class="text-center">
+                                <a class="text-light mr-3 font-16" href="javascript:;" (click)="editRole(role)"><i class="ti-pencil"></i></a>
+                                <a class="text-light font-16" href="javascript:;"><i (click)="delete(role)" class="ti-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <pagination-controls
+                    (pageChange)="getDataPage($event)" 
+                    id="server"
+                    previousLabel="Anterior"
+                    nextLabel="Siguiente"
+                    class="paginationStyles"
+                    autoHide="true">
+                </pagination-controls>
             </div>
         </div>
     </div>
-</div> -->
+</div>
 
 <create-role-modal #createRoleModal (modalSave)="refresh()"></create-role-modal>
 <edit-role-modal #editRoleModal (modalSave)="refresh()"></edit-role-modal>
