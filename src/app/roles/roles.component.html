@@ -19,19 +19,31 @@
             </div>
             <div class="body table-responsive"> -->
 <!-- <div class="page-wrapper"> -->
+    
+<div class="page-heading">
+    <h1 class="page-title">Mantenimiento de roles</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="javascript:;" (click)="goBack()"><i class="la la-home font-20"></i></a>
+        </li>
+        <li class="breadcrumb-item">Seguridad</li>
+        <li class="breadcrumb-item">Roles</li>
+    </ol>
+</div>
+<div class="page-content fade-in-up">
     <div class="ibox">
         <div class="ibox-body">
             <h5 class="font-strong mb-4">LISTADO DE ROLES</h5>
             <div class="flexbox mb-4">
                 <div class="flexbox">
-                    <label class="mb-0 mr-2">Type:</label>
-                    <select class="selectpicker show-tick form-control" id="type-filter" title="Please select" data-style="btn-solid" data-width="150px">
+                    <!-- <label class="mb-0 mr-2">Type:</label> -->
+                    <!-- <select class="selectpicker show-tick form-control" id="type-filter" title="Please select" data-style="btn-solid" data-width="150px">
                         <option value="">All</option>
                         <option>Shipped</option>
                         <option>Completed</option>
                         <option>Pending</option>
                         <option>Canceled</option>
-                    </select>
+                    </select> -->
                 </div>
                 <div class="flexbox">
                     <div class="input-group-icon input-group-icon-left mr-3">
@@ -82,12 +94,12 @@
 
                 <div class="text-center" *ngIf="totalItems > pageSize">
                     <pagination-controls
-                         (pageChange)="getDataPage($event)" 
-                         id="server"
-                         previousLabel="Anterior"
-                         nextLabel="Siguiente"
-                         class="paginationStyles"
-                         autoHide="true">
+                        (pageChange)="getDataPage($event)" 
+                        id="server"
+                        previousLabel="Anterior"
+                        nextLabel="Siguiente"
+                        class="paginationStyles"
+                        autoHide="true">
                         
                         </pagination-controls>
                 </div>
@@ -95,9 +107,9 @@
 
             <!-- </div> -->
         <!-- </div> -->
+        </div>
     </div>
 </div>
-
                 <!-- <div class="text-align: center;" *ngIf="totalItems > pageSize">
                     <pagination-controls (pageChange)="getDataPage($event)" id="server"></pagination-controls>
                 </div>

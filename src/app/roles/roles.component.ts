@@ -6,6 +6,7 @@ import { CreateRoleComponent } from 'app/roles/create-role/create-role.component
 import { EditRoleComponent } from 'app/roles/edit-role/edit-role.component';
 import { finalize } from 'rxjs/operators';
 import { MessageHelper } from '@app/shared/MessageHelper';
+import { Router } from '@angular/router';
 
 
 declare var $:any;
@@ -24,7 +25,8 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto>  {
 	roles: RoleDto[] = [];
 
 	constructor(
-		private injector:Injector,
+		private injector: Injector,
+        private _router: Router,
 		private rolesService: RoleServiceProxy
 	) {
 		super(injector);
@@ -50,6 +52,7 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto>  {
 						this.refresh();
 					}))
 					.subscribe(() => { });
+					abp.notify.info('Rol borrado exitosamente');
 			}
 		);
 	}
@@ -59,7 +62,11 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto>  {
 		this.createRoleModal.show();
 	}
 
-	editRole(role:RoleDto): void {
+	editRole(role: RoleDto): void {
 		this.editRoleModal.show(role.id);
+	}
+
+	goBack(): void {
+		this._router.navigate(['/app/dashboard']);
 	}
 }
