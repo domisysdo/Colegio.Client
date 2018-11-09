@@ -10,15 +10,36 @@
           </span>
       </div>
         
-      <form class="ibox-body" id="login-form" action="javascript:;" method="POST" novalidate (ngSubmit)="login()">
+      <form class="ibox-body"  #formLogin="ngForm" id="login-form" action="javascript:;" method="POST" novalidate (ngSubmit)="login(formLogin)">
           <h4 class="font-strong text-center mb-5">{{l("Ingresar")}}</h4>
 
+          
           <div class="form-group mb-4">
-            <input class="form-control form-control-inline" [(ngModel)]="loginService.authenticateModel.userNameOrEmailAddress" type="text" placeholder="{{l('Usuario o email')}}" name="userNameOrEmailAddress" required maxlength="255" autofocus>
+            <input 
+                class="form-control form-control-inline" 
+                [(ngModel)]="loginService.authenticateModel.userNameOrEmailAddress" 
+                type="text" 
+                placeholder="{{l('Usuario o email')}}" 
+                name="userNameOrEmailAddress" 
+                id="userNameOrEmailAddress" 
+                required
+                #name="ngModel" 
+                maxlength="255" 
+                autofocus>
+                <app-input-validation [input]="name"></app-input-validation>   
           </div>
 
           <div class="form-group mb-4">
-            <input type="password" [(ngModel)]="loginService.authenticateModel.password" class="form-control form-control-inline" name="password" placeholder="{{l('Contraseña')}}" required maxlength="32">
+            <input 
+                type="password" 
+                [(ngModel)]="loginService.authenticateModel.password" 
+                class="form-control form-control-inline" 
+                name="password" 
+                placeholder="{{l('Contraseña')}}" 
+                required
+                #password="ngModel" 
+                maxlength="32">
+                <app-input-validation [input]="password"></app-input-validation>   
           </div>
 
           <div class="form-group mb-4">

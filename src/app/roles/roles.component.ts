@@ -5,12 +5,18 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { CreateRoleComponent } from 'app/roles/create-role/create-role.component';
 import { EditRoleComponent } from 'app/roles/edit-role/edit-role.component';
 import { finalize } from 'rxjs/operators';
+import { MessageHelper } from '@app/shared/MessageHelper';
+
+
+declare var $:any;
 
 @Component({
   templateUrl: './roles.component.html',
+  styleUrls:['./roles.component.css'],
   animations: [appModuleAnimation()]
 })
-export class RolesComponent extends PagedListingComponentBase<RoleDto> {
+export class RolesComponent extends PagedListingComponentBase<RoleDto>  {
+	
 
 	@ViewChild('createRoleModal') createRoleModal: CreateRoleComponent;
 	@ViewChild('editRoleModal') editRoleModal: EditRoleComponent;
@@ -34,19 +40,16 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> {
 	}
 
 	delete(role: RoleDto): void {
-		abp.message.confirm(
-			"Remove Users from Role and delete Role '"+ role.displayName +"'?",
-			"Permanently delete this Role",
-			(result:boolean) =>{
-				if(result)
-				{
-                    this.rolesService.delete(role.id)
-                        .pipe(finalize(() => {
-                            abp.notify.info("Deleted Role: " + role.displayName);
-                            this.refresh();
-                        }))
-						.subscribe(() => { });
-				}
+			MessageHelper.confirmar(
+			"Se eliminaran los usuarios relacionados al rol: '"+ role.displayName +"'",
+			"¿Desea borrarlo?",
+			() =>{
+				this.rolesService.delete(role.id)
+					.pipe(finalize(() => {
+						abp.notify.info("Deleted Role: " + role.displayName);
+						this.refresh();
+					}))
+					.subscribe(() => { });
 			}
 		);
 	}

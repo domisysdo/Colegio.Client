@@ -7,17 +7,15 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ModalModule } from 'ngx-bootstrap';
 import { SharedModule } from '@shared/shared.module';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { AbpModule } from 'abp-ng2-module/dist/src/abp.module';
 import { JsonpModule } from '@angular/http';
 
 
-
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     !environment.production ? StoreDevtoolsModule.instrument() : [],
@@ -28,12 +26,21 @@ import { JsonpModule } from '@angular/http';
     JsonpModule,
     ModalModule.forRoot(),
     AbpModule,
-    AppRoutingModule,
     ServiceProxyModule,
-    SharedModule,
-    NgxPaginationModule
+    SharedModule
   ],
-  providers: []
+  providers: [],
 
+  exports:
+  [
+    AppRoutingModule,
+    CommonModule,
+    FormsModule,
+    HttpClientModule,
+    JsonpModule,
+    AbpModule,
+    ServiceProxyModule,
+    SharedModule
+  ]
 })
 export class AppModule {}

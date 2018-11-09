@@ -7,7 +7,8 @@ import { AppSessionService } from './session/app-session.service';
 import { AppUrlService } from './nav/app-url.service';
 import { AppAuthService } from './auth/app-auth.service';
 import { AppRouteGuard } from './auth/auth-route-guard';
-import { MaterialInput } from 'shared/directives/material-input.directive';
+import { MaterialInput } from 'shared/directives/material-input.directive';;
+import { InputValidationComponent } from './components/validation/input-validation/input-validation.component'
 
 @NgModule({
     imports: [
@@ -16,10 +17,13 @@ import { MaterialInput } from 'shared/directives/material-input.directive';
         RouterModule
     ],
     declarations: [
-        MaterialInput
+        MaterialInput,
+        InputValidationComponent
+
     ],
     exports: [
-        MaterialInput
+        MaterialInput,
+        InputValidationComponent
     ]
 })
 export class SharedModule {

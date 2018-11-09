@@ -22,6 +22,7 @@ import { RegisterComponent } from './register/register.component';
 import { AccountLanguagesComponent } from './layout/account-languages.component';
 
 import { LoginService } from './login/login.service';
+import { InputValidationComponent } from '@shared/components/validation/input-validation/input-validation.component';
 
 @NgModule({
     imports: [

@@ -8,9 +8,24 @@ import { QuickSidebarComponent } from './quick-sidebar/quick-sidebar.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { TopHeaderComponent } from './top-header/top-header.component';
 import { LayoutRoutingModule } from './layout-routing.module';
+import { RolesComponent } from '@app/roles/roles.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { CreateRoleComponent } from '@app/roles/create-role/create-role.component';
+import { EditRoleComponent } from '@app/roles/edit-role/edit-role.component';
+import { ModalModule } from 'ngx-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [CommonModule, LayoutRoutingModule],
+  imports: 
+  [
+    CommonModule, 
+    LayoutRoutingModule,
+    NgxPaginationModule,
+    ModalModule.forRoot(),
+    FormsModule
+
+    
+  ],
   declarations: [
     MainComponent,
     DashboardComponent,
@@ -18,7 +33,10 @@ import { LayoutRoutingModule } from './layout-routing.module';
     FooterComponent,
     QuickSidebarComponent,
     SideBarComponent,
-    LayoutSettingsComponent
+    LayoutSettingsComponent, 
+    RolesComponent,
+    CreateRoleComponent,
+    EditRoleComponent
   ]
 })
 export class LayoutModule {}
