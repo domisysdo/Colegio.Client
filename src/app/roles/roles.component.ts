@@ -20,7 +20,7 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto>  {
 
 
   @ViewChild('createRoleModal') createRoleModal: CreateRoleComponent;
-  @ViewChild('editRoleModal') editRoleModal: EditRoleComponent;
+  @ViewChild('content') editRoleModal: EditRoleComponent;
 
   roles: RoleDto[] = [];
 
