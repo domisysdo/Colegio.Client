@@ -5,6 +5,7 @@ import { MainComponent } from './main/main.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RolesComponent } from '@app/roles/roles.component';
 import { CreateRoleComponent } from '@app/roles/create-role/create-role.component';
+import { EditRoleComponent } from '@app/roles/edit-role/edit-role.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
@@ -23,6 +24,10 @@ const routes: Routes = [
       {
         path: 'roles/create-role',
         component: CreateRoleComponent
+      },
+      {
+        path: 'roles/edit-role/:id',
+        component: EditRoleComponent
       }
     ]
   }

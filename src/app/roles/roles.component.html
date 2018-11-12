@@ -41,7 +41,7 @@
                         <td>{{role.displayName}}</td>
                         <td>
                             <div class="text-center">
-                                <a class="text-light mr-3 font-16" href="javascript:;" (click)="editRole(role)"><i class="ti-pencil"></i></a>
+                                <a [routerLink] = "['edit-role', role.id]" class="text-light mr-3 font-16" href="javascript:;"><i class="ti-pencil"></i></a>
                                 <a class="text-light font-16" href="javascript:;"><i (click)="delete(role)" class="ti-trash"></i></a>
                             </div>
                         </td>

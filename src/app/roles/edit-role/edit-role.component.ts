@@ -1,47 +1,48 @@
-import { Component, ViewChild, Injector, Output, EventEmitter, ElementRef } from '@angular/core';
+import { Component, ViewChild, Injector, Output, EventEmitter, ElementRef, AfterViewInit, OnInit, OnChanges } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
-import { RoleServiceProxy, GetRoleForEditOutput, RoleDto } from '@shared/service-proxies/service-proxies';
+import { RoleServiceProxy, GetRoleForEditOutput, RoleDto, RoleEditDto } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
     selector: 'app-edit-role-modal',
     templateUrl: './edit-role.component.html'
 })
-export class EditRoleComponent extends AppComponentBase {
+
+export class EditRoleComponent extends AppComponentBase implements OnInit {
+
+
     @ViewChild('editRoleModal') modal: ModalDirective;
     @ViewChild('content') content: ElementRef;
 
     active = false;
     saving = false;
 
-    model: GetRoleForEditOutput = null;
+    model: GetRoleForEditOutput = new GetRoleForEditOutput();
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
     constructor(
         injector: Injector,
         private _roleService: RoleServiceProxy,
         private _router: Router,
+        private _route: ActivatedRoute
     ) {
         super(injector);
     }
 
-    show(id: number): void {
+    ngOnInit(): void {
+        this.initializeValues();
+        const id = this._route.snapshot.params['id'];
         this._roleService.getRoleForEdit(id)
             .pipe(finalize(() => {
                 this.active = true;
-                // this.modal.show();
-                this._router.navigate(['/app/roles/edit-role'])
             }))
             .subscribe((result: GetRoleForEditOutput) => {
                 this.model = result;
             });
-    }
-
-    onShown(): void {
-        // $.AdminBSB.input.activate($(this.modalContent.nativeElement));
     }
 
     checkPermission(permissionName: string): string {
@@ -82,11 +83,19 @@ export class EditRoleComponent extends AppComponentBase {
                     this.close();
                     this.modalSave.emit(null);
                 });
+
+        } else {
+            this.notify.warn(this.l('Complete los valores requeridos'), this.l('Corregir'), { preventDuplicates: true } );
         }
     }
 
     close(): void {
         this.active = false;
-        this.modal.hide();
+        this._router.navigate(['app/roles'])
+    }
+
+    initializeValues(): void {
+        this.model = new GetRoleForEditOutput();
+        this.model.role = new RoleEditDto();
     }
 }

@@ -48,10 +48,6 @@ export class CreateRoleComponent extends AppComponentBase implements OnInit {
         this.modal.show();
     }
 
-    // onShown(): void {
-    //     $.AdminBSB.input.activate($(this.modalContent.nativeElement));
-    // }
-
     save(form: NgForm): void {
 
         const permissions = [];
@@ -75,6 +71,8 @@ export class CreateRoleComponent extends AppComponentBase implements OnInit {
                     this.close();
                     this.modalSave.emit(null);
                 });
+        } else {
+            this.notify.warn(this.l('Complete los valores requeridos'), this.l('Corregir'), { preventDuplicates: true } );
         }
     }
 

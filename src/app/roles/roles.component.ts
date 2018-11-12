@@ -63,9 +63,9 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto>  {
     this._router.navigate(['/app/roles/create-role'])
   }
 
-  editRole(role: RoleDto): void {
-    this.editRoleModal.show(role.id);
-  }
+  // editRole(role: RoleDto): void {
+  //   this.editRoleModal.show(role.id);
+  // }
 
   goBack(): void {
     this._router.navigate(['/app/dashboard']);
