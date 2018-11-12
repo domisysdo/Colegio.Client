@@ -30,7 +30,10 @@
                 "output": "/assets/abp"
               }
             ],
-            "styles": ["src/styles.css"],
+            "styles": [
+              "src/styles.css",               
+              "node_modules/toastr/build/toastr.min.css"
+             ],
 
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

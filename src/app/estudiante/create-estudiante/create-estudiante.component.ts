@@ -5,7 +5,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
 
 @Component({
-  selector: 'create-estudiante-modal',
+  selector: 'app-create-estudiante-modal',
   templateUrl: './create-estudiante.component.html'
 })
 export class CreateEstudianteComponent extends AppComponentBase implements OnInit {
@@ -15,8 +15,8 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
-    active: boolean = false;
-    saving: boolean = false;
+    active = false;
+    saving = false;
     estudiante: EstudianteDto = null;
     roles: RoleDto[] = null;
 
@@ -46,17 +46,17 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     }
 
     save(): void {
-        //TODO: Refactor this, don't use jQuery style code
-        var roles = [];
-        $(this.modalContent.nativeElement).find("[name=role]").each((ind:number, elem:Element) => {
-            if($(elem).is(":checked") == true){
-                roles.push(elem.getAttribute("value").valueOf());
+        // TODO: Refactor this, don't use jQuery style code
+        const roles = [];
+        $(this.modalContent.nativeElement).find('[name=role]').each((ind: number, elem: Element) => {
+            if ($(elem).is(':checked') === true) {
+                roles.push(elem.getAttribute('value').valueOf());
             }
         });
 
         this.estudiante.roleNames = roles;
         this.saving = true;
-         
+
         this._estudianteService.create(this.estudiante)
             .pipe(finalize(() => { this.saving = false; }))
             .subscribe(() => {

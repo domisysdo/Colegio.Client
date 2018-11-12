@@ -8,9 +8,9 @@ import { NgModel } from '@angular/forms';
 })
 export class InputValidationComponent implements OnInit {
 
-  constructor() { }
-
   @Input() input: NgModel
+
+  constructor() { }
 
   ngOnInit() {
   }

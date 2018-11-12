@@ -8,7 +8,7 @@ import { AppComponentBase } from '@shared/app-component-base';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent extends AppComponentBase implements OnInit, AfterViewInit {
-  
+
   constructor(
     private element: ElementRef,
     injector: Injector

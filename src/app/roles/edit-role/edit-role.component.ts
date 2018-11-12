@@ -5,15 +5,15 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
 
 @Component({
-    selector: 'edit-role-modal',
+    selector: 'app-edit-role-modal',
     templateUrl: './edit-role.component.html'
 })
 export class EditRoleComponent extends AppComponentBase {
     @ViewChild('editRoleModal') modal: ModalDirective;
     @ViewChild('modalContent') modalContent: ElementRef;
 
-    active: boolean = false;
-    saving: boolean = false;
+    active = false;
+    saving = false;
 
     model: GetRoleForEditOutput = null;
 
@@ -41,28 +41,27 @@ export class EditRoleComponent extends AppComponentBase {
     }
 
     checkPermission(permissionName: string): string {
-        if (this.model.grantedPermissionNames.indexOf(permissionName) != -1) {
-            return "checked";
-        }
-        else {
-            return "";
+        if (this.model.grantedPermissionNames.indexOf(permissionName) !== -1) {
+            return 'checked';
+        } else {
+            return '';
         }
     }
 
     save(): void {
         const role = this.model.role;
 
-        var permissions = [];
-        $(this.modalContent.nativeElement).find("[name=permission]").each(
+        const permissions = [];
+        $(this.modalContent.nativeElement).find('[name=permission]').each(
             function (index: number, elem: Element) {
-                if ($(elem).is(":checked") == true) {
-                    permissions.push(elem.getAttribute("value").valueOf());
+                if ($(elem).is(':checked') === true) {
+                    permissions.push(elem.getAttribute('value').valueOf());
                 }
             }
         )
 
         this.saving = true;
-        var input = new RoleDto();
+        const input = new RoleDto();
 
         input.name = role.name;
         input.displayName = role.displayName;

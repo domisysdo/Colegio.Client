@@ -10,13 +10,12 @@ import { finalize } from 'rxjs/operators';
     templateUrl: './register.component.html',
     animations: [accountModuleAnimation()]
 })
-export class RegisterComponent extends AppComponentBase implements AfterViewInit {
+export class RegisterComponent extends AppComponentBase  {
 
-    @ViewChild('cardBody') cardBody: ElementRef;
 
     model: RegisterInput = new RegisterInput();
 
-    saving: boolean = false;
+    saving = false;
 
     constructor(
         injector: Injector,
@@ -27,10 +26,6 @@ export class RegisterComponent extends AppComponentBase implements AfterViewInit
         super(injector);
     }
 
-    ngAfterViewInit(): void {
-        $(this.cardBody.nativeElement).find('input:first').focus();
-    }
-
     back(): void {
         this._router.navigate(['/login']);
     }
@@ -39,14 +34,14 @@ export class RegisterComponent extends AppComponentBase implements AfterViewInit
         this.saving = true;
         this._accountService.register(this.model)
             .pipe(finalize(() => { this.saving = false; }))
-            .subscribe((result:RegisterOutput) => {
+            .subscribe((result: RegisterOutput) => {
                 if (!result.canLogin) {
                     this.notify.success(this.l('SuccessfullyRegistered'));
                     this._router.navigate(['/login']);
                     return;
                 }
 
-                //Autheticate
+                // Autheticate
                 this.saving = true;
                 this._loginService.authenticateModel.userNameOrEmailAddress = this.model.userName;
                 this._loginService.authenticateModel.password = this.model.password;

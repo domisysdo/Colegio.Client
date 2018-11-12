@@ -11,18 +11,14 @@ import { AbpModule } from '@abp/abp.module';
 import { AccountRoutingModule } from './account-routing.module';
 
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
-
 import { SharedModule } from '@shared/shared.module';
-
 import { AccountComponent } from './account.component';
 import { TenantChangeComponent } from './tenant/tenant-change.component';
 import { TenantChangeModalComponent } from './tenant/tenant-change-modal.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AccountLanguagesComponent } from './layout/account-languages.component';
-
 import { LoginService } from './login/login.service';
-import { InputValidationComponent } from '@shared/components/validation/input-validation/input-validation.component';
 
 @NgModule({
     imports: [

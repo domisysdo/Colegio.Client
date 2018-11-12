@@ -7,8 +7,8 @@ import { AppSessionService } from './session/app-session.service';
 import { AppUrlService } from './nav/app-url.service';
 import { AppAuthService } from './auth/app-auth.service';
 import { AppRouteGuard } from './auth/auth-route-guard';
-import { MaterialInput } from 'shared/directives/material-input.directive';;
-import { InputValidationComponent } from './components/validation/input-validation/input-validation.component'
+import { MaterialInput } from 'shared/directives/material-input.directive';
+import { InputValidationComponent } from './components/validation/input-validation/input-validation.component';
 
 @NgModule({
     imports: [
@@ -19,6 +19,8 @@ import { InputValidationComponent } from './components/validation/input-validati
     declarations: [
         MaterialInput,
         InputValidationComponent
+,
+
 
     ],
     exports: [

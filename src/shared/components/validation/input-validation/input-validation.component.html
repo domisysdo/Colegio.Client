@@ -1,4 +1,4 @@
-<div *ngIf="input.invalid && (input.dirty || input.touched)" class="alert alert-danger">
+<div *ngIf="input.invalid && (input.dirty || input.touched)" class="text-danger">
     <span *ngIf="input.errors.required">El valor del campo es requerido</span>
     <span *ngIf="input.errors.minlength">La longitud del campo es incorrecta</span>
 </div>

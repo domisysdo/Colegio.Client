@@ -14,18 +14,19 @@ import { CreateRoleComponent } from '@app/roles/create-role/create-role.componen
 import { EditRoleComponent } from '@app/roles/edit-role/edit-role.component';
 import { ModalModule } from 'ngx-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
-  imports: 
+  imports:
   [
-    CommonModule, 
+    CommonModule,
     LayoutRoutingModule,
     NgxPaginationModule,
     ModalModule.forRoot(),
-    FormsModule
-
-    
+    FormsModule,
+    SharedModule
   ],
+
   declarations: [
     MainComponent,
     DashboardComponent,
@@ -33,7 +34,7 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     QuickSidebarComponent,
     SideBarComponent,
-    LayoutSettingsComponent, 
+    LayoutSettingsComponent,
     RolesComponent,
     CreateRoleComponent,
     EditRoleComponent

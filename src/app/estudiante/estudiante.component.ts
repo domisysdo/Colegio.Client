@@ -5,6 +5,7 @@ import { PagedListingComponentBase, PagedRequestDto } from 'shared/paged-listing
 import { CreateEstudianteComponent } from 'app/estudiante/create-estudiante/create-estudiante.component';
 import { EditEstudianteComponent } from 'app/estudiante/edit-estudiante/edit-estudiante.component';
 import { finalize } from 'rxjs/operators';
+import { MessageHelper } from '@app/shared/MessageHelper';
 
 @Component({
     templateUrl: './estudiante.component.html',
@@ -15,7 +16,7 @@ export class EstudiantesComponent extends PagedListingComponentBase<EstudianteDt
     @ViewChild('createEstudianteModal') createEstudianteModal: CreateEstudianteComponent;
     @ViewChild('editEstudianteModal') editEstudianteModal: EditEstudianteComponent;
 
-    active: boolean = false;
+    active = false;
     estudiante: EstudianteDto[] = [];
 
     constructor(
@@ -37,16 +38,16 @@ export class EstudiantesComponent extends PagedListingComponentBase<EstudianteDt
     }
 
     protected delete(estudiante: EstudianteDto): void {
-        abp.message.confirm(
-            "Delete estudiante '" + estudiante.nombres + "'?",
-            (result: boolean) => {
-                if (result) {
-                    this._estudianteService.delete(estudiante.id)
-                        .subscribe(() => {
-                            abp.notify.info("Deleted Estudiante: " + estudiante.nombres);
-                            this.refresh();
-                        });
-                }
+        MessageHelper.confirmar(
+            'Se borrará el estudiante ' + estudiante.nombres + '?',
+            '¿Esta seguro?',
+            () => {
+
+            this._estudianteService.delete(estudiante.id)
+                .subscribe(() => {
+                    abp.notify.info('Deleted Estudiante: ' + estudiante.nombres);
+                    this.refresh();
+                });
             }
         );
     }

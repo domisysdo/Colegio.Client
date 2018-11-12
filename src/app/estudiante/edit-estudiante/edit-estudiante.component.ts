@@ -5,7 +5,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
 
 @Component({
-    selector: 'edit-estudiante-modal',
+    selector: 'app-edit-estudiante-modal',
     templateUrl: './edit-estudiante.component.html'
 })
 export class EditEstudianteComponent extends AppComponentBase {
@@ -15,8 +15,8 @@ export class EditEstudianteComponent extends AppComponentBase {
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
-    active: boolean = false;
-    saving: boolean = false;
+    active = false;
+    saving = false;
 
     estudiante: EstudianteDto = null;
     roles: RoleDto[] = null;
@@ -30,10 +30,9 @@ export class EditEstudianteComponent extends AppComponentBase {
 
     estudianteInRole(role: RoleDto, estudiante: EstudianteDto): string {
         if (estudiante.roleNames.indexOf(role.normalizedName) !== -1) {
-            return "checked";
-        }
-        else {
-            return "";
+            return 'checked';
+        } else {
+            return '';
         }
     }
 
@@ -59,10 +58,10 @@ export class EditEstudianteComponent extends AppComponentBase {
 
     save(): void {
 
-        var roles = [];
-        $(this.modalContent.nativeElement).find("[name=role]").each(function (ind: number, elem: Element) {
-            if ($(elem).is(":checked")) {
-                roles.push(elem.getAttribute("value").valueOf());
+        const roles = [];
+        $(this.modalContent.nativeElement).find('[name=role]').each(function (ind: number, elem: Element) {
+            if ($(elem).is(':checked')) {
+                roles.push(elem.getAttribute('value').valueOf());
             }
         });
 

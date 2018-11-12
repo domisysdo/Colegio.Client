@@ -9,64 +9,65 @@ import { MessageHelper } from '@app/shared/MessageHelper';
 import { Router } from '@angular/router';
 
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   templateUrl: './roles.component.html',
-  styleUrls:['./roles.component.css'],
+  styleUrls: ['./roles.component.css'],
   animations: [appModuleAnimation()]
 })
 export class RolesComponent extends PagedListingComponentBase<RoleDto>  {
-	
 
-	@ViewChild('createRoleModal') createRoleModal: CreateRoleComponent;
-	@ViewChild('editRoleModal') editRoleModal: EditRoleComponent;
-	
-	roles: RoleDto[] = [];
 
-	constructor(
-		private injector: Injector,
-        private _router: Router,
-		private rolesService: RoleServiceProxy
-	) {
-		super(injector);
-	}
-    
-	list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
-        this.rolesService.getAll(request.skipCount, request.maxResultCount)
-            .pipe(finalize(() => { finishedCallback() }))
-            .subscribe((result: PagedResultDtoOfRoleDto)=>{
-				this.roles = result.items;
-				this.showPaging(result, pageNumber);
-		});
-	}
+  @ViewChild('createRoleModal') createRoleModal: CreateRoleComponent;
+  @ViewChild('editRoleModal') editRoleModal: EditRoleComponent;
 
-	delete(role: RoleDto): void {
-			MessageHelper.confirmar(
-			"Se eliminaran los usuarios relacionados al rol: '"+ role.displayName +"'",
-			"¿Desea borrarlo?",
-			() =>{
-				this.rolesService.delete(role.id)
-					.pipe(finalize(() => {
-						abp.notify.info("Deleted Role: " + role.displayName);
-						this.refresh();
-					}))
-					.subscribe(() => { });
-					abp.notify.info('Rol borrado exitosamente');
-			}
-		);
-	}
+  roles: RoleDto[] = [];
 
-	// Show Modals
-	createRole(): void {
-		this.createRoleModal.show();
-	}
+  constructor(
+    private injector: Injector,
+    private _router: Router,
+    private rolesService: RoleServiceProxy
+  ) {
+    super(injector);
+  }
 
-	editRole(role: RoleDto): void {
-		this.editRoleModal.show(role.id);
-	}
+  list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
+    this.rolesService.getAll(request.skipCount, request.maxResultCount)
+      .pipe(finalize(() => { finishedCallback() }))
+      .subscribe((result: PagedResultDtoOfRoleDto) => {
+        this.roles = result.items;
+        this.showPaging(result, pageNumber);
+      });
+  }
 
-	goBack(): void {
-		this._router.navigate(['/app/dashboard']);
-	}
+  delete(role: RoleDto): void {
+    MessageHelper.confirmar(
+      'Se eliminaran los usuarios relacionados al rol:' + role.displayName,
+      '¿Desea borrarlo?',
+      () => {
+        this.rolesService.delete(role.id)
+          .pipe(finalize(() => {
+            abp.notify.info('Deleted Role: ' + role.displayName);
+            this.refresh();
+          }))
+          .subscribe(() => { });
+        abp.notify.info('Rol borrado exitosamente');
+      }
+    );
+  }
+
+  // Show Modals
+  createRole(): void {
+    // this.createRoleModal.show();
+    this._router.navigate(['/app/roles/create-role'])
+  }
+
+  editRole(role: RoleDto): void {
+    this.editRoleModal.show(role.id);
+  }
+
+  goBack(): void {
+    this._router.navigate(['/app/dashboard']);
+  }
 }

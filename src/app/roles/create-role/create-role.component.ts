@@ -3,24 +3,30 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { RoleServiceProxy, CreateRoleDto, ListResultDtoOfPermissionDto } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
+import { MessageHelper } from '@app/shared/MessageHelper';
+import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
-    selector: 'create-role-modal',
+    selector: 'app-create-role-modal',
     templateUrl: './create-role.component.html'
 })
 export class CreateRoleComponent extends AppComponentBase implements OnInit {
     @ViewChild('createRoleModal') modal: ModalDirective;
-    @ViewChild('modalContent') modalContent: ElementRef;
+    @ViewChild('content') content: ElementRef;
 
-    active: boolean = false;
-    saving: boolean = false;
+    active = false;
+    saving = false;
 
-    permissions: ListResultDtoOfPermissionDto = null;
-    role: CreateRoleDto = null;
+    permissions: ListResultDtoOfPermissionDto = new ListResultDtoOfPermissionDto();
+    role: CreateRoleDto = new CreateRoleDto();
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
+    c: string[];
+
     constructor(
         injector: Injector,
+        private _router: Router,
         private _roleService: RoleServiceProxy
 
     ) {
@@ -31,7 +37,7 @@ export class CreateRoleComponent extends AppComponentBase implements OnInit {
         this._roleService.getAllPermissions()
             .subscribe((permissions: ListResultDtoOfPermissionDto) => {
                 this.permissions = permissions;
-            });
+              });
     }
 
     show(): void {
@@ -42,34 +48,38 @@ export class CreateRoleComponent extends AppComponentBase implements OnInit {
         this.modal.show();
     }
 
-    onShown(): void {
-        $.AdminBSB.input.activate($(this.modalContent.nativeElement));
-    }
+    // onShown(): void {
+    //     $.AdminBSB.input.activate($(this.modalContent.nativeElement));
+    // }
 
-    save(): void {
-        var permissions = [];
-        $(this.modalContent.nativeElement).find("[name=permission]").each(
-            (index: number, elem: Element) => {
-                if ($(elem).is(":checked")) {
-                    permissions.push(elem.getAttribute("value").valueOf());
+    save(form: NgForm): void {
+
+        const permissions = [];
+        if (form.valid) {
+
+            $(this.content.nativeElement).find('[name=permission]').each(
+                (index: number, elem: Element) => {
+                    if ($(elem).is(':checked')) {
+                        permissions.push(elem.getAttribute('value').valueOf());
+                    }
                 }
-            }
-        );
+            );
 
-        this.role.permissions = permissions;
+            this.role.permissions = permissions;
 
-        this.saving = true;
-        this._roleService.create(this.role)
-            .pipe(finalize(() => { this.saving = false; }))
-            .subscribe(() => {
-                this.notify.info(this.l('SavedSuccessfully'));
-                this.close();
-                this.modalSave.emit(null);
-            });
+            this.saving = true;
+            this._roleService.create(this.role)
+                .pipe(finalize(() => { this.saving = false; }))
+                .subscribe(() => {
+                    this.notify.info(this.l('Registrado exitosamente'), this.l('Completado'));
+                    this.close();
+                    this.modalSave.emit(null);
+                });
+        }
     }
 
     close(): void {
         this.active = false;
-        this.modal.hide();
+        this._router.navigate(['app/roles'])
     }
 }

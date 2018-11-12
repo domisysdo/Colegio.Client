@@ -4,7 +4,6 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { LoginService } from './login.service';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AbpSessionService } from '@abp/session/abp-session.service';
-import { MessageHelper } from '@app/shared/MessageHelper';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -20,8 +19,8 @@ export class LoginComponent extends AppComponentBase {
 
   @ViewChild('cardBody') cardBody: ElementRef;
 
-  submitting: boolean = false;
-  confirmado: boolean = false;
+  submitting = false;
+  confirmado = false;
   constructor(
     injector: Injector,
     public loginService: LoginService,
@@ -30,10 +29,6 @@ export class LoginComponent extends AppComponentBase {
 
   ) {
     super(injector);
-  }
-
-  ngAfterViewInit(): void {
-
   }
 
   get multiTenancySideIsTeanant(): boolean {

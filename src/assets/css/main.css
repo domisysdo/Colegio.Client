@@ -1029,7 +1029,8 @@ pre {
     width: 100%; }
   .ibox.shadow-wide {
     -webkit-box-shadow: 0 5px 20px #d6dee4;
-    box-shadow: 0 5px 20px #d6dee4; }
+    box-shadow: 0 5px 20px #d6dee4; 
+  }
 
 body.fullscreen-mode {
   overflow-y: hidden; }
@@ -5171,3 +5172,9 @@ table > tbody > tr > td > span.footable-toggle {
 .wizard .actions .disabled a, .wizard .actions a[href="#previous"] {
   color: #485b6f;
   background-color: #e3e6e7; }
+
+.no-shadow {
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+}

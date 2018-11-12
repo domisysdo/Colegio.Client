@@ -4,7 +4,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 import * as _ from 'lodash';
 
 @Component({
-    selector: 'account-languages',
+    selector: 'app-account-languages',
     templateUrl: './account-languages.component.html',
     styleUrls: [
         './account-languages.component.less'
@@ -28,9 +28,9 @@ export class AccountLanguagesComponent extends AppComponentBase implements OnIni
 
     changeLanguage(languageName: string): void {
         abp.utils.setCookieValue(
-            "Abp.Localization.CultureName",
+            'Abp.Localization.CultureName',
             languageName,
-            new Date(new Date().getTime() + 5 * 365 * 86400000), //5 year
+            new Date(new Date().getTime() + 5 * 365 * 86400000), // 5 year
             abp.appPath
         );
 
