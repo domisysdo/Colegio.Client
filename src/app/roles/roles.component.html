@@ -17,9 +17,9 @@
                 <div class="flexbox">
                     <div class="input-group-icon input-group-icon-left mr-3">
                         <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
-                        <input class="form-control form-control-rounded form-control-solid no-shadow" id="key-search" type="text" placeholder="Search ...">
+                        <input #searchBox class="form-control form-control-rounded form-control-solid no-shadow" id="key-search" (input)="refreshData(searchBox.value)" type="text" placeholder="Buscar...">
                     </div>
-                    <button class="btn btn-primary btn-sm btn-rounded btn-icon" (click)="createRole()" >
+                    <button class="btn btn-primary btn-md btn-rounded btn-icon" (click)="createRole()" >
                         <span class="btn-icon">
                             <li class="la la-plus"></li>
                             Agregar nuevo
@@ -48,7 +48,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="text-center">
+            <div class="text-center" *ngIf="totalItems > pageSize">
                 <pagination-controls
                     (pageChange)="getDataPage($event)" 
                     id="server"

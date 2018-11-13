@@ -1,5 +1,5 @@
 import { Component, Injector, ViewChild } from '@angular/core';
-import { PagedListingComponentBase, PagedRequestDto } from 'shared/paged-listing-component-base';
+import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from 'shared/paged-listing-component-base';
 import { RoleServiceProxy, RoleDto, PagedResultDtoOfRoleDto } from 'shared/service-proxies/service-proxies';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { CreateRoleComponent } from 'app/roles/create-role/create-role.component';
@@ -23,6 +23,7 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto>  {
   @ViewChild('content') editRoleModal: EditRoleComponent;
 
   roles: RoleDto[] = [];
+  filter: string;
 
   constructor(
     private injector: Injector,
@@ -33,10 +34,11 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto>  {
   }
 
   list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
-    this.rolesService.getAll(request.skipCount, request.maxResultCount)
+    this.rolesService.getAllFiltered(request.skipCount, request.maxResultCount, this.filter)
       .pipe(finalize(() => { finishedCallback() }))
       .subscribe((result: PagedResultDtoOfRoleDto) => {
         this.roles = result.items;
+        console.log(this.roles);
         this.showPaging(result, pageNumber);
       });
   }
@@ -69,5 +71,14 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto>  {
 
   goBack(): void {
     this._router.navigate(['/app/dashboard']);
+  }
+
+  refreshData(filter: string ): void {
+
+    console.log(filter);
+    this.filter = filter;
+    this.pageNumber = 1;
+    this.isTableLoading = true;
+    this.refresh();
   }
 }
