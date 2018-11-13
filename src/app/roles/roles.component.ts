@@ -24,6 +24,7 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto>  {
 
   roles: RoleDto[] = [];
   filter: string;
+  totalCount: number;
 
   constructor(
     private injector: Injector,
@@ -38,7 +39,7 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto>  {
       .pipe(finalize(() => { finishedCallback() }))
       .subscribe((result: PagedResultDtoOfRoleDto) => {
         this.roles = result.items;
-        console.log(this.roles);
+        this.totalCount = result.items.length;
         this.showPaging(result, pageNumber);
       });
   }
