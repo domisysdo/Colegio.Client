@@ -58,6 +58,36 @@
                     autoHide="true">
                 </pagination-controls>
             </div>
+
+
+            <ngx-datatable
+                class="table table-bordered table-hover"
+                [rows]="rows"
+                [columnMode]="'force'"
+                [headerHeight]="50"
+                [footerHeight]="50"
+                [rowHeight]="'auto'"
+                [limit]="10"
+                [selectionType]="'checkbox'"
+            >
+
+                <ngx-datatable-column
+                    [width]="30"
+                    [sortable]="false"
+                    [canAutoResize]="false"
+                    [draggable]="false"
+                    [resizeable]="false"
+                    [headerCheckboxable]="true"
+                    [checkboxable]="true">
+                </ngx-datatable-column>
+                
+                <ngx-datatable-column name="Nombre"></ngx-datatable-column>
+                <ngx-datatable-column name="Descripción"></ngx-datatable-column>
+
+          </ngx-datatable>
+
+
+
         </div>
     </div>
 </div>
