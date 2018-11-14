@@ -27,12 +27,16 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> implement
   totalCount: number;
   selected = [];
 
+  rows: any [] = [];
   constructor(
     private injector: Injector,
     private _router: Router,
     private rolesService: RoleServiceProxy
   ) {
     super(injector);
+
+
+
   }
 
   list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
@@ -40,10 +44,19 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> implement
       .pipe(finalize(() => { finishedCallback() }))
       .subscribe((result: PagedResultDtoOfRoleDto) => {
         this.roles = result.items;
+      
+        result.items.forEach(function (value) {
+          this.rows.push(value);
+          console.log(value);
+        });
+
+        console.log(this.rows);
         this.totalCount = result.items.length;
         this.showPaging(result, pageNumber);
 
       });
+
+
   }
 
   delete(role: RoleDto): void {
