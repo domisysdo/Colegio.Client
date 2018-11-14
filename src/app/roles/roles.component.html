@@ -60,43 +60,50 @@
             </div> -->
 
             <ngx-datatable
+                #table
                 class="bootstrap"
-                [columnMode]="'force'"
+                [columnMode]="'flex'"
                 [headerHeight]="50"
-                [footerHeight]="50" 
+                [footerHeight]="50"
                 [rowHeight]="'auto'"
                 [selected]="selected"
-                [rows]="roles"
+                [rows]="roles" 
+                [selectionType]="'checkbox'"
+                [selectAllRowsOnPage]="false"
+                [reorderable]="reorderable"
+                [displayCheck]="displayCheck"
                 [externalPaging]="true"
                 [count]= "(filter==='')? totalItems: totalCount"
                 [offset]="0"
                 [limit]="pageSize"
                 (page)='getDataPage($event.offset)'
-                >
-
-                <!-- <ngx-datatable-column 
-                    [width]="30" 
-                    [sortable]="false" 
-                    [canAutoResize]="false" 
-                    [draggable]="false" 
-                    [resizeable]="false"> -->
-
-                <ngx-datatable-column >
+                (select)='onSelect($event)'>
+                <!-- <ngx-datatable-column prop="acctions">
+                
                     <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
                         <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)" />
                     </ng-template>
+
                     <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
                         <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)" />
-                        
                     </ng-template>
-                </ngx-datatable-column>
-
-                    <!-- </ngx-datatable-column> -->
-
-                <ngx-datatable-column name="Nombre" prop="name"></ngx-datatable-column>
-                <ngx-datatable-column name="Descripción" prop="displayName"></ngx-datatable-column>
                 
-                <ngx-datatable-column [width]="10" name="id" >
+                </ngx-datatable-column> -->
+
+                <ngx-datatable-column
+                [width]="30"
+                [sortable]="false"
+                [canAutoResize]="false"
+                [draggable]="false"
+                [resizeable]="false"
+                [headerCheckboxable]="true"
+                [checkboxable]="true">
+                </ngx-datatable-column>
+                
+                <ngx-datatable-column [flexGrow]="4" name="Nombre" prop="name"></ngx-datatable-column>
+                <ngx-datatable-column [flexGrow]="4" name="Descripción" prop="displayName"></ngx-datatable-column>
+                
+                <ngx-datatable-column [flexGrow]="1" name="id" >
                     <ng-template let-column="column" ngx-datatable-header-template>
                         Actions
                     </ng-template>
@@ -105,14 +112,7 @@
                         <a class="text-light font-16" href="javascript:;"><i (click)="delete(row)" class="ti-trash"></i></a>
                     </ng-template>
                 </ngx-datatable-column>
-
-          </ngx-datatable>
-
-         
-
+            </ngx-datatable>
         </div>
     </div>
 </div>
-
-<!-- <app-create-role-modal #createRoleModal (modalSave)="refresh()"></app-create-role-modal> -->
-<!-- <app-edit-role-modal #editRoleModal (modalSave)="refresh()"></app-edit-role-modal> -->

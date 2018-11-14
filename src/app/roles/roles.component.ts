@@ -1,4 +1,4 @@
-import { Component, Injector, ViewChild, OnInit } from '@angular/core';
+import { Component, Injector, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from 'shared/paged-listing-component-base';
 import { RoleServiceProxy, RoleDto, PagedResultDtoOfRoleDto } from 'shared/service-proxies/service-proxies';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
@@ -7,6 +7,7 @@ import { EditRoleComponent } from 'app/roles/edit-role/edit-role.component';
 import { finalize } from 'rxjs/operators';
 import { MessageHelper } from '@app/shared/MessageHelper';
 import { Router } from '@angular/router';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 
 declare var $: any;
@@ -16,18 +17,37 @@ declare var $: any;
   styleUrls: ['./roles.component.css'],
   animations: [appModuleAnimation()]
 })
-export class RolesComponent extends PagedListingComponentBase<RoleDto> implements OnInit  {
+export class RolesComponent extends PagedListingComponentBase<RoleDto> implements AfterViewInit  {
+
 
 
   @ViewChild('createRoleModal') createRoleModal: CreateRoleComponent;
   @ViewChild('content') editRoleModal: EditRoleComponent;
+  @ViewChild('table') table: DatatableComponent;
 
   roles: RoleDto[] = [];
   filter = '';
   totalCount: number;
   selected = [];
 
-  rows: any [] = [];
+  // columns = [
+  //   { name: 'Nombre', prop: 'name'},
+  //   { name: 'Descripción', prop: 'displayName'},
+  //   { name: '', prop: 'acctions', sortable: false }
+  // ];
+
+  // columnWidths = [
+  //   {column: 'name', width: 150},
+  //   {column: 'displayName', width: 150},
+  //   {column: 'acctions', width: 50}
+  // ]
+
+  ngAfterViewInit() {
+    this.table.bodyComponent.recalcLayout();
+    this.table.recalculateColumns();
+    this.table.recalculate();
+  }
+
   constructor(
     private injector: Injector,
     private _router: Router,
