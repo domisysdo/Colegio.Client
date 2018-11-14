@@ -27,7 +27,7 @@
                     </button>
                 </div>
             </div>
-            <table class="table table-bordered table-hover" id="orders-table">
+            <!-- <table class="table table-bordered table-hover" id="orders-table">
                 <thead class="thead-default thead-lg">
                     <tr>
                         <th>{{l('Nombre')}}</th>
@@ -57,7 +57,91 @@
                     class="paginationStyles"
                     autoHide="true">
                 </pagination-controls>
-            </div>
+            </div> -->
+
+            <ngx-datatable
+                class="bootstrap"
+                [columnMode]="'force'"
+                [headerHeight]="50"
+                [rowHeight]="'auto'"
+                [selected]="selected"
+                [rows]="roles"
+                [externalPaging]="true"
+                [count]="totalItems"
+                [offset]="pageSize"
+                [limit]="pageSize"
+                (page)='getDataPage($event)'
+                >
+
+                <!-- <ngx-datatable-column 
+                    [width]="30" 
+                    [sortable]="false" 
+                    [canAutoResize]="false" 
+                    [draggable]="false" 
+                    [resizeable]="false"> -->
+
+                    <ngx-datatable-column >
+                        <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                            <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)" />
+                        </ng-template>
+                        <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                            <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)" />
+                            
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <!-- </ngx-datatable-column> -->
+
+                <ngx-datatable-column name="Nombre" prop="name"></ngx-datatable-column>
+                <ngx-datatable-column name="Descripción" prop="displayName"></ngx-datatable-column>
+                
+                <ngx-datatable-column [width]="10" name="id" >
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                        Actions
+                    </ng-template>
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <a [routerLink] = "['edit-role', row.id]" class="text-light mr-3 font-16" href="javascript:;"><i class="ti-pencil"></i></a>
+                        <a class="text-light font-16" href="javascript:;"><i (click)="delete(row)" class="ti-trash"></i></a>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-footer>
+                    <ng-template
+                        ngx-datatable-footer-template
+                        let-rowCount="totalItems"
+                        let-pageSize="pageSize"
+                        let-curPage="pageNumber"
+                        let-offset="pageSize">
+                        <div style="padding: 5px 10px">
+                        <div>
+                            <strong>Summary</strong>: Gender: Female
+                        </div>
+                        <hr style="width:100%" />
+                        <div>
+                            Rows: {{totalCount}} |
+                            Size: {{pageSize}} |
+                            Current: {{pageNumber}} |
+                            Offset: {{pageSize}}
+                        </div>
+                        </div>
+                    </ng-template>
+                    <datatable-pager
+                        [pagerLeftArrowIcon]="'datatable-icon-left'"
+                        [pagerRightArrowIcon]="'datatable-icon-right'"
+                        [pagerPreviousIcon]="'datatable-icon-prev'"
+                        [pagerNextIcon]="'datatable-icon-skip'"
+                        [page]="pageNumber"
+                        [size]="pageSize"
+                        [count]="totalItems"
+                        [hidden]="false"
+                        (change)="getDataPage($event)">
+                    </datatable-pager>
+                </ngx-datatable-footer>
+                    
+          </ngx-datatable>
+
+         
+
         </div>
     </div>
 </div>

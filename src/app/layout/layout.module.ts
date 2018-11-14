@@ -15,6 +15,9 @@ import { EditRoleComponent } from '@app/roles/edit-role/edit-role.component';
 import { ModalModule } from 'ngx-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '@shared/shared.module';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
+
 
 @NgModule({
   imports:
@@ -22,6 +25,7 @@ import { SharedModule } from '@shared/shared.module';
     CommonModule,
     LayoutRoutingModule,
     NgxPaginationModule,
+    NgxDatatableModule,
     ModalModule.forRoot(),
     FormsModule,
     SharedModule

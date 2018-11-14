@@ -1,4 +1,4 @@
-import { Component, Injector, ViewChild } from '@angular/core';
+import { Component, Injector, ViewChild, OnInit } from '@angular/core';
 import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from 'shared/paged-listing-component-base';
 import { RoleServiceProxy, RoleDto, PagedResultDtoOfRoleDto } from 'shared/service-proxies/service-proxies';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
@@ -16,7 +16,7 @@ declare var $: any;
   styleUrls: ['./roles.component.css'],
   animations: [appModuleAnimation()]
 })
-export class RolesComponent extends PagedListingComponentBase<RoleDto>  {
+export class RolesComponent extends PagedListingComponentBase<RoleDto> implements OnInit  {
 
 
   @ViewChild('createRoleModal') createRoleModal: CreateRoleComponent;
@@ -25,6 +25,7 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto>  {
   roles: RoleDto[] = [];
   filter: string;
   totalCount: number;
+  selected = [];
 
   constructor(
     private injector: Injector,
@@ -41,6 +42,7 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto>  {
         this.roles = result.items;
         this.totalCount = result.items.length;
         this.showPaging(result, pageNumber);
+
       });
   }
 
@@ -76,10 +78,20 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto>  {
 
   refreshData(filter: string ): void {
 
-    console.log(filter);
     this.filter = filter;
     this.pageNumber = 1;
     this.isTableLoading = true;
     this.refresh();
   }
+  onSelect({ selected }) {
+    console.log('Select Event', selected, this.selected);
+
+    // this.selected.splice(0, this.selected.length);
+    // this.selected.push(...selected);
+  }
+
+  onActivate(event) {
+    console.log('Activate Event', event);
+  }
+
 }

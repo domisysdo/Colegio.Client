@@ -19,9 +19,6 @@ import { InputValidationComponent } from './components/validation/input-validati
     declarations: [
         MaterialInput,
         InputValidationComponent
-,
-
-
     ],
     exports: [
         MaterialInput,
