@@ -23,7 +23,7 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> implement
   @ViewChild('content') editRoleModal: EditRoleComponent;
 
   roles: RoleDto[] = [];
-  filter: string;
+  filter = '';
   totalCount: number;
   selected = [];
 
@@ -44,13 +44,13 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> implement
       .pipe(finalize(() => { finishedCallback() }))
       .subscribe((result: PagedResultDtoOfRoleDto) => {
         this.roles = result.items;
-      
-        result.items.forEach(function (value) {
-          this.rows.push(value);
-          console.log(value);
-        });
 
-        console.log(this.rows);
+        // result.items.forEach(function (value) {
+        //   this.rows.push(value);
+        //   console.log(value);
+        // });
+
+        // console.log(this.rows);
         this.totalCount = result.items.length;
         this.showPaging(result, pageNumber);
 
@@ -92,7 +92,7 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> implement
   refreshData(filter: string ): void {
 
     this.filter = filter;
-    this.pageNumber = 1;
+    this.pageNumber = 0;
     this.isTableLoading = true;
     this.refresh();
   }

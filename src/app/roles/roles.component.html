@@ -63,14 +63,15 @@
                 class="bootstrap"
                 [columnMode]="'force'"
                 [headerHeight]="50"
+                [footerHeight]="50" 
                 [rowHeight]="'auto'"
                 [selected]="selected"
                 [rows]="roles"
                 [externalPaging]="true"
-                [count]="totalItems"
-                [offset]="pageSize"
+                [count]= "(filter==='')? totalItems: totalCount"
+                [offset]="0"
                 [limit]="pageSize"
-                (page)='getDataPage($event)'
+                (page)='getDataPage($event.offset)'
                 >
 
                 <!-- <ngx-datatable-column 
@@ -80,15 +81,15 @@
                     [draggable]="false" 
                     [resizeable]="false"> -->
 
-                    <ngx-datatable-column >
-                        <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
-                            <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)" />
-                        </ng-template>
-                        <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
-                            <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)" />
-                            
-                        </ng-template>
-                    </ngx-datatable-column>
+                <ngx-datatable-column >
+                    <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                        <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)" />
+                    </ng-template>
+                    <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                        <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)" />
+                        
+                    </ng-template>
+                </ngx-datatable-column>
 
                     <!-- </ngx-datatable-column> -->
 
@@ -105,39 +106,6 @@
                     </ng-template>
                 </ngx-datatable-column>
 
-                <ngx-datatable-footer>
-                    <ng-template
-                        ngx-datatable-footer-template
-                        let-rowCount="totalItems"
-                        let-pageSize="pageSize"
-                        let-curPage="pageNumber"
-                        let-offset="pageSize">
-                        <div style="padding: 5px 10px">
-                        <div>
-                            <strong>Summary</strong>: Gender: Female
-                        </div>
-                        <hr style="width:100%" />
-                        <div>
-                            Rows: {{totalCount}} |
-                            Size: {{pageSize}} |
-                            Current: {{pageNumber}} |
-                            Offset: {{pageSize}}
-                        </div>
-                        </div>
-                    </ng-template>
-                    <datatable-pager
-                        [pagerLeftArrowIcon]="'datatable-icon-left'"
-                        [pagerRightArrowIcon]="'datatable-icon-right'"
-                        [pagerPreviousIcon]="'datatable-icon-prev'"
-                        [pagerNextIcon]="'datatable-icon-skip'"
-                        [page]="pageNumber"
-                        [size]="pageSize"
-                        [count]="totalItems"
-                        [hidden]="false"
-                        (change)="getDataPage($event)">
-                    </datatable-pager>
-                </ngx-datatable-footer>
-                    
           </ngx-datatable>
 
          

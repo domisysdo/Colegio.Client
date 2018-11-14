@@ -18,7 +18,7 @@ export class PagedRequestDto {
 export abstract class PagedListingComponentBase<EntityDto> extends AppComponentBase implements OnInit {
 
     public pageSize = 10;
-    public pageNumber = 1;
+    public pageNumber = 0;
     public totalPages = 1;
     public totalItems: number;
     public isTableLoading = false;
@@ -43,6 +43,8 @@ export abstract class PagedListingComponentBase<EntityDto> extends AppComponentB
     }
 
     public getDataPage(page: number): void {
+        console.log(page);
+        page = page + 1;
         const req = new PagedRequestDto();
         req.maxResultCount = this.pageSize;
         req.skipCount = (page - 1) * this.pageSize;
