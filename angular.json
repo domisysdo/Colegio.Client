@@ -32,9 +32,9 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/assets/css/ngxDatatable.css",               
-              "node_modules/toastr/build/toastr.min.css"
-
+              "src/assets/css/ngx-datatable.css",               
+              "node_modules/toastr/build/toastr.min.css",
+              "node_modules/@swimlane/ngx-datatable/release/assets/icons.css"
              ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
