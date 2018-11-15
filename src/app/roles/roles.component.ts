@@ -1,4 +1,4 @@
-import { Component, Injector, ViewChild, OnInit, AfterViewInit } from '@angular/core';
+import { Component, Injector, ViewChild, OnInit, AfterViewInit, HostListener } from '@angular/core';
 import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from 'shared/paged-listing-component-base';
 import { RoleServiceProxy, RoleDto, PagedResultDtoOfRoleDto } from 'shared/service-proxies/service-proxies';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
@@ -54,9 +54,10 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> implement
     private rolesService: RoleServiceProxy
   ) {
     super(injector);
+  }
 
-
-
+  @HostListener('window:resize') onResize() {
+    this.table.recalculate();
   }
 
   list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {

@@ -4,6 +4,7 @@ declare var $: any;
 declare var Clipboard: any;
 
 export class Helpers {
+
   static setLoading(loading) {
     const body = $('body');
     if (loading) {

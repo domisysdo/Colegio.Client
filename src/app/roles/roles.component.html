@@ -27,7 +27,7 @@
                     </button>
                 </div>
             </div>
-            <table class="table table-bordered table-hover" id="orders-table">
+            <!-- <table class="table table-bordered table-hover" id="orders-table">
                 <thead class="thead-default thead-lg">
                     <tr>
                         <th>{{l('Nombre')}}</th>
@@ -57,7 +57,7 @@
                     class="paginationStyles"
                     autoHide="true">
                 </pagination-controls>
-            </div>
+            </div> -->
 
             <ngx-datatable
                 #table
@@ -100,10 +100,10 @@
                 [checkboxable]="true">
                 </ngx-datatable-column>
                 
-                <ngx-datatable-column [width]="500" name="Nombre" prop="name"></ngx-datatable-column>
-                <ngx-datatable-column [width]="500" name="Descripción" prop="displayName"></ngx-datatable-column>
+                <ngx-datatable-column [headerClass]="'width-35'" [cellClass]="'width-35'" name="Nombre" prop="name"></ngx-datatable-column>
+                <ngx-datatable-column [headerClass]="'width-35'" [cellClass]="'width-35'" name="Descripción" prop="displayName"></ngx-datatable-column>
                 
-                <ngx-datatable-column name="id" >
+                <ngx-datatable-column name="id" [headerClass]="'width-10'" [cellClass]="'width-10'" >
                     <ng-template let-column="column" ngx-datatable-header-template>
                         Actions
                     </ng-template>

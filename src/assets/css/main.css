@@ -5178,3 +5178,11 @@ table > tbody > tr > td > span.footable-toggle {
     -moz-box-shadow: none !important;
     box-shadow: none !important;
 }
+
+.width-10 {
+  width: 20% !important;
+}
+
+.width-35 {
+  width: 40% !important;
+}
