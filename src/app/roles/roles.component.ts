@@ -27,20 +27,10 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> implement
 
   roles: RoleDto[] = [];
   filter = '';
+  sorting = '';
+  actualPage = 0;
   totalCount: number;
   selected = [];
-
-  // columns = [
-  //   { name: 'Nombre', prop: 'name'},
-  //   { name: 'Descripción', prop: 'displayName'},
-  //   { name: '', prop: 'acctions', sortable: false }
-  // ];
-
-  // columnWidths = [
-  //   {column: 'name', width: 150},
-  //   {column: 'displayName', width: 150},
-  //   {column: 'acctions', width: 50}
-  // ]
 
   ngAfterViewInit() {
     this.table.bodyComponent.recalcLayout();
@@ -61,23 +51,13 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> implement
   }
 
   list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
-    this.rolesService.getAllFiltered(request.skipCount, request.maxResultCount, this.filter)
+    this.rolesService.getAllFiltered(this.sorting, request.skipCount, request.maxResultCount, this.filter)
       .pipe(finalize(() => { finishedCallback() }))
       .subscribe((result: PagedResultDtoOfRoleDto) => {
         this.roles = result.items;
-
-        // result.items.forEach(function (value) {
-        //   this.rows.push(value);
-        //   console.log(value);
-        // });
-
-        // console.log(this.rows);
         this.totalCount = result.items.length;
         this.showPaging(result, pageNumber);
-
       });
-
-
   }
 
   delete(role: RoleDto): void {
@@ -122,6 +102,17 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> implement
 
     // this.selected.splice(0, this.selected.length);
     // this.selected.push(...selected);
+  }
+  onSort(event: any) {
+    this.sorting = event.sorts[0].prop + ' ' + event.sorts[0].dir;
+    // console.log(this.sorting);
+    this.getDataPage(this.pageNumber);
+  }
+
+  onPageChange(event: any)  {
+    console.log(event.offset);
+    this.getDataPage(event.offset);
+    this.pageNumber = event.offset;
   }
 
   onActivate(event) {

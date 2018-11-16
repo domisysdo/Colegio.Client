@@ -43,11 +43,10 @@ export abstract class PagedListingComponentBase<EntityDto> extends AppComponentB
     }
 
     public getDataPage(page: number): void {
-        console.log(page);
-        page = page + 1;
+
         const req = new PagedRequestDto();
         req.maxResultCount = this.pageSize;
-        req.skipCount = (page - 1) * this.pageSize;
+        req.skipCount = page * this.pageSize;
 
         this.isTableLoading = true;
         this.list(req, page, () => {

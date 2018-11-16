@@ -73,11 +73,13 @@
                 [reorderable]="reorderable"
                 [displayCheck]="displayCheck"
                 [externalPaging]="true"
+                [externalSorting]="true"
                 [count]= "(filter==='')? totalItems: totalCount"
                 [offset]="0"
                 [limit]="pageSize"
-                (page)='getDataPage($event.offset)'
-                (select)='onSelect($event)'>
+                (page)='onPageChange($event)'
+                (select)='onSelect($event)'
+                (sort)= 'onSort($event)'>
                 <!-- <ngx-datatable-column prop="acctions">
                 
                     <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
