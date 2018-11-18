@@ -5,20 +5,19 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
 
 @Component({
-  selector: 'create-user-modal',
+  selector: 'app-create-user-modal',
   templateUrl: './create-user.component.html'
 })
 export class CreateUserComponent extends AppComponentBase implements OnInit {
 
     @ViewChild('createUserModal') modal: ModalDirective;
-    @ViewChild('modalContent') modalContent: ElementRef;
-
+    @ViewChild('content') content: ElementRef;
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
-    active: boolean = false;
-    saving: boolean = false;
-    user: CreateUserDto = null;
-    roles: RoleDto[] = null;
+    active = false;
+    saving = false;
+    user: CreateUserDto = new CreateUserDto();
+    roles: RoleDto[] = [];
 
     constructor(
         injector: Injector,
@@ -41,16 +40,16 @@ export class CreateUserComponent extends AppComponentBase implements OnInit {
         this.user.init({ isActive: true });
     }
 
-    onShown(): void {
-        $.AdminBSB.input.activate($(this.modalContent.nativeElement));
-    }
+    // onShown(): void {
+    //     $.AdminBSB.input.activate($(this.modalContent.nativeElement));
+    // }
 
     save(): void {
-        //TODO: Refactor this, don't use jQuery style code
-        var roles = [];
-        $(this.modalContent.nativeElement).find("[name=role]").each((ind:number, elem:Element) => {
-            if($(elem).is(":checked") == true){
-                roles.push(elem.getAttribute("value").valueOf());
+        // TODO: Refactor this, don't use jQuery style code
+        const roles = [];
+        $(this.content.nativeElement).find('[name=role]').each((ind: number, elem: Element) => {
+            if ($(elem).is(':checked') === true) {
+                roles.push(elem.getAttribute('value').valueOf());
             }
         });
 

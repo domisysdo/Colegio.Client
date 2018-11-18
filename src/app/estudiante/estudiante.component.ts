@@ -38,7 +38,7 @@ export class EstudiantesComponent extends PagedListingComponentBase<EstudianteDt
     }
 
     protected delete(estudiante: EstudianteDto): void {
-        MessageHelper.confirmar(
+        MessageHelper.confirm(
             'Se borrará el estudiante ' + estudiante.nombres + '?',
             '¿Esta seguro?',
             () => {

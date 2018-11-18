@@ -1,0 +1,4 @@
+<div class="flexbox mb-4"></div>
+<button (click)="onClick($event)" *ngIf="selectedCount > 1" class="btn btn-outline-danger btn-fix btn-rounded">
+    <span class="btn-icon"><i class="la la-trash"></i>Eliminar seleccionados({{selectedCount}})</span>
+</button>

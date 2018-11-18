@@ -6,6 +6,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RolesComponent } from '@app/roles/roles.component';
 import { CreateRoleComponent } from '@app/roles/create-role/create-role.component';
 import { EditRoleComponent } from '@app/roles/edit-role/edit-role.component';
+import { UsersComponent } from '@app/users/users.component';
+import { CreateUserComponent } from '@app/users/create-user/create-user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
@@ -28,6 +30,14 @@ const routes: Routes = [
       {
         path: 'roles/edit-role/:id',
         component: EditRoleComponent
+      },
+      {
+        path: 'users',
+        component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard]
+      },
+      {
+        path: 'users/create-user',
+        component: CreateUserComponent
       }
     ]
   }

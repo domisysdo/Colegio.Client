@@ -1,23 +1,14 @@
-﻿<div class="page-heading">
-    <h1 class="page-title">Mantenimiento de roles</h1>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="javascript:;" (click)="goBack()"><i class="la la-home font-20"></i></a>
-        </li>
-        <li class="breadcrumb-item">Seguridad</li>
-        <li class="breadcrumb-item">Roles</li>
-    </ol>
-</div>
-<div class="page-content fade-in-up">
+﻿<div class="page-content fade-in-up">
     <div class="ibox">
         <div class="ibox-body">
-            <h5 class="font-strong mb-4">LISTADO DE ROLES</h5>
             <div class="flexbox mb-4">
-                <div class="flexbox"></div>
+                <div class="flexbox">
+                    <h5 class="font-strong mb-4">LISTADO DE ROLES</h5>
+                </div>
                 <div class="flexbox">
                     <div class="input-group-icon input-group-icon-left mr-3">
                         <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
-                        <input #searchBox class="form-control form-control-rounded form-control-solid no-shadow" id="key-search" (input)="refreshData(searchBox.value)" type="text" placeholder="Buscar...">
+                        <input #searchBox class="form-control form-control-rounded form-control-solid no-shadow" id="key-search" (input)="searchData(searchBox.value)" type="text" placeholder="Buscar...">
                     </div>
                     <button class="btn btn-primary btn-md btn-rounded btn-icon" (click)="createRole()" >
                         <span class="btn-icon">
@@ -27,40 +18,8 @@
                     </button>
                 </div>
             </div>
-            <!-- <table class="table table-bordered table-hover" id="orders-table">
-                <thead class="thead-default thead-lg">
-                    <tr>
-                        <th>{{l('Nombre')}}</th>
-                        <th>{{l('Descripción')}}</th>
-                        <th style="width: 10%"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let role of roles | paginate: { id: 'server', itemsPerPage: pageSize, currentPage: pageNumber, totalItems: totalItems }">
-                        <td>{{role.name}}</td>
-                        <td>{{role.displayName}}</td>
-                        <td>
-                            <div class="text-center">
-                                <a [routerLink] = "['edit-role', role.id]" class="text-light mr-3 font-16" href="javascript:;"><i class="ti-pencil"></i></a>
-                                <a class="text-light font-16" href="javascript:;"><i (click)="delete(role)" class="ti-trash"></i></a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="text-center" *ngIf="(totalCount >= pageSize) || (pageSize >= totalCount && searchBox.value === '')">
-                <pagination-controls
-                    (pageChange)="getDataPage($event)" 
-                    id="server"
-                    previousLabel="Anterior"
-                    nextLabel="Siguiente"
-                    class="paginationStyles"
-                    autoHide="true">
-                </pagination-controls>
-            </div> -->
 
             <ngx-datatable
-                #table
                 class="bootstrap"
                 [columnMode]="'force'"
                 [headerHeight]="50"
@@ -71,44 +30,60 @@
                 [selectionType]="'checkbox'"
                 [selectAllRowsOnPage]="false"
                 [reorderable]="reorderable"
-                [displayCheck]="displayCheck"
                 [externalPaging]="true"
                 [externalSorting]="true"
                 [count]= "(filter==='')? totalItems: totalCount"
                 [offset]="0"
                 [limit]="pageSize"
+                (sort)= 'onSort($event)'
                 (page)='onPageChange($event)'
-                (select)='onSelect($event)'
-                (sort)= 'onSort($event)'>
-                <!-- <ngx-datatable-column prop="acctions">
-                
+                (select)='onSelect($event)'>
+
+                <ngx-datatable-column
+                    [width]="50"
+                    [sortable]="false"
+                    [canAutoResize]="false"
+                    [draggable]="false"
+                    [resizeable]="false"
+                    [headerCheckboxable]="true"
+                    [checkboxable]="false">
+
                     <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
-                        <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)" />
+                        <label class="checkbox checkbox-primary">
+                            <input 
+                                type="checkbox"
+                                [checked]="allRowsSelected"
+                                (change)="selectFn(!allRowsSelected)"/>
+                                <span class="input-span"></span>
+                        </label>
                     </ng-template>
 
                     <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
-                        <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)" />
+                        <label class="checkbox checkbox-primary">
+                            <input 
+                                type="checkbox"
+                                [checked]="isSelected"
+                                (change)="onCheckboxChangeFn($event)"/>
+                                <span class="input-span"></span>
+                        </label>
                     </ng-template>
-                
-                </ngx-datatable-column> -->
-
-                <ngx-datatable-column
-                [width]="35"
-                [sortable]="false"
-                [canAutoResize]="false"
-                [draggable]="false"
-                [resizeable]="false"
-                [headerCheckboxable]="true"
-                [checkboxable]="true">
+                </ngx-datatable-column>
+            
+                <ngx-datatable-column 
+                    [headerClass]="'width-35'" 
+                    [cellClass]="'width-35'" 
+                    name="Nombre" 
+                    prop="name">
                 </ngx-datatable-column>
                 
-                <ngx-datatable-column [headerClass]="'width-35'" [cellClass]="'width-35'" name="Nombre" prop="name"></ngx-datatable-column>
-                <ngx-datatable-column [headerClass]="'width-35'" [cellClass]="'width-35'" name="Descripción" prop="displayName"></ngx-datatable-column>
+                <ngx-datatable-column 
+                    [headerClass]="'width-35'" 
+                    [cellClass]="'width-35'" 
+                    name="Descripción" 
+                    prop="displayName">
+                </ngx-datatable-column>
                 
-                <ngx-datatable-column name="id" [headerClass]="'width-10'" [cellClass]="'width-10'" >
-                    <ng-template let-column="column" ngx-datatable-header-template>
-                        Actions
-                    </ng-template>
+                <ngx-datatable-column  [headerClass]="'width-10'" [cellClass]="'width-10'" >
                     <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                         <div class="text-center">
                             <a [routerLink] = "['edit-role', row.id]" class="text-light mr-3 font-16" href="javascript:;"><i class="ti-pencil"></i></a>
@@ -116,8 +91,9 @@
                         </div>
                     </ng-template>
                 </ngx-datatable-column>
-                
             </ngx-datatable>
+
+            <app-table-items-delete (onClickEvent)="deleteMultipleRoles()" [selectedCount]="selectedCount"></app-table-items-delete>
         </div>
     </div>
 </div>

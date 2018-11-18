@@ -16,6 +16,8 @@ import { ModalModule } from 'ngx-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '@shared/shared.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { UsersComponent } from '@app/users/users.component';
+import { CreateUserComponent } from '@app/users/create-user/create-user.component';
 
 
 
@@ -41,7 +43,9 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     LayoutSettingsComponent,
     RolesComponent,
     CreateRoleComponent,
-    EditRoleComponent
+    EditRoleComponent,
+    UsersComponent,
+    CreateUserComponent
   ]
 })
 export class LayoutModule {}

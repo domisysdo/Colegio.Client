@@ -1,4 +1,4 @@
-﻿<div bsModal #createUserModal="bs-modal" class="modal fade" (onShown)="onShown()" tabindex="-1" role="dialog" aria-labelledby="createUserModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+﻿<!-- <div bsModal #createUserModal="bs-modal" class="modal fade" (onShown)="onShown()" tabindex="-1" role="dialog" aria-labelledby="createUserModal" aria-hidden="true" [config]="{backdrop: 'static'}">
     <div class="modal-dialog">
 
         <div #modalContent class="modal-content">
@@ -123,4 +123,189 @@
             </form>
         </div>
     </div>
-</div>
+</div> -->
+
+<div class="page-heading">
+        <h1 class="page-title">Mantenimiento de usuarios</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="javascript:;" (click)="goBack()"><i class="la la-home font-20"></i></a>
+            </li>
+            <li class="breadcrumb-item">Seguridad</li>
+            <li class="breadcrumb-item">Usuarios</li>
+        </ol>
+    </div>
+    <div class="page-content fade-in-up" >
+        <div class="col-md-12">
+            <div class="ibox ibox-body">
+    
+                <div class="ibox-head">
+                    <div class="ibox-title">{{l("Registrar nuevo usuario")}}</div>
+                </div>
+    
+                <div #content>
+                    <form class="form-horizontal" #userForm="ngForm" method="post" novalidate (ngSubmit)="save(userForm)">
+                        <div class="ibox-body">   
+                            
+                            <div [ngClass]="(userName.invalid && userName.touched)?'form-group has-error mb-4 row':'form-group mb-4 row'">
+                                <label class="col-sm-2 col-form-label">{{l("Usuario")}}</label>
+                                <div class="col-sm-10">
+                                    <span *ngIf="userName.invalid && userName.touched" class="input-icon input-icon-right text-danger"></span>
+                                    <input 
+                                        id="username" 
+                                        class="form-control no-shadow" 
+                                        type="text"
+                                        #userName = "ngModel" 
+                                        [(ngModel)]="user.userName" 
+                                        name="UserName" 
+                                        required
+                                        minlength="2" 
+                                        maxlength="32" 
+                                        placeholder="Usuario"/>
+                                        <app-input-validation [input]="userName"></app-input-validation>
+                                </div>
+                            </div>
+    
+                            <div [ngClass]="(name.invalid && name.touched)?'form-group has-error mb-4 row':'form-group mb-4 row'">                        
+                                <label class="col-sm-2 col-form-label">{{l("Nombres")}}</label>
+                                <div class="col-sm-10">
+    
+                                    <span *ngIf = "name.invalid && name.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                    <input 
+                                        id="name" 
+                                        class="form-control no-shadow" 
+                                        type="text" 
+                                        #name = "ngModel"
+                                        [(ngModel)]="user.name" 
+                                        name="Name" 
+                                        required
+                                        minlength="2" 
+                                        maxlength="32" 
+                                        placeholder="Nombres"/>
+                                        <app-input-validation [input]="name"></app-input-validation>
+                                </div>
+                            </div>
+
+                            <div [ngClass]="(surname.invalid && surname.touched)?'form-group has-error mb-4 row':'form-group mb-4 row'">                        
+                                    <label class="col-sm-2 col-form-label">{{l("Apellidos")}}</label>
+                                    <div class="col-sm-10">
+        
+                                        <span *ngIf = "surname.invalid && surname.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                        <input 
+                                            id="surname" 
+                                            class="form-control no-shadow" 
+                                            type="text" 
+                                            #surname = "ngModel"
+                                            [(ngModel)]="user.surname" 
+                                            name="Surname" 
+                                            required
+                                            minlength="2" 
+                                            maxlength="32" 
+                                            placeholder="Apellidos"/>
+                                            <app-input-validation [input]="surname"></app-input-validation>
+                                    </div>
+                            </div>
+    
+                            <div [ngClass]="(emailAddress.invalid && emailAddress.touched)?'form-group has-error mb-4 row':'form-group mb-4 row'">                        
+                                    <label class="col-sm-2 col-form-label">{{l("Email")}}</label>
+                                    <div class="col-sm-10">
+        
+                                        <span *ngIf = "emailAddress.invalid && emailAddress.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                        <input 
+                                            id="emailAddress" 
+                                            class="form-control no-shadow" 
+                                            type="text" 
+                                            #emailAddress = "ngModel"
+                                            [(ngModel)]="user.emailAddress" 
+                                            name="EmailAddress" 
+                                            required
+                                            minlength="2" 
+                                            maxlength="32" 
+                                            placeholder="Email"/>
+                                            <app-input-validation [input]="emailAddress"></app-input-validation>
+                                    </div>
+                            </div>
+    
+                            <div [ngClass]="(password.invalid && password.touched)?'form-group has-error mb-4 row':'form-group mb-4 row'">                        
+                                    <label class="col-sm-2 col-form-label">{{l("Contraseña")}}</label>
+                                    <div class="col-sm-10">
+        
+                                        <span *ngIf = "password.invalid && password.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                        <input 
+                                            id="password" 
+                                            class="form-control no-shadow" 
+                                            type="password" 
+                                            #password = "ngModel"
+                                            [(ngModel)]="user.password" 
+                                            name="Password" 
+                                            required
+                                            minlength="2" 
+                                            maxlength="32" 
+                                            placeholder="Contraseña"/>
+                                            <app-input-validation [input]="password"></app-input-validation>
+                                    </div>
+                            </div>
+
+                            <div [ngClass]="(confirmPassword.invalid && confirmPassword.touched)?'form-group has-error mb-4 row':'form-group mb-4 row'">                        
+                                    <label class="col-sm-2 col-form-label">{{l("Confirmar contraseña")}}</label>
+                                    <div class="col-sm-10">
+        
+                                        <span *ngIf = "(confirmPassword.invalid && confirmPassword.touched)" class="input-icon input-icon-right text-danger"></span>                                
+                                        <input 
+                                            id="confirmPassword" 
+                                            class="form-control no-shadow" 
+                                            type="password" 
+                                            #confirmPassword = "ngModel"
+                                            [(ngModel)]="user.confirmPassword" 
+                                            name="ConfirmPassword" 
+                                            required
+                                            minlength="2" 
+                                            maxlength="32" 
+                                            placeholder="Confirmar contraseña"/>
+                                            <app-input-validation [input]="confirmPassword"></app-input-validation>
+                                    </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox checkbox-primary">
+                                    <input
+                                        name="isactive"
+                                        [(ngModel)]="user.isActive" 
+                                        checked 
+                                        type="checkbox">                                        
+                                    <span class="input-span"></span>Activo
+                                </label>
+                            </div>
+
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <h4>Roles</h4>
+                                    <ng-template ngFor let-role [ngForOf]="roles" let-roleIndex="index">
+                                        <div class="col-sm-6">
+                                            <input 
+                                                type="checkbox" 
+                                                name="role" 
+                                                value="{{role.normalizedName}}" 
+                                                title="{{role.description}}" 
+                                                class="filled-in" 
+                                                id="role-{{roleIndex}}" 
+                                                checked="checked" />
+                                            <label for="role-{{roleIndex}}" title="{{role.displayName}}">{{role.name}}</label>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </div>
+                            
+                            <div class="ibox-footer row">
+                                <div class="col-sm-12 ml-sm-auto">
+                                    <button type="submit" class="btn btn-primary mr-2">{{l("Registrar")}}</button>
+                                    <button [disabled]="saving" [routerLink]="['../../roles']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    

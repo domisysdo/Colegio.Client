@@ -2,13 +2,13 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { AbpModule } from '@abp/abp.module';
 import { RouterModule } from '@angular/router';
-
 import { AppSessionService } from './session/app-session.service';
 import { AppUrlService } from './nav/app-url.service';
 import { AppAuthService } from './auth/app-auth.service';
 import { AppRouteGuard } from './auth/auth-route-guard';
 import { MaterialInput } from 'shared/directives/material-input.directive';
 import { InputValidationComponent } from './components/validation/input-validation/input-validation.component';
+import { TableItemsDeleteComponent } from './components/tables/table-items-delete/table-items-delete.component';
 
 @NgModule({
     imports: [
@@ -18,11 +18,13 @@ import { InputValidationComponent } from './components/validation/input-validati
     ],
     declarations: [
         MaterialInput,
-        InputValidationComponent
+        InputValidationComponent,
+        TableItemsDeleteComponent
     ],
     exports: [
         MaterialInput,
-        InputValidationComponent
+        InputValidationComponent,
+        TableItemsDeleteComponent
     ]
 })
 export class SharedModule {

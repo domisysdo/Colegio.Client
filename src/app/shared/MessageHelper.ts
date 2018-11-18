@@ -5,7 +5,7 @@ import { FormGroup } from '@angular/forms';
 @Injectable()
 export class MessageHelper {
 
-  public static async confirmar(
+  public static async confirm(
     text: string,
     title?: string,
     siCallback?: () => void,
@@ -28,19 +28,17 @@ export class MessageHelper {
         if (siCallback) {
           siCallback();
         }
-      }
-      else {
+      } else {
         if (noCallback) {
           noCallback();
         }
       }
-    }
-    catch (reason) {
+    } catch (reason) {
       return this.handleError(reason);
     }
   }
 
-  public static async confirmarHtml(
+  public static async confirmHtml(
     textHtml: string,
     title?: string,
     siCallback?: () => void,
@@ -63,14 +61,12 @@ export class MessageHelper {
         if (siCallback) {
           siCallback();
         }
-      }
-      else {
+      } else {
         if (noCallback) {
           noCallback();
         }
       }
-    }
-    catch (reason) {
+    } catch (reason) {
       return this.handleError(reason);
     }
   }
@@ -99,7 +95,7 @@ export class MessageHelper {
     }).catch((reason: any) => this.handleError(reason));
   }
 
-  public static async confirmarPerdidaDatos(title?: string, text?: string, okCallback?: () => void) {
+  public static async confirmDataLose(title?: string, text?: string, okCallback?: () => void) {
     try {
       const result_1 = await swal({
         text: (text) ? text : 'Se perderán los cambios realizados, desea continuar?',
@@ -116,8 +112,7 @@ export class MessageHelper {
           okCallback();
         }
       }
-    }
-    catch (reason) {
+    } catch (reason) {
       return this.handleError(reason);
     }
   }

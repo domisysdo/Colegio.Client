@@ -1,4 +1,4 @@
-﻿<div class="row clearfix" [@routerTransition]>
+﻿<!-- <div class="row clearfix" [@routerTransition]>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card main-content">
             <div class="header">
@@ -19,7 +19,6 @@
             </div>
             <div class="body table-responsive">
 
-            <!-- ******************************************************** -->
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
@@ -53,7 +52,7 @@
                         </tr>
                     </tbody>
                 </table>
-            <!-- ******************************************************** -->
+
 
                 <div class="text-align: center;" *ngIf="totalItems > pageSize">
                     <pagination-controls (pageChange)="getDataPage($event)" id="server"></pagination-controls>
@@ -67,4 +66,128 @@
 </div>
 
 <create-user-modal #createUserModal (modalSave)="refresh()"></create-user-modal>
-<edit-user-modal #editUserModal (modalSave)="refresh()"></edit-user-modal>
+<edit-user-modal #editUserModal (modalSave)="refresh()"></edit-user-modal> -->
+
+
+<div class="page-content fade-in-up">
+        <div class="ibox">
+            <div class="ibox-body">
+                <div class="flexbox mb-4">
+                    <div class="flexbox">
+                        <h5 class="font-strong mb-4">LISTADO DE USUARIOS</h5>
+                    </div>
+                    <div class="flexbox">
+                        <div class="input-group-icon input-group-icon-left mr-3">
+                            <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
+                            <input #searchBox class="form-control form-control-rounded form-control-solid no-shadow" id="key-search" (input)="searchData(searchBox.value)" type="text" placeholder="Buscar...">
+                        </div>
+                        <button class="btn btn-primary btn-md btn-rounded btn-icon" (click)="createUser()" >
+                            <span class="btn-icon">
+                                <li class="la la-plus"></li>
+                                Agregar nuevo
+                            </span>
+                        </button>
+                    </div>
+                </div>
+    
+                <ngx-datatable
+                    class="bootstrap"
+                    [columnMode]="'force'"
+                    [headerHeight]="50"
+                    [footerHeight]="50"
+                    [rowHeight]="'auto'"
+                    [selected]="selected"
+                    [rows]="users" 
+                    [selectionType]="'checkbox'"
+                    [selectAllRowsOnPage]="false"
+                    [reorderable]="reorderable"
+                    [externalPaging]="true"
+                    [externalSorting]="true"
+                    [count]= "(filter==='')? totalItems: totalCount"
+                    [offset]="0"
+                    [limit]="pageSize"
+                    (sort)= 'onSort($event)'
+                    (page)='onPageChange($event)'
+                    (select)='onSelect($event)'>
+    
+                    <ngx-datatable-column
+                        [width]="50"
+                        [sortable]="false"
+                        [canAutoResize]="false"
+                        [draggable]="false"
+                        [resizeable]="false"
+                        [headerCheckboxable]="true"
+                        [checkboxable]="false">
+    
+                        <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                            <label class="checkbox checkbox-primary">
+                                <input 
+                                    type="checkbox"
+                                    [checked]="allRowsSelected"
+                                    (change)="selectFn(!allRowsSelected)"/>
+                                    <span class="input-span"></span>
+                            </label>
+                        </ng-template>
+    
+                        <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                            <label class="checkbox checkbox-primary">
+                                <input 
+                                    type="checkbox"
+                                    [checked]="isSelected"
+                                    (change)="onCheckboxChangeFn($event)"/>
+                                    <span class="input-span"></span>
+                            </label>
+                        </ng-template>
+                    </ngx-datatable-column>
+                
+                    <ngx-datatable-column 
+                        [width]="150"
+                        name="Nombre de usuario" 
+                        prop="userName">
+                    </ngx-datatable-column>
+                    
+                    <ngx-datatable-column 
+                        [width]="150"
+                        name="Nombre completo" 
+                        prop="fullName">
+                    </ngx-datatable-column>
+                    
+                    <ngx-datatable-column 
+                        [width]="150"
+                        name="Email" 
+                        prop="emailAddress">
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column
+                        [width]="130"
+                        [sortable]="false"
+                        [canAutoResize]="false"
+                        [draggable]="false"
+                        [resizeable]="false"
+                        [headerClass]="'text-center'"
+                        name="Estado"
+                        prop="isActive">
+    
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <div class="text-center">
+                                <span *ngIf="row.isActive" class="badge badge-success badge-pill">Activo</span>
+                                <span *ngIf="!row.isActive" class="badge badge-danger badge-pill">Inactivo</span>
+                            </div>
+                        </ng-template>
+
+                    </ngx-datatable-column>
+
+
+                    <ngx-datatable-column  [width]="50" >
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <div class="text-center">
+                                <a [routerLink] = "['edit-role', row.id]" class="text-light mr-3 font-16" href="javascript:;"><i class="ti-pencil"></i></a>
+                                <a class="text-light font-16" href="javascript:;"><i (click)="delete(row)" class="ti-trash"></i></a>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            <app-table-items-delete (onClickEvent)="deleteMultipleUsers()" [selectedCount]="selectedCount"></app-table-items-delete>
+        </div>
+    </div>
+</div>

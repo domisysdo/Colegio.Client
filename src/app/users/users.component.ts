@@ -5,6 +5,8 @@ import { PagedListingComponentBase, PagedRequestDto } from 'shared/paged-listing
 import { CreateUserComponent } from 'app/users/create-user/create-user.component';
 import { EditUserComponent } from 'app/users/edit-user/edit-user.component';
 import { finalize } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { MessageHelper } from '@app/shared/MessageHelper';
 
 @Component({
     templateUrl: './users.component.html',
@@ -15,48 +17,84 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
     @ViewChild('createUserModal') createUserModal: CreateUserComponent;
     @ViewChild('editUserModal') editUserModal: EditUserComponent;
 
-    active: boolean = false;
+    active = false;
     users: UserDto[] = [];
+    filter = '';
+    sorting = '';
+    totalCount: number;
+    selected = [];
+    selectedCount = 0;
 
     constructor(
         injector: Injector,
+        private _router: Router,
         private _userService: UserServiceProxy
     ) {
         super(injector);
     }
 
     protected list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
-        this._userService.getAll(request.skipCount, request.maxResultCount)
+        this._userService.getAllFiltered(this.sorting, request.skipCount, request.maxResultCount, this.filter)
             .pipe(finalize(() => {
                  finishedCallback()
             }))
             .subscribe((result: PagedResultDtoOfUserDto) => {
                 this.users = result.items;
+                this.totalCount = result.totalCount;
                 this.showPaging(result, pageNumber);
             });
     }
 
     protected delete(user: UserDto): void {
-        abp.message.confirm(
-            "Delete user '" + user.fullName + "'?",
-            (result: boolean) => {
-                if (result) {
+        MessageHelper.confirm(
+            'Se eliminaran los usuarios relacionados al rol:' + user.fullName,
+            '¿Desea borrarlo?',
+            () => {
                     this._userService.delete(user.id)
                         .subscribe(() => {
-                            abp.notify.info("Deleted User: " + user.fullName);
+                            abp.notify.info('Usuario borrado exitosamente');
                             this.refresh();
                         });
                 }
-            }
         );
     }
 
-    // Show Modals
     createUser(): void {
-        this.createUserModal.show();
+        this._router.navigate(['/app/users/create-user'])
     }
 
     editUser(user: UserDto): void {
         this.editUserModal.show(user.id);
+    }
+
+    deleteMultipleUsers() {
+        //
+    }
+
+    goBack(): void {
+        this._router.navigate(['/app/dashboard']);
+    }
+
+    searchData(filter: string ): void {
+
+        this.filter = filter;
+        this.pageNumber = 0;
+        this.isTableLoading = true;
+        this.refresh();
+    }
+
+    onSelect({ selected }) {
+        console.log('Select Event', selected, this.selected);
+        this.selected = selected
+        this.selectedCount = selected.length;
+    }
+
+    onSort(event: any) {
+        this.sorting = event.sorts[0].prop + ' ' + event.sorts[0].dir;
+        this.getDataPage(0);
+    }
+
+    onPageChange(event: any)  {
+        this.getDataPage(event.offset);
     }
 }

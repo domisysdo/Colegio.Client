@@ -5186,3 +5186,8 @@ table > tbody > tr > td > span.footable-toggle {
 .width-35 {
   width: 40% !important;
 }
+
+.custom-control-input:checked~.custom-control-indicator{
+  color:white;
+  background-color:red;
+}
