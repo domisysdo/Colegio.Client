@@ -11,7 +11,7 @@ export class AppConsts {
     };
 
     static readonly localization = {
-        defaultLocalizationSourceName: 'Colegio'
+        defaultLocalizationSourceName: 'Colegio-es'
     };
 
     static readonly authorization = {

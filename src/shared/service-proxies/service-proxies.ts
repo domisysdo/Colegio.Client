@@ -3759,7 +3759,7 @@ export class CreateUserDto implements ICreateUserDto {
     isActive: boolean | undefined;
     roleNames: string[] | undefined;
     password: string;
-
+    
     constructor(data?: ICreateUserDto) {
         if (data) {
             for (var property in data) {

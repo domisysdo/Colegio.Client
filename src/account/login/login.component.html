@@ -15,7 +15,7 @@
 
           <div class="form-group mb-4">
             <input 
-                class="form-control form-control-inline" 
+                class="form-control form-control-inline no-shadow" 
                 [(ngModel)]="loginService.authenticateModel.userNameOrEmailAddress" 
                 type="text" 
                 placeholder="{{l('Usuario o email')}}" 
@@ -32,7 +32,7 @@
             <input 
                 type="password" 
                 [(ngModel)]="loginService.authenticateModel.password" 
-                class="form-control form-control-inline" 
+                class="form-control form-control-inline no-shadow" 
                 name="password" 
                 placeholder="{{l('Contraseña')}}" 
                 required

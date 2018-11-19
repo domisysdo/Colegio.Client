@@ -92,54 +92,25 @@
     
                 <ngx-datatable
                     class="bootstrap"
-                    [columnMode]="'force'"
-                    [headerHeight]="50"
-                    [footerHeight]="50"
-                    [rowHeight]="'auto'"
+                    [columnMode]="ngxDatatableHelper.columnMode"
+                    [headerHeight]="ngxDatatableHelper.headerHeight"
+                    [footerHeight]="ngxDatatableHelper.footerHeight"
+                    [rowHeight]="ngxDatatableHelper.rowHeight"
                     [selected]="selected"
                     [rows]="users" 
-                    [selectionType]="'checkbox'"
-                    [selectAllRowsOnPage]="false"
-                    [reorderable]="reorderable"
-                    [externalPaging]="true"
-                    [externalSorting]="true"
+                    [selectionType]="ngxDatatableHelper.selectionType"
+                    [selectAllRowsOnPage]="ngxDatatableHelper.selectAllRowsOnPage"
+                    [reorderable]="ngxDatatableHelper.reorderable"
+                    [externalPaging]="ngxDatatableHelper.externalPaging"
+                    [externalSorting]="ngxDatatableHelper.externalSorting"
                     [count]= "(filter==='')? totalItems: totalCount"
                     [offset]="0"
+                    [messages]="ngxDatatableHelper.ngxDatatableMesagges"
                     [limit]="pageSize"
                     (sort)= 'onSort($event)'
                     (page)='onPageChange($event)'
                     (select)='onSelect($event)'>
-    
-                    <ngx-datatable-column
-                        [width]="50"
-                        [sortable]="false"
-                        [canAutoResize]="false"
-                        [draggable]="false"
-                        [resizeable]="false"
-                        [headerCheckboxable]="true"
-                        [checkboxable]="false">
-    
-                        <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
-                            <label class="checkbox checkbox-primary">
-                                <input 
-                                    type="checkbox"
-                                    [checked]="allRowsSelected"
-                                    (change)="selectFn(!allRowsSelected)"/>
-                                    <span class="input-span"></span>
-                            </label>
-                        </ng-template>
-    
-                        <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
-                            <label class="checkbox checkbox-primary">
-                                <input 
-                                    type="checkbox"
-                                    [checked]="isSelected"
-                                    (change)="onCheckboxChangeFn($event)"/>
-                                    <span class="input-span"></span>
-                            </label>
-                        </ng-template>
-                    </ngx-datatable-column>
-                
+                    
                     <ngx-datatable-column 
                         [width]="150"
                         name="Nombre de usuario" 

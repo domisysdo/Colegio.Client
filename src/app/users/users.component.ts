@@ -7,6 +7,7 @@ import { EditUserComponent } from 'app/users/edit-user/edit-user.component';
 import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MessageHelper } from '@app/shared/MessageHelper';
+import { NgxDatatableHelper } from '@shared/helpers/NgxDatatableHelper';
 
 @Component({
     templateUrl: './users.component.html',
@@ -16,6 +17,7 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
 
     @ViewChild('createUserModal') createUserModal: CreateUserComponent;
     @ViewChild('editUserModal') editUserModal: EditUserComponent;
+    ngxDatatableHelper = NgxDatatableHelper;
 
     active = false;
     users: UserDto[] = [];
@@ -40,7 +42,7 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
             }))
             .subscribe((result: PagedResultDtoOfUserDto) => {
                 this.users = result.items;
-                this.totalCount = result.totalCount;
+                this.totalCount = result.items.length;
                 this.showPaging(result, pageNumber);
             });
     }
@@ -84,9 +86,9 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
     }
 
     onSelect({ selected }) {
-        console.log('Select Event', selected, this.selected);
         this.selected = selected
         this.selectedCount = selected.length;
+        this.ngxDatatableHelper.selectedCountMessages(this.selectedCount);
     }
 
     onSort(event: any) {
