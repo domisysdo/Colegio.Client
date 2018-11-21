@@ -1,0 +1,66 @@
+﻿<div class="page-content fade-in-up">
+        <div class="ibox">
+            <div class="ibox-body">
+                <div class="flexbox mb-4">
+                    <div class="flexbox">
+                        <h5 class="font-strong mb-4">LISTADO DE PAISES</h5>
+                    </div>
+                    <div class="flexbox">
+                        <div class="input-group-icon input-group-icon-left mr-3">
+                            <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
+                            <input #searchBox class="form-control form-control-rounded form-control-solid no-shadow" id="key-search" (input)="searchData(searchBox.value)" type="text" placeholder="Buscar...">
+                        </div>
+                        <button class="btn btn-primary btn-md btn-rounded btn-icon" (click)="createPais()" >
+                            <span class="btn-icon">
+                                <li class="la la-plus"></li>
+                                Agregar nuevo
+                            </span>
+                        </button>
+                    </div>
+                </div>
+    
+                <ngx-datatable
+                    class="bootstrap"
+                    [columnMode]="ngxDatatableHelper.columnMode"
+                    [headerHeight]="ngxDatatableHelper.headerHeight"
+                    [footerHeight]="ngxDatatableHelper.footerHeight"
+                    [rowHeight]="ngxDatatableHelper.rowHeight"
+                    [selected]="selected"
+                    [rows]="paises" 
+                    [selectionType]="ngxDatatableHelper.selectionType"
+                    [selectAllRowsOnPage]="ngxDatatableHelper.selectAllRowsOnPage"
+                    [reorderable]="ngxDatatableHelper.reorderable"
+                    [externalPaging]="ngxDatatableHelper.externalPaging"
+                    [externalSorting]="ngxDatatableHelper.externalSorting"
+                    [count]= "(filter==='')? totalItems: totalCount"
+                    [offset]="0"
+                    [messages]="ngxDatatableHelper.ngxDatatableMesagges"
+                    [limit]="pageSize"
+                    (sort)= 'onSort($event)'
+                    (page)='onPageChange($event)'
+                    (select)='onSelect($event)'>
+                    
+                    <ngx-datatable-column 
+                        [width]="150"
+                        name="Identificador" 
+                        prop="identificador">
+                    </ngx-datatable-column>
+                    
+                    <ngx-datatable-column 
+                        [width]="250"
+                        name="Nombre" 
+                        prop="nombre">
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column  [width]="50" >
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            <div class="text-center">
+                                <a [routerLink] = "['edit-pais', row.id]" class="text-light mr-3 font-16" href="javascript:;"><i class="ti-pencil"></i></a>
+                                <a class="text-light font-16" href="javascript:;"><i (click)="delete(row)" class="ti-trash"></i></a>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+        </div>
+    </div>
+</div>

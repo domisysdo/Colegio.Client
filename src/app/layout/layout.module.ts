@@ -18,8 +18,10 @@ import { SharedModule } from '@shared/shared.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { UsersComponent } from '@app/users/users.component';
 import { CreateUserComponent } from '@app/users/create-user/create-user.component';
-
-
+import { EditUserComponent } from '@app/users/edit-user/edit-user.component';
+import { PaisComponent } from '@app/generales/pais/pais.component';
+import { CreatePaisComponent } from '@app/generales/pais/create-pais/create-pais.component';
+import { EditPaisComponent } from '@app/generales/pais/edit-pais/edit-pais.component';
 
 @NgModule({
   imports:
@@ -45,7 +47,8 @@ import { CreateUserComponent } from '@app/users/create-user/create-user.componen
     CreateRoleComponent,
     EditRoleComponent,
     UsersComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    EditUserComponent
   ]
 })
 export class LayoutModule {}

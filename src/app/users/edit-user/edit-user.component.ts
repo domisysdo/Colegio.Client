@@ -1,43 +1,43 @@
-import { Component, ViewChild, Injector, Output, EventEmitter, ElementRef } from '@angular/core';
+import { Component, ViewChild, Injector, Output, EventEmitter, ElementRef, OnInit } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { UserServiceProxy, UserDto, RoleDto } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'edit-user-modal',
+    selector: 'app-edit-user-modal',
     templateUrl: './edit-user.component.html'
 })
-export class EditUserComponent extends AppComponentBase {
+export class EditUserComponent extends AppComponentBase implements OnInit {
 
     @ViewChild('editUserModal') modal: ModalDirective;
-    @ViewChild('modalContent') modalContent: ElementRef;
+    @ViewChild('content') content: ElementRef;
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
-    active: boolean = false;
-    saving: boolean = false;
+    active = false;
+    saving = false;
 
-    user: UserDto = null;
+    user: UserDto = new UserDto();
     roles: RoleDto[] = null;
+
+    validation = {
+        confirmPassword: ''
+    };
 
     constructor(
         injector: Injector,
+        private _route: ActivatedRoute,
+        private _router: Router,
         private _userService: UserServiceProxy
     ) {
         super(injector);
     }
 
-    userInRole(role: RoleDto, user: UserDto): string {
-        if (user.roleNames.indexOf(role.normalizedName) !== -1) {
-            return "checked";
-        }
-        else {
-            return "";
-        }
-    }
+    ngOnInit(): void {
+        const id = this._route.snapshot.params['id'];
 
-    show(id: number): void {
         this._userService.getRoles()
             .subscribe((result) => {
                 this.roles = result.items;
@@ -48,20 +48,23 @@ export class EditUserComponent extends AppComponentBase {
             (result) => {
                 this.user = result;
                 this.active = true;
-                this.modal.show();
             }
-            );
+        );
     }
 
-    onShown(): void {
-        $.AdminBSB.input.activate($(this.modalContent.nativeElement));
+    userInRole(role: RoleDto, user: UserDto): string {
+        if (user.roleNames.indexOf(role.normalizedName) !== -1) {
+            return 'checked';
+        } else {
+            return '';
+        }
     }
 
     save(): void {
-        var roles = [];
-        $(this.modalContent.nativeElement).find("[name=role]").each(function (ind: number, elem: Element) {
-            if ($(elem).is(":checked")) {
-                roles.push(elem.getAttribute("value").valueOf());
+        const roles = [];
+        $(this.content.nativeElement).find('[name=role]').each(function (ind: number, elem: Element) {
+            if ($(elem).is(':checked')) {
+                roles.push(elem.getAttribute('value').valueOf());
             }
         });
 
@@ -71,7 +74,7 @@ export class EditUserComponent extends AppComponentBase {
         this._userService.update(this.user)
             .pipe(finalize(() => { this.saving = false; }))
             .subscribe(() => {
-                this.notify.info(this.l('SavedSuccessfully'));
+                this.notify.info(this.l('Modificado exitosamente'), this.l('Completado'));
                 this.close();
                 this.modalSave.emit(null);
             });
@@ -79,6 +82,6 @@ export class EditUserComponent extends AppComponentBase {
 
     close(): void {
         this.active = false;
-        this.modal.hide();
+        this._router.navigate(['app/users'])
     }
 }

@@ -34,7 +34,8 @@
               "src/styles.css",
               "src/assets/css/ngx-datatable.css",               
               "node_modules/toastr/build/toastr.min.css",
-              "node_modules/@swimlane/ngx-datatable/release/assets/icons.css"
+              "node_modules/@swimlane/ngx-datatable/release/assets/icons.css",
+              "node_modules/@ng-select/ng-select/themes/default.theme.css"
              ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -221,7 +222,8 @@
               "src/bsb-theme/css/materialize.css",
               "src/bsb-theme/css/style.css",
               "src/bsb-theme/css/themes/all-themes.css",
-              "src/shared/core.less"
+              "src/shared/core.less",
+              "node_modules/@ng-select/ng-select/themes/default.theme.css"
             ],
             "assets": [
               "src/assets",

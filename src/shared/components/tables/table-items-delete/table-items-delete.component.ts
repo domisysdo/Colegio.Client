@@ -17,6 +17,8 @@ export class TableItemsDeleteComponent implements OnInit {
   }
 
   onClick(event) {
-    this.onClickEvent.emit(event);
+    if (this.onClickEvent.observers.length > 0) {
+      this.onClickEvent.emit(event);
+    }
   }
 }

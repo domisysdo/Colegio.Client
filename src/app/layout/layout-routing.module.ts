@@ -8,9 +8,15 @@ import { CreateRoleComponent } from '@app/roles/create-role/create-role.componen
 import { EditRoleComponent } from '@app/roles/edit-role/edit-role.component';
 import { UsersComponent } from '@app/users/users.component';
 import { CreateUserComponent } from '@app/users/create-user/create-user.component';
+import { EditUserComponent } from '@app/users/edit-user/edit-user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
+  {
+    path: '',
+    component: MainComponent,
+    loadChildren: '../../app/generales/generales.module#GeneralesModule',
+  },
   {
     path: '',
     component: MainComponent,
@@ -38,6 +44,10 @@ const routes: Routes = [
       {
         path: 'users/create-user',
         component: CreateUserComponent
+      },
+      {
+        path: 'users/edit-user/:id',
+        component: EditUserComponent
       }
     ]
   }
@@ -48,7 +58,7 @@ const routes: Routes = [
   declarations: [],
 
   imports: [
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes)
   ],
 
   exports: [
