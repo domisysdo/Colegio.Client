@@ -3391,6 +3391,7 @@ export interface IPagedResultDtoOfPaisDto {
 export class PaisDto implements IPaisDto {
     identificador: string | undefined;
     nombre: string | undefined;
+    identificadorNombre: string | undefined;
     id: number | undefined;
 
     constructor(data?: IPaisDto) {
@@ -3406,6 +3407,7 @@ export class PaisDto implements IPaisDto {
         if (data) {
             this.identificador = data["identificador"];
             this.nombre = data["nombre"];
+            this.identificadorNombre = data["identificadorNombre"];
             this.id = data["id"];
         }
     }
@@ -3421,6 +3423,7 @@ export class PaisDto implements IPaisDto {
         data = typeof data === 'object' ? data : {};
         data["identificador"] = this.identificador;
         data["nombre"] = this.nombre;
+        data["identificadorNombre"] = this.identificadorNombre;
         data["id"] = this.id;
         return data; 
     }
@@ -3436,6 +3439,7 @@ export class PaisDto implements IPaisDto {
 export interface IPaisDto {
     identificador: string | undefined;
     nombre: string | undefined;
+    identificadorNombre: string | undefined;
     id: number | undefined;
 }
 
@@ -3497,6 +3501,7 @@ export interface IPagedResultDtoOfProvinciaDto {
 export class ProvinciaDto implements IProvinciaDto {
     identificador: string | undefined;
     nombre: string | undefined;
+    identificadorNombre: string | undefined;
     paisId: number | undefined;
     id: number | undefined;
 
@@ -3513,6 +3518,7 @@ export class ProvinciaDto implements IProvinciaDto {
         if (data) {
             this.identificador = data["identificador"];
             this.nombre = data["nombre"];
+            this.identificadorNombre = data["identificadorNombre"];
             this.paisId = data["paisId"];
             this.id = data["id"];
         }
@@ -3529,6 +3535,7 @@ export class ProvinciaDto implements IProvinciaDto {
         data = typeof data === 'object' ? data : {};
         data["identificador"] = this.identificador;
         data["nombre"] = this.nombre;
+        data["identificadorNombre"] = this.identificadorNombre;
         data["paisId"] = this.paisId;
         data["id"] = this.id;
         return data; 
@@ -3545,6 +3552,7 @@ export class ProvinciaDto implements IProvinciaDto {
 export interface IProvinciaDto {
     identificador: string | undefined;
     nombre: string | undefined;
+    identificadorNombre: string | undefined;
     paisId: number | undefined;
     id: number | undefined;
 }
