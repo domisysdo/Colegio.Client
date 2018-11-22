@@ -1,14 +1,14 @@
 import { Component, ViewChild, Injector, Output, EventEmitter, ElementRef, OnInit } from '@angular/core';
-import { ProvinciaDto, ProvinciaServiceProxy, PaisDto, PaisServiceProxy } from '@shared/service-proxies/service-proxies';
+import { MunicipioDto, MunicipioServiceProxy, ProvinciaDto, ProvinciaServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'app-edit-provincia',
-    templateUrl: './edit-provincia.component.html'
+    selector: 'app-edit-municipio',
+    templateUrl: './edit-municipio.component.html'
 })
-export class EditProvinciaComponent extends AppComponentBase implements OnInit {
+export class EditMunicipioComponent extends AppComponentBase implements OnInit {
 
     @ViewChild('content') content: ElementRef;
 
@@ -16,28 +16,28 @@ export class EditProvinciaComponent extends AppComponentBase implements OnInit {
 
     active = false;
     saving = false;
-    provincia: ProvinciaDto = new ProvinciaDto();
-    paises: PaisDto[] = [];
+    municipio: MunicipioDto = new MunicipioDto();
+    provincias: ProvinciaDto[] = [];
 
 
     constructor(
         injector: Injector,
         private _route: ActivatedRoute,
         private _router: Router,
-        private _provinciaService: ProvinciaServiceProxy,
-        private _paisService: PaisServiceProxy
+        private _municipioService: MunicipioServiceProxy,
+        private _provinciaService: ProvinciaServiceProxy
     ) {
         super(injector);
     }
 
     ngOnInit(): void {
         const id = this._route.snapshot.params['id'];
-        this.getPaises();
+        this.getProvincias();
 
-        this._provinciaService.get(id)
+        this._municipioService.get(id)
             .subscribe(
             (result) => {
-                this.provincia = result;
+                this.municipio = result;
                 this.active = true;
             }
         );
@@ -47,7 +47,7 @@ export class EditProvinciaComponent extends AppComponentBase implements OnInit {
     save(): void {
 
         this.saving = true;
-        this._provinciaService.update(this.provincia)
+        this._municipioService.update(this.municipio)
             .pipe(finalize(() => { this.saving = false; }))
             .subscribe(() => {
                 this.notify.info(this.l('Modificado exitosamente'), this.l('Completado'));
@@ -56,15 +56,15 @@ export class EditProvinciaComponent extends AppComponentBase implements OnInit {
             });
     }
 
-    getPaises() {
-        this._paisService.getAllForSelect()
-        .subscribe((result: PaisDto[]) => {
-            this.paises = result;
+    getProvincias() {
+        this._provinciaService.getAllForSelect()
+        .subscribe((result: ProvinciaDto[]) => {
+            this.provincias = result;
         });
     }
 
     close(): void {
         this.active = false;
-        this._router.navigate(['app/generales/provincia'])
+        this._router.navigate(['app/generales/municipio'])
     }
 }

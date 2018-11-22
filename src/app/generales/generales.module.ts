@@ -13,6 +13,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ProvinciaComponent } from './provicia/provincia.component';
 import { CreateProvinciaComponent } from './provicia/create-provincia/create-provincia.component';
 import { EditProvinciaComponent } from './provicia/edit-provincia/edit-provincia.component';
+import { EditMunicipioComponent } from './municipio/edit-municipio/edit-municipio.component';
+import { MunicipioComponent } from './municipio/municipio.component';
+import { CreateMunicipioComponent } from './municipio/create-municipio/create-municipio.component';
 
 @NgModule({
 
@@ -34,7 +37,10 @@ import { EditProvinciaComponent } from './provicia/edit-provincia/edit-provincia
         EditPaisComponent,
         ProvinciaComponent,
         CreateProvinciaComponent,
-        EditProvinciaComponent
+        EditProvinciaComponent,
+        MunicipioComponent,
+        CreateMunicipioComponent,
+        EditMunicipioComponent
     ]
 
 })

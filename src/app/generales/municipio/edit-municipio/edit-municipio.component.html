@@ -7,7 +7,7 @@
             </div>
 
             <div #content>
-                <form class="form-horizontal" #provinciaForm="ngForm" method="post" novalidate (ngSubmit)="save(provinciaForm)">
+                <form class="form-horizontal" #municipioForm="ngForm" method="post" novalidate (ngSubmit)="save(municipioForm)">
                     <div class="ibox-body">   
 
                         <div [ngClass]="(identificador.invalid && identificador.touched)?'col-sm-6 form-group has-error mb-4':'col-sm-6 form-group mb-4'">
@@ -18,7 +18,7 @@
                                     class="form-control no-shadow" 
                                     type="text"
                                     #identificador = "ngModel" 
-                                    [(ngModel)]="provincia.identificador" 
+                                    [(ngModel)]="municipio.identificador" 
                                     name="Identificador" 
                                     required
                                     [disabled]="true"
@@ -36,7 +36,7 @@
                                     class="form-control no-shadow" 
                                     type="text"
                                     #nombre = "ngModel" 
-                                    [(ngModel)]="provincia.nombre" 
+                                    [(ngModel)]="municipio.nombre" 
                                     name="Nombre" 
                                     required
                                     minlength="2" 
@@ -46,13 +46,13 @@
                         </div>
                         
                         <div [ngClass]="(nombre.invalid && nombre.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">
-                            <label>{{l("País")}}<span class="text-danger"> *</span> </label>                            
-                            <ng-select [items]="paises"
+                            <label>{{l("Municipio")}}<span class="text-danger"> *</span> </label>                            
+                            <ng-select [items]="provincias"
                                 name="paisSelect"
                                 bindLabel="identificadorNombre"
                                 bindValue="id"
                                 required
-                                [(ngModel)]="provincia.paisId">
+                                [(ngModel)]="municipio.provinciaId">
                                 <ng-template ng-option-tmp let-item="item">
                                     {{item.nombre}} <br />
                                     <small class="text-muted">{{item.identificador}}</small>
@@ -64,7 +64,7 @@
                         <div class="ibox-footer row">
                             <div class="col-sm-12 ml-sm-auto">
                                 <button type="submit" class="btn btn-primary mr-2">{{l("Registrar")}}</button>
-                                <button [disabled]="saving" [routerLink]="['../../../provincia']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
+                                <button [disabled]="saving" [routerLink]="['../../../municipio']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
                             </div>
                         </div>
                     </div>

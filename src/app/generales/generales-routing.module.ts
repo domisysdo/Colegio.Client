@@ -8,6 +8,9 @@ import { EditPaisComponent } from './pais/edit-pais/edit-pais.component';
 import { ProvinciaComponent } from './provicia/provincia.component';
 import { CreateProvinciaComponent } from './provicia/create-provincia/create-provincia.component';
 import { EditProvinciaComponent } from './provicia/edit-provincia/edit-provincia.component';
+import { MunicipioComponent } from './municipio/municipio.component';
+import { EditMunicipioComponent } from './municipio/edit-municipio/edit-municipio.component';
+import { CreateMunicipioComponent } from './municipio/create-municipio/create-municipio.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
@@ -37,6 +40,18 @@ const routes: Routes = [
         {
           path: 'generales/provincia/edit-provincia/:id',
           component: EditProvinciaComponent
+        },
+        {
+          path: 'generales/municipio',
+          component: MunicipioComponent, canActivate: [AppRouteGuard]
+        },
+        {
+          path: 'generales/municipio/create-municipio',
+          component: CreateMunicipioComponent
+        },
+        {
+          path: 'generales/municipio/edit-municipio/:id',
+          component: EditMunicipioComponent
         }
       ]
     }
