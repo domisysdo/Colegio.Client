@@ -1,0 +1,42 @@
+﻿
+<div class="page-content fade-in-up" >
+    <div class="col-md-8 offset-md-2">
+        <div class="ibox ibox-body">
+
+            <div class="ibox-head">
+                <div class="ibox-title">{{l("Registrar nuevo tipo de dirección")}}</div>
+            </div>
+
+            <div #content>
+                <form class="form-horizontal" #tipoDireccionForm="ngForm" method="post" novalidate (ngSubmit)="save(tipoDireccionForm)">
+                    <div class="ibox-body">   
+
+                        <div [ngClass]="(descripcion.invalid && descripcion.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">                        
+                            <label>{{l("Descripción")}}<span class="text-danger"> *</span></label>
+                                <span *ngIf = "descripcion.invalid && descripcion.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                <input 
+                                    id="descripcion" 
+                                    class="form-control no-shadow" 
+                                    type="text" 
+                                    #descripcion = "ngModel"
+                                    [(ngModel)]="tipoDireccion.descripcion" 
+                                    name="Descripcion" 
+                                    required
+                                    minlength="2" 
+                                    maxlength="32" 
+                                    placeholder="Descripción"/>
+                                    <app-input-validation [input]="descripcion"></app-input-validation>
+                        </div>
+
+                        <div class="ibox-footer row">
+                            <div class="col-sm-12 ml-sm-auto">
+                                <button type="submit" class="btn btn-primary mr-2">{{l("Registrar")}}</button>
+                                <button [disabled]="saving" [routerLink]="['../../tipo-direccion']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+﻿<div class="page-content fade-in-up" >
+    <div class="col-md-8 offset-md-2">
+        <div class="ibox ibox-body">
+
+            <div class="ibox-head">
+                <div class="ibox-title">{{l("Editar sector")}}</div>
+            </div>
+
+            <div #content>
+                <form class="form-horizontal" #sectorForm="ngForm" method="post" novalidate (ngSubmit)="save(sectorForm)">
+                    <div class="ibox-body">   
+
+                        <div [ngClass]="(identificador.invalid && identificador.touched)?'col-sm-6 form-group has-error mb-4':'col-sm-6 form-group mb-4'">
+                            <label>{{l("Identificador")}}<span class="text-danger"> *</span> </label>
+                                <span *ngIf="identificador.invalid && identificador.touched" class="input-icon input-icon-right text-danger"></span>
+                                <input 
+                                    id="identificador" 
+                                    class="form-control no-shadow" 
+                                    type="text"
+                                    #identificador = "ngModel" 
+                                    [(ngModel)]="sector.identificador" 
+                                    name="Identificador" 
+                                    required
+                                    [disabled]="true"
+                                    minlength="2" 
+                                    maxlength="32" 
+                                    placeholder="Nombre"/>
+                                    <app-input-validation [input]="identificador"></app-input-validation>
+                        </div>
+                        
+                        <div [ngClass]="(nombre.invalid && nombre.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">
+                            <label>{{l("Nombre")}}<span class="text-danger"> *</span> </label>
+                                <span *ngIf="nombre.invalid && nombre.touched" class="input-icon input-icon-right text-danger"></span>
+                                <input 
+                                    id="nombre" 
+                                    class="form-control no-shadow" 
+                                    type="text"
+                                    #nombre = "ngModel" 
+                                    [(ngModel)]="sector.nombre" 
+                                    name="Nombre" 
+                                    required
+                                    minlength="2" 
+                                    maxlength="32" 
+                                    placeholder="Nombre"/>
+                                    <app-input-validation [input]="nombre"></app-input-validation>
+                        </div>
+                        
+                        <div [ngClass]="(nombre.invalid && nombre.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">
+                            <label>{{l("Sector")}}<span class="text-danger"> *</span> </label>                            
+                            <ng-select [items]="municipios"
+                                name="municipioSelect"
+                                bindLabel="identificadorNombre"
+                                bindValue="id"
+                                required
+                                [(ngModel)]="sector.municipioId">
+                                <ng-template ng-option-tmp let-item="item">
+                                    {{item.nombre}} <br />
+                                    <small class="text-muted">{{item.identificador}}</small>
+                                </ng-template>
+                            </ng-select>
+                        </div>
+    
+    
+                        <div class="ibox-footer row">
+                            <div class="col-sm-12 ml-sm-auto">
+                                <button type="submit" class="btn btn-primary mr-2">{{l("Registrar")}}</button>
+                                <button [disabled]="saving" [routerLink]="['../../../sector']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

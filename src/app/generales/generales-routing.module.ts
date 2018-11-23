@@ -11,6 +11,15 @@ import { EditProvinciaComponent } from './provicia/edit-provincia/edit-provincia
 import { MunicipioComponent } from './municipio/municipio.component';
 import { EditMunicipioComponent } from './municipio/edit-municipio/edit-municipio.component';
 import { CreateMunicipioComponent } from './municipio/create-municipio/create-municipio.component';
+import { SectorComponent } from './sector/sector.component';
+import { CreateSectorComponent } from './sector/create-sector/create-sector.component';
+import { EditSectorComponent } from './sector/edit-sector/edit-sector-component';
+import { TipoTelefonoComponent } from './tipo-telefono/tipo-telefono.component';
+import { CreateTipoTelefonoComponent } from './tipo-telefono/create-tipo-telefono/create-tipo-telefono.component';
+import { EditTipoTelefonoComponent } from './tipo-telefono/edit-tipo-telefono/edit-tipo-telefono.component';
+import { TipoDireccionComponent } from './tipo-direccion/tipo-direccion.component';
+import { CreateTipoDireccionComponent } from './tipo-direccion/create-tipo-direccion/create-tipo-direccion.component';
+import { EditTipoDireccionComponent } from './tipo-direccion/edit-tipo-direccion/edit-tipo-direccion.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
@@ -52,6 +61,42 @@ const routes: Routes = [
         {
           path: 'generales/municipio/edit-municipio/:id',
           component: EditMunicipioComponent
+        },
+        {
+          path: 'generales/sector',
+          component: SectorComponent, canActivate: [AppRouteGuard]
+        },
+        {
+          path: 'generales/sector/create-sector',
+          component: CreateSectorComponent
+        },
+        {
+          path: 'generales/sector/edit-sector/:id',
+          component: EditSectorComponent
+        },
+        {
+          path: 'generales/tipo-telefono',
+          component: TipoTelefonoComponent, canActivate: [AppRouteGuard]
+        },
+        {
+          path: 'generales/tipo-telefono/create-tipo-telefono',
+          component: CreateTipoTelefonoComponent
+        },
+        {
+          path: 'generales/tipo-telefono/edit-tipo-telefono/:id',
+          component: EditTipoTelefonoComponent
+        },
+        {
+          path: 'generales/tipo-direccion',
+          component: TipoDireccionComponent, canActivate: [AppRouteGuard]
+        },
+        {
+          path: 'generales/tipo-direccion/create-tipo-direccion',
+          component: CreateTipoDireccionComponent
+        },
+        {
+          path: 'generales/tipo-direccion/edit-tipo-direccion/:id',
+          component: EditTipoDireccionComponent
         }
       ]
     }

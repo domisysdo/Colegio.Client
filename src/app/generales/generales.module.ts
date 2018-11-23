@@ -16,6 +16,15 @@ import { EditProvinciaComponent } from './provicia/edit-provincia/edit-provincia
 import { EditMunicipioComponent } from './municipio/edit-municipio/edit-municipio.component';
 import { MunicipioComponent } from './municipio/municipio.component';
 import { CreateMunicipioComponent } from './municipio/create-municipio/create-municipio.component';
+import { SectorComponent } from './sector/sector.component';
+import { CreateSectorComponent } from './sector/create-sector/create-sector.component';
+import { EditSectorComponent } from './sector/edit-sector/edit-sector-component';
+import { TipoTelefonoComponent } from './tipo-telefono/tipo-telefono.component';
+import { CreateTipoTelefonoComponent } from './tipo-telefono/create-tipo-telefono/create-tipo-telefono.component';
+import { EditTipoTelefonoComponent } from './tipo-telefono/edit-tipo-telefono/edit-tipo-telefono.component';
+import { CreateTipoDireccionComponent } from './tipo-direccion/create-tipo-direccion/create-tipo-direccion.component';
+import { EditTipoDireccionComponent } from './tipo-direccion/edit-tipo-direccion/edit-tipo-direccion.component';
+import { TipoDireccionComponent } from './tipo-direccion/tipo-direccion.component';
 
 @NgModule({
 
@@ -40,8 +49,16 @@ import { CreateMunicipioComponent } from './municipio/create-municipio/create-mu
         EditProvinciaComponent,
         MunicipioComponent,
         CreateMunicipioComponent,
-        EditMunicipioComponent
+        EditMunicipioComponent,
+        SectorComponent,
+        CreateSectorComponent,
+        EditSectorComponent,
+        TipoTelefonoComponent,
+        CreateTipoTelefonoComponent,
+        EditTipoTelefonoComponent,
+        TipoDireccionComponent,
+        CreateTipoDireccionComponent,
+        EditTipoDireccionComponent
     ]
-
 })
 export class GeneralesModule {}

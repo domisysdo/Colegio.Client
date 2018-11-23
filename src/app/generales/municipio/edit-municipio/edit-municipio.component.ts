@@ -12,8 +12,6 @@ export class EditMunicipioComponent extends AppComponentBase implements OnInit {
 
     @ViewChild('content') content: ElementRef;
 
-    @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
-
     active = false;
     saving = false;
     municipio: MunicipioDto = new MunicipioDto();
@@ -52,7 +50,6 @@ export class EditMunicipioComponent extends AppComponentBase implements OnInit {
             .subscribe(() => {
                 this.notify.info(this.l('Modificado exitosamente'), this.l('Completado'));
                 this.close();
-                this.modalSave.emit(null);
             });
     }
 
