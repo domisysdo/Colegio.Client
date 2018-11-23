@@ -69,7 +69,8 @@
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.blockUI.js",
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js",
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js",
-              "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js",              
+              "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js", 
+              "src/assets/js/app.js",
               {
                 "input": "node_modules/popper.js/dist/umd/popper.min.js"
               },
@@ -89,9 +90,6 @@
               },
               {
                 "input": "node_modules/chart.js/dist/Chart.min.js"
-              },
-              {
-                "input": "src/assets/js/app.js"
               }
             ]
           },
@@ -183,6 +181,7 @@
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js",
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js",
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js",
+              "src/assets/js/app.js",
               {
                 "input": "node_modules/jquery/dist/jquery.min.js"
               },
@@ -205,9 +204,6 @@
               },
               {
                 "input": "node_modules/chart.js/dist/Chart.min.js"
-              },
-              {
-                "input": "src/assets/js/app.js"
               }
 
             ],
