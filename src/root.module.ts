@@ -21,12 +21,14 @@ import { HttpClientModule } from '@angular/common/http';
 
 import * as _ from 'lodash';
 import { RootComponent } from 'root.component';
+import { Helpers } from '@app/helpers';
 
 export function appInitializerFactory(injector: Injector,
     platformLocation: PlatformLocation) {
     return () => {
 
-        abp.ui.setBusy();
+        // abp.ui.setBusy();
+
         return new Promise<boolean>((resolve, reject) => {
             AppConsts.appBaseHref = getBaseHref(platformLocation);
             const appBaseUrl = getDocumentOrigin() + AppConsts.appBaseHref;
@@ -37,6 +39,7 @@ export function appInitializerFactory(injector: Injector,
                 appSessionService.init().then(
                     (result) => {
                         abp.ui.clearBusy();
+                        Helpers.setLoading(false);
 
                         if (shouldLoadLocale()) {
                             const angularLocale = convertAbpLocaleToAngularLocale(abp.localization.currentLanguage.name);
@@ -51,6 +54,7 @@ export function appInitializerFactory(injector: Injector,
                     },
                     (err) => {
                         abp.ui.clearBusy();
+                        Helpers.setLoading(false);
                         reject(err);
                     }
                 );

@@ -19,8 +19,14 @@ APP.UI = {
 };
 
 $(window).on('load resize scroll', function () {
-    if (true) {
-        // $('body').addClass('drawer-sidebar');
+    if ($(this).width() < 992 && !$('body').hasClass('sidebar-mini')) {
+        $('body').addClass('drawer-sidebar');
+        $('#sidebar-collapse').slimScroll({
+            height: '100%',
+            railOpacity: '0.9',
+        });
+    } else {
+        $('body').removeClass('drawer-sidebar');
         $('#sidebar-collapse').slimScroll({
             height: '100%',
             railOpacity: '0.9',
@@ -85,7 +91,6 @@ $(function () {
 	$('.to-top').click(function(e) {
 		$("html, body").animate({scrollTop:0},500);
 	});
-
 
     //  CHAT
     $('.chat-list [data-toggle="show-chat"]').click(function(){
