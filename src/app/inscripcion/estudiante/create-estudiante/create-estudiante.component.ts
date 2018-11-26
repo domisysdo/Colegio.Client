@@ -1,10 +1,12 @@
 import { Component, ViewChild, Injector, ElementRef, AfterViewInit, OnInit } from '@angular/core';
-import { EstudianteDto, EstudianteServiceProxy, NacionalidadServiceProxy, NacionalidadDto } from '@shared/service-proxies/service-proxies';
+import { EstudianteDto, EstudianteServiceProxy, NacionalidadServiceProxy,
+        NacionalidadDto, TelefonoEstudianteDto, TelefonoEstudianteServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { SexoArray } from '@app/inscripcion/shared/inscripcion-arrays';
+import { NgxDatatableHelper } from '@shared/helpers/NgxDatatableHelper';
 
 
 @Component({
@@ -19,14 +21,23 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     saving = false;
     estudiante: EstudianteDto = new EstudianteDto();
     nacionalidades: NacionalidadDto[];
+    telefonos: TelefonoEstudianteDto[] = [];
     sexo =  SexoArray.Sexo;
     estadoCivil =  SexoArray.EstadoCivil;
+    ngxDatatableHelper = NgxDatatableHelper;
+    filter = '';
+    sorting = '';
+    totalCount: number;
+    selected = [];
+    selectedCount = 0;
+
 
     constructor(
         injector: Injector,
         private _router: Router,
         private _estudianteService: EstudianteServiceProxy,
-        private _nacionalidadService: NacionalidadServiceProxy
+        private _nacionalidadService: NacionalidadServiceProxy,
+        private _telefonoEstudianteService: TelefonoEstudianteServiceProxy
 
     ) {
         super(injector);
@@ -34,6 +45,7 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
 
     ngOnInit(): void {
         this.getNacionalidades();
+        this.getTelefonosEstudiante();
         this.defaultValues();
     }
 
@@ -60,6 +72,15 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
             });
     }
 
+    getTelefonosEstudiante() {
+        this._telefonoEstudianteService.getAllForSelect()
+            .subscribe((result: TelefonoEstudianteDto[]) => {
+                this.telefonos = result;
+                alert(result);
+            });
+
+    }
+
     close(): void {
         this.active = false;
         this._router.navigate(['app/generales/estudiante'])
@@ -67,5 +88,18 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
 
     defaultValues() {
         this.estudiante.init({ estado: 1 });
+    }
+
+    onSelect({ selected }) {
+        this.selected = selected
+        this.selectedCount = selected.length;
+        this.ngxDatatableHelper.selectedCountMessages(this.selectedCount);
+    }
+
+    onSort(event: any) {
+    }
+
+    onPageChange(event: any)  {
+
     }
 }
