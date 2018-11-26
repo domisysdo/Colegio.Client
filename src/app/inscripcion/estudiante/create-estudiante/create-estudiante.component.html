@@ -11,7 +11,7 @@
                 <form class="form-horizontal" #estudianteForm="ngForm" method="post" novalidate (ngSubmit)="save(estudianteForm)">
                     <div class="ibox-body">   
 
-                            <div [ngClass]="(identificador.invalid && identificador.touched)?' form-group has-error mb-4':' form-group mb-4'">                        
+                            <div [ngClass]="(identificador.invalid && identificador.touched)?' form-group mb-4 has-error ':' form-group mb-4'">                        
                                     <label class="col-form-label">{{l("Identificador")}}<span class="text-danger"> *</span></label>
                                         <span *ngIf = "identificador.invalid && identificador.touched" class="input-icon input-icon-right text-danger"></span>                                
                                         <input 
@@ -28,7 +28,7 @@
                                             <app-input-validation [input]="identificador"></app-input-validation>
                                 </div>
         
-                                <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group has-error mb-4':' form-group mb-4'">
+                                <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
                                     <label class="col-form-label">{{l("Nombres")}}<span class="text-danger"> *</span> </label>
                                         <span *ngIf="nombres.invalid && nombres.touched" class="input-icon input-icon-right text-danger"></span>
                                         <input 
@@ -63,7 +63,7 @@
                                                 <app-input-validation [input]="primerApellido"></app-input-validation>
                                     </div>
                                 
-                                    <div [ngClass]="(segundoApellido.invalid && segundoApellido.touched)?'col-sm-6 form-group has-error mb-4':'col-sm-6 form-group mb-4'">                        
+                                    <div [ngClass]="(segundoApellido.invalid && segundoApellido.touched)?'col-sm-6 form-group mb-4 has-error ':'col-sm-6 form-group mb-4'">                        
                                             <label class="col-form-label" for="segundoapellido">{{l("Segundo apellido")}}<span class="text-danger"> *</span></label>            
                                             <span *ngIf = "(segundoApellido.invalid && segundoApellido.touched)" class="input-icon input-icon-right text-danger"></span>                                
                                             <input 
@@ -88,21 +88,60 @@
                             (change)="$event">
                         </app-input-date>                            
 
-                        <div>
-                                <label>{{l("Nacionalidad")}}<span class="text-danger"> *</span> </label>                            
-                                <ng-select [items]="nacionalidades"
-                                    name="nacionalidadSelect"
-                                    bindLabel="descripcion"
-                                    bindValue="id"
-                                    required
-                                    [(ngModel)]="estudiante.nacionalidadId">
-                                    <ng-template ng-option-tmp let-item="item">
-                                        {{item.descripcion}} <br />
-                                        <small class="text-muted">{{item.identificador}}</small>
-                                    </ng-template>
-                                </ng-select>
+                        <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
+                            <label class="col-form-label">{{l("Nacionalidad")}}<span class="text-danger"> *</span> </label>                            
+                            <ng-select [items]="nacionalidades"
+                                name="nacionalidadSelect"
+                                bindLabel="descripcion"
+                                bindValue="id"
+                                required
+                                #nacionalidad = "ngModel"
+                                [(ngModel)]="estudiante.nacionalidadId">
+                                <ng-template ng-option-tmp let-item="item">
+                                    {{item.descripcion}} <br />
+                                    <small class="text-muted">{{item.identificador}}</small>
+                                </ng-template>
+                            </ng-select>
+                            <app-input-validation [input]="nacionalidad"></app-input-validation>
+                        </div>
+
+                        <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
+                            <label class="col-form-label">{{l("Sexo")}}<span class="text-danger"> *</span> </label>                            
+                            <ng-select 
+                                [(ngModel)]="estudiante.sexo" 
+                                name= "sexoSelect" 
+                                #sexoModel = "ngModel" 
+                                required>
+                                <ng-option *ngFor="let sex of sexo" [value]="sex.value">{{sex.name}}</ng-option>
+                            </ng-select>
+
+                            <app-input-validation [input]="sexoModel"></app-input-validation>
+                        </div>
+
+                        <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
+                            <label class="col-form-label">{{l("Estado civil")}}<span class="text-danger"> *</span> </label>                            
+                            <ng-select 
+                                [(ngModel)]="estudiante.estadoCivil" 
+                                name= "estadoCivilSelect" 
+                                #estadoCivilModel = "ngModel" 
+                                required>
+                                <ng-option *ngFor="let estado of estadoCivil" [value]="estado.value">{{estado.name}}</ng-option>
+                            </ng-select>
+                            <app-input-validation [input]="estadoCivilModel"></app-input-validation>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-form-label">{{l("Estado")}}<span class="text-danger"> *</span> </label>
+                            <div>
+                                <label class="radio radio-inline radio-primary">
+                                    <input [value]="1" [(ngModel)]="estudiante.estado" name="a" type="radio" checked="checked">
+                                    <span class="input-span"></span>Activo</label>
+
+                                <label class="radio radio-inline radio-primary">
+                                    <input [value]="0" [(ngModel)]="estudiante.estado" name="a" type="radio">
+                                    <span class="input-span"></span>Inactivo</label>
                             </div>
-    
+                        </div>
 
                         <div class="ibox-footer row">
                             <div class="col-sm-12 ml-sm-auto">

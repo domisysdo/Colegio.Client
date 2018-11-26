@@ -4,6 +4,8 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { SexoArray } from '@app/inscripcion/shared/inscripcion-arrays';
+
 
 @Component({
     selector: 'app-create-estudiante',
@@ -17,6 +19,8 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     saving = false;
     estudiante: EstudianteDto = new EstudianteDto();
     nacionalidades: NacionalidadDto[];
+    sexo =  SexoArray.Sexo;
+    estadoCivil =  SexoArray.EstadoCivil;
 
     constructor(
         injector: Injector,
@@ -30,11 +34,11 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
 
     ngOnInit(): void {
         this.getNacionalidades();
+        this.defaultValues();
     }
 
 
     save(form: NgForm): void {
-
         if (form.valid) {
 
             this.saving = true;
@@ -59,5 +63,9 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     close(): void {
         this.active = false;
         this._router.navigate(['app/generales/estudiante'])
+    }
+
+    defaultValues() {
+        this.estudiante.init({ estado: 1 });
     }
 }
