@@ -20,6 +20,11 @@ const routes: Routes = [
   {
     path: '',
     component: MainComponent,
+    loadChildren: '../../app/inscripcion/inscripcion.module#InscripcionModule',
+  },
+  {
+    path: '',
+    component: MainComponent,
     children: [
       {
         path: 'dashboard',

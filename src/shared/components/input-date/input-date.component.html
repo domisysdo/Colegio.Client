@@ -1,0 +1,28 @@
+<div class="inbox-body">
+  <div class="form-group" id="date_1">
+    <div [ngClass]="(!validDate)?'form-group has-error mb-4':'form-group mb-4'">
+      <label class="col-form-label">{{ tittle }}</label>
+      <div (click)="date.toggle()" class="input-group-icon input-group-icon-left">
+        <span style="cursor:pointer" class="input-icon input-icon-left"><i class="fa fa-calendar"></i></span>
+        <input class="form-control no-shadow" placeholder="dd/mm/yyyy" name="datePicker" maxlength="10" [container]="container"
+          [(ngModel)]="model" [autocomplete]="autocomplete" ngbDatepicker #date="ngbDatepicker" (keyup)="validate()"
+          (blur)="setDate(true)" (dateSelect)="setDate(true)">
+      </div>
+
+    </div>
+  </div>
+</div>
+
+                        
+
+
+<!-- </div> -->
+<!-- </div> -->
+
+<!-- <div class="form-group" id="date_1">
+  <label class="font-normal"></label>
+  <div class="input-group date">
+      <span class="input-group-addon bg-white"><i class="fa fa-calendar"></i></span>
+      <input class="form-control" type="text" value="04/12/2017">
+  </div>
+</div> -->

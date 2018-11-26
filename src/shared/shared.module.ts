@@ -9,22 +9,30 @@ import { AppRouteGuard } from './auth/auth-route-guard';
 import { MaterialInput } from 'shared/directives/material-input.directive';
 import { InputValidationComponent } from './components/validation/input-validation/input-validation.component';
 import { TableItemsDeleteComponent } from './components/tables/table-items-delete/table-items-delete.component';
+import { InputDateComponent } from './components/input-date/input-date-component';
+import { NgbModule, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
+        FormsModule,
         CommonModule,
         AbpModule,
-        RouterModule
+        RouterModule,
+        NgbModule.forRoot()
     ],
     declarations: [
         MaterialInput,
         InputValidationComponent,
-        TableItemsDeleteComponent
+        TableItemsDeleteComponent,
+        InputDateComponent
     ],
     exports: [
+        NgbModule,
         MaterialInput,
         InputValidationComponent,
-        TableItemsDeleteComponent
+        TableItemsDeleteComponent,
+        InputDateComponent
     ]
 })
 export class SharedModule {

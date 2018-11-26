@@ -19,9 +19,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { UsersComponent } from '@app/users/users.component';
 import { CreateUserComponent } from '@app/users/create-user/create-user.component';
 import { EditUserComponent } from '@app/users/edit-user/edit-user.component';
-import { PaisComponent } from '@app/generales/pais/pais.component';
-import { CreatePaisComponent } from '@app/generales/pais/create-pais/create-pais.component';
-import { EditPaisComponent } from '@app/generales/pais/edit-pais/edit-pais.component';
+import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 
 @NgModule({
   imports:
@@ -32,6 +30,7 @@ import { EditPaisComponent } from '@app/generales/pais/edit-pais/edit-pais.compo
     NgxDatatableModule,
     ModalModule.forRoot(),
     FormsModule,
+    AngularDateTimePickerModule,
     SharedModule
   ],
 

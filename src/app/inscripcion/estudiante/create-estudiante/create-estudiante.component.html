@@ -1,0 +1,118 @@
+﻿
+<div class="page-content fade-in-up" >
+    <div class="col-md-8 offset-md-2">
+        <div class="ibox ibox-body">
+
+            <div class="ibox-head">
+                <div class="ibox-title">{{l("Registrar nuevo estudiante")}}</div>
+            </div>
+
+            <div #content>
+                <form class="form-horizontal" #estudianteForm="ngForm" method="post" novalidate (ngSubmit)="save(estudianteForm)">
+                    <div class="ibox-body">   
+
+                            <div [ngClass]="(identificador.invalid && identificador.touched)?' form-group has-error mb-4':' form-group mb-4'">                        
+                                    <label class="col-form-label">{{l("Identificador")}}<span class="text-danger"> *</span></label>
+                                        <span *ngIf = "identificador.invalid && identificador.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                        <input 
+                                            id="identificador" 
+                                            class="form-control no-shadow" 
+                                            type="text" 
+                                            #identificador="ngModel"
+                                            [(ngModel)]="estudiante.identificador" 
+                                            name="Identificador" 
+                                            required
+                                            minlength="2" 
+                                            maxlength="32" 
+                                            placeholder="Identificador"/>
+                                            <app-input-validation [input]="identificador"></app-input-validation>
+                                </div>
+        
+                                <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group has-error mb-4':' form-group mb-4'">
+                                    <label class="col-form-label">{{l("Nombres")}}<span class="text-danger"> *</span> </label>
+                                        <span *ngIf="nombres.invalid && nombres.touched" class="input-icon input-icon-right text-danger"></span>
+                                        <input 
+                                            id="nombres" 
+                                            class="form-control no-shadow" 
+                                            type="text"
+                                            #nombres = "ngModel" 
+                                            [(ngModel)]="estudiante.nombres" 
+                                            name="Nombres" 
+                                            required
+                                            minlength="2" 
+                                            maxlength="32" 
+                                            placeholder="Nombres"/>
+                                            <app-input-validation [input]="nombres"></app-input-validation>
+                                </div>
+                           
+                                <div class="row"> 
+                                    <div [ngClass]="(primerApellido.invalid && primerApellido.touched)?'col-sm-6 form-group has-error mb-4':'col-sm-6 form-group mb-4'">                        
+                                        <label class="col-form-label">{{l("Primer apellido")}}<span class="text-danger"> *</span></label>
+                                            <span *ngIf = "primerApellido.invalid && primerApellido.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                            <input 
+                                                id="primerApellido" 
+                                                class="form-control no-shadow" 
+                                                type="text" 
+                                                #primerApellido = "ngModel"
+                                                [(ngModel)]="estudiante.primerApellido" 
+                                                name="PrimerApellido" 
+                                                required
+                                                minlength="2" 
+                                                maxlength="32" 
+                                                placeholder="Primer apellido"/>
+                                                <app-input-validation [input]="primerApellido"></app-input-validation>
+                                    </div>
+                                
+                                    <div [ngClass]="(segundoApellido.invalid && segundoApellido.touched)?'col-sm-6 form-group has-error mb-4':'col-sm-6 form-group mb-4'">                        
+                                            <label class="col-form-label" for="segundoapellido">{{l("Segundo apellido")}}<span class="text-danger"> *</span></label>            
+                                            <span *ngIf = "(segundoApellido.invalid && segundoApellido.touched)" class="input-icon input-icon-right text-danger"></span>                                
+                                            <input 
+                                                id="segundoapellido"
+                                                class="form-control no-shadow" 
+                                                type="text" 
+                                                #segundoApellido = "ngModel"
+                                                [(ngModel)]="estudiante.segundoApellido" 
+                                                name="SegundoApellido" 
+                                                required
+                                                minlength="2" 
+                                                maxlength="32" 
+                                                placeholder="Segundo apellido"/>
+                                                <app-input-validation [input]="segundoApellido"></app-input-validation>
+        
+                                    </div>
+                                </div>
+        
+                        <app-input-date
+                            tittle="Fecha de nacimiento"
+                            [date]="estudiante.fechaNacimiento"
+                            (change)="$event">
+                        </app-input-date>                            
+
+                        <div>
+                                <label>{{l("Nacionalidad")}}<span class="text-danger"> *</span> </label>                            
+                                <ng-select [items]="nacionalidades"
+                                    name="nacionalidadSelect"
+                                    bindLabel="descripcion"
+                                    bindValue="id"
+                                    required
+                                    [(ngModel)]="estudiante.nacionalidadId">
+                                    <ng-template ng-option-tmp let-item="item">
+                                        {{item.descripcion}} <br />
+                                        <small class="text-muted">{{item.identificador}}</small>
+                                    </ng-template>
+                                </ng-select>
+                            </div>
+    
+
+                        <div class="ibox-footer row">
+                            <div class="col-sm-12 ml-sm-auto">
+                                <button type="submit" class="btn btn-primary mr-2">{{l("Registrar")}}</button>
+                                <button [disabled]="saving" [routerLink]="['../../estudiante']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

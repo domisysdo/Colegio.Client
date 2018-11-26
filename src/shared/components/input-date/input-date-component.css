@@ -1,0 +1,42 @@
+ :host /deep/ .ngb-dp-header {
+    background-color: limegreen !important;;
+    border-radius: 32px !important;;
+    color: black !important;;
+  }
+  :host /deep/ .partially button span {
+    background-color: orange !important;;
+    border-radius: 32px !important;;
+    color: black !important;;
+  }
+/* .datpicker .text-info contains text for today's date but
+   it dosn't work when we are not showing the current month */
+   :host /deep/ .datepicker .text-info {
+    font-size: 14px !important;;
+    color: black !important;;
+}
+/* .datpicker .btn-info contains selected date */
+:host /deep/ .datepicker .btn-info {
+    font-size: 14px !important;;
+    font-weight: bold !important;;
+    background-color: #39b3d7 !important;;
+}
+:host /deep/ .datepicker .btn:disabled  {
+    font-size: 14px !important;;
+    font-weight: normal !important;;
+    color: gray !important;;
+}
+:host /deep/ .datepicker .btn:disabled>.text-muted  {
+    font-size: 14px !important;;
+    font-weight: normal !important;;
+    color: gray !important;;
+}
+:host /deep/ .datepicker .text-muted  {
+    font-size: 14px !important;;
+    font-weight: bold !important;;
+    color: black !important;;
+}
+:host /deep/ .datepicker .btn:enabled  {
+    font-size: 14px !important;;
+    font-weight: bold !important;;
+    color: black !important;;
+}
