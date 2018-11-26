@@ -7,6 +7,10 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { SexoArray } from '@app/inscripcion/shared/inscripcion-arrays';
 import { NgxDatatableHelper } from '@shared/helpers/NgxDatatableHelper';
+import { ModalDirective } from 'ngx-bootstrap';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ModalHelper } from '@shared/helpers/ModalHelper';
+
 
 
 @Component({
@@ -25,19 +29,16 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     sexo =  SexoArray.Sexo;
     estadoCivil =  SexoArray.EstadoCivil;
     ngxDatatableHelper = NgxDatatableHelper;
-    filter = '';
-    sorting = '';
-    totalCount: number;
-    selected = [];
-    selectedCount = 0;
 
+    public modal: NgbModalRef;
 
     constructor(
         injector: Injector,
         private _router: Router,
         private _estudianteService: EstudianteServiceProxy,
         private _nacionalidadService: NacionalidadServiceProxy,
-        private _telefonoEstudianteService: TelefonoEstudianteServiceProxy
+        private _telefonoEstudianteService: TelefonoEstudianteServiceProxy,
+        private modalHelper: ModalHelper,
 
     ) {
         super(injector);
@@ -76,7 +77,6 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
         this._telefonoEstudianteService.getAllForSelect()
             .subscribe((result: TelefonoEstudianteDto[]) => {
                 this.telefonos = result;
-                alert(result);
             });
 
     }
@@ -90,16 +90,11 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
         this.estudiante.init({ estado: 1 });
     }
 
-    onSelect({ selected }) {
-        this.selected = selected
-        this.selectedCount = selected.length;
-        this.ngxDatatableHelper.selectedCountMessages(this.selectedCount);
+    mostrarModalTelefonos() {
+        this.modal = this.modalHelper.getSmallModal(this.modal);
     }
 
-    onSort(event: any) {
-    }
-
-    onPageChange(event: any)  {
-
+    agregarTelefono() {
+        this.modal.close();
     }
 }

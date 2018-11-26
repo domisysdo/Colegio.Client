@@ -12,6 +12,7 @@ import { TableItemsDeleteComponent } from './components/tables/table-items-delet
 import { InputDateComponent } from './components/input-date/input-date-component';
 import { NgbModule, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { ModalService } from './helpers/modal.service';
 
 @NgModule({
     imports: [
@@ -33,6 +34,9 @@ import { FormsModule } from '@angular/forms';
         InputValidationComponent,
         TableItemsDeleteComponent,
         InputDateComponent
+    ],
+    providers: [
+        ModalService
     ]
 })
 export class SharedModule {

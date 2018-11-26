@@ -176,20 +176,11 @@
                         [headerHeight]="ngxDatatableHelper.headerHeight"
                         [footerHeight]="0"
                         [rowHeight]="ngxDatatableHelper.rowHeight"
-                        [selected]="selected"
                         [rows]="telefonos" 
                         [selectionType]="ngxDatatableHelper.selectionType"
                         [selectAllRowsOnPage]="ngxDatatableHelper.selectAllRowsOnPage"
                         [reorderable]="ngxDatatableHelper.reorderable"
-                        [externalPaging]="ngxDatatableHelper.externalPaging"
-                        [externalSorting]="ngxDatatableHelper.externalSorting"
-                        [count]= "(filter==='')? totalItems: totalCount"
-                        [offset]="0"
-                        [messages]="ngxDatatableHelper.ngxDatatableMesagges"
-                        [limit]="pageSize"
-                        (sort)= 'onSort($event)'
-                        (page)='onPageChange($event)'
-                        (select)='onSelect($event)'>
+                        [messages]="ngxDatatableHelper.ngxDatatableMesagges">
                         
                         <ngx-datatable-column 
                             [width]="150"
@@ -217,17 +208,62 @@
                         <div class="flexbox">
                         </div>
                         <div class="flexbox">
-                            <button class="btn btn-primary btn-sm btn-rounded btn-icon" (click)="createEstudiante()" >
+                            
+                            <a class="btn btn-primary btn-block" data-toggle="modal" (click)="mostrarModalTelefonos()" href="javascript:;">
+                                <span class="btn-icon"><i class="la la-plus"></i>Agregar nuevo</span>
+                            </a>
+<!--                             
+                            <button class="btn btn-primary btn-sm btn-rounded btn-icon" data-target="#agregarTelefonoFormModal" >
                                 <span class="btn-icon">
                                     <li class="la la-plus"></li>
                                     Agregar nuevo
                                 </span>
-                            </button>
+                            </button> -->
                         </div>
                     </div>
-                    <pre>{{telefonos}}</pre>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+
+<ng-template #telefonoForm let-c="close" let-d="dismiss">
+
+    <div class="modal-header">
+        <h4 class="modal-title">NUEVO TELEFONO</h4>
+        <button type = "button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true"> &times;</span>
+        </button>
+      </div>
+      
+      <form #advFormCambioEstado="ngForm" (ngSubmit)="agregarTelefono()">
+        <div class="modal-body">
+        
+            <div class="form-group mb-4">
+                <input class="form-control form-control" type="text" name="to" placeholder="(809) 222-2525">
+            </div>
+
+            <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
+                <label class="col-form-label">{{l("Tipo de teléfono")}}<span class="text-danger"> *</span> </label>                            
+                <ng-select 
+                    [(ngModel)]="estudiante.sexo" 
+                    name= "sexoSelect" 
+                    #sexoModel = "ngModel" 
+                    required>
+                    <ng-option *ngFor="let sex of sexo" [value]="sex.value">{{sex.name}}</ng-option>
+                </ng-select>
+
+                <app-input-validation [input]="sexoModel"></app-input-validation>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary ripple light" [disabled]="!advFormCambioEstado.valid">Guardar</button>
+          <button type="button" class="btn btn-inverse btn-outline-inverse ripple light" (click)="d('Cross click')">Cancelar</button>
+        </div>
+      </form>
+    
+    
+</ng-template>
