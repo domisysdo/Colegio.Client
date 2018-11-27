@@ -207,18 +207,10 @@
                     <div class="flexbox mb-4">
                         <div class="flexbox">
                         </div>
-                        <div class="flexbox">
-                            
-                            <a class="btn btn-primary btn-block" data-toggle="modal" (click)="mostrarModalTelefonos()" href="javascript:;">
+                        <div class="flexbox">                            
+                            <a class="btn btn-primary btn-block"  (click)="mostrarModalTelefonos(telefonoForm)" href="javascript:;">
                                 <span class="btn-icon"><i class="la la-plus"></i>Agregar nuevo</span>
                             </a>
-<!--                             
-                            <button class="btn btn-primary btn-sm btn-rounded btn-icon" data-target="#agregarTelefonoFormModal" >
-                                <span class="btn-icon">
-                                    <li class="la la-plus"></li>
-                                    Agregar nuevo
-                                </span>
-                            </button> -->
                         </div>
                     </div>
                 </form>
@@ -233,37 +225,54 @@
     <div class="modal-header">
         <h4 class="modal-title">NUEVO TELEFONO</h4>
         <button type = "button" class="close" aria-label="Close" (click)="d('Cross click')">
-          <span aria-hidden="true"> &times;</span>
+            <span aria-hidden="true"> &times;</span>
         </button>
-      </div>
-      
-      <form #advFormCambioEstado="ngForm" (ngSubmit)="agregarTelefono()">
+    </div>
+
+    <form #formAgregarTelefono="ngForm" (ngSubmit)="agregarTelefono()">
         <div class="modal-body">
-        
-            <div class="form-group mb-4">
-                <input class="form-control form-control" type="text" name="to" placeholder="(809) 222-2525">
+            <div class="inbox">
+                <div class="inbox-body">
+                    <div [ngClass]="(nombres.invalid && nombres.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
+                        <label class="col-form-label">{{l("Número de teléfono")}}<span class="text-danger"> *</span> </label>
+                        <span *ngIf="nombres.invalid && nombres.touched" class="input-icon input-icon-right text-danger"></span>
+                        <input 
+                            id="nombres" 
+                            class="form-control no-shadow" 
+                            type="text"
+                            #nombres = "ngModel" 
+                            [(ngModel)]="telefono.numero" 
+                            name="Nombres" 
+                            required
+                            minlength="2" 
+                            maxlength="32" 
+                            placeholder="(809) 214-1312"/>
+                        <app-input-validation [input]="nombres"></app-input-validation>
+                    </div>
+
+                    <div [ngClass]="(sexoModel.invalid && sexoModel.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
+                        <label class="col-form-label">{{l("Número de teléfono")}}<span class="text-danger"> *</span> </label>                            
+                        <ng-select [items]="tipoTelefonos"
+                            name="nacionalidadSelect"
+                            bindLabel="descripcion"
+                            bindValue="id"
+                            required
+                            #sexoModel = "ngModel"
+                            [(ngModel)]="telefono.tipoTelefonoId">
+                            <ng-template ng-option-tmp let-item="item">
+                                {{item.descripcion}}
+                            </ng-template>
+                        </ng-select>
+                        <app-input-validation [input]="sexoModel"></app-input-validation>
+                    </div>
+                </div>
             </div>
-
-            <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
-                <label class="col-form-label">{{l("Tipo de teléfono")}}<span class="text-danger"> *</span> </label>                            
-                <ng-select 
-                    [(ngModel)]="estudiante.sexo" 
-                    name= "sexoSelect" 
-                    #sexoModel = "ngModel" 
-                    required>
-                    <ng-option *ngFor="let sex of sexo" [value]="sex.value">{{sex.name}}</ng-option>
-                </ng-select>
-
-                <app-input-validation [input]="sexoModel"></app-input-validation>
-            </div>
-
         </div>
 
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary ripple light" [disabled]="!advFormCambioEstado.valid">Guardar</button>
-          <button type="button" class="btn btn-inverse btn-outline-inverse ripple light" (click)="d('Cross click')">Cancelar</button>
+            <button type="submit" class="btn btn-primary ripple light" [disabled]="!formAgregarTelefono.valid">Agregar</button>
+            <button type="button" class="btn btn-inverse btn-outline-inverse ripple light" (click)="d('Cross click')">Cancelar</button>
         </div>
-      </form>
-    
-    
+
+    </form>
 </ng-template>

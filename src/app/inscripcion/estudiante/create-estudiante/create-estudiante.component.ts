@@ -1,6 +1,7 @@
 import { Component, ViewChild, Injector, ElementRef, AfterViewInit, OnInit } from '@angular/core';
 import { EstudianteDto, EstudianteServiceProxy, NacionalidadServiceProxy,
-        NacionalidadDto, TelefonoEstudianteDto, TelefonoEstudianteServiceProxy } from '@shared/service-proxies/service-proxies';
+        NacionalidadDto, TelefonoEstudianteDto, TelefonoEstudianteServiceProxy,
+        TipoTelefonoDto, TipoTelefonoServiceProxy, ITelefonoEstudianteDto } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -25,7 +26,10 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     saving = false;
     estudiante: EstudianteDto = new EstudianteDto();
     nacionalidades: NacionalidadDto[];
+    tipoTelefonos: TipoTelefonoDto[];
     telefonos: TelefonoEstudianteDto[] = [];
+
+    telefono: TelefonoEstudianteDto = new TelefonoEstudianteDto();
     sexo =  SexoArray.Sexo;
     estadoCivil =  SexoArray.EstadoCivil;
     ngxDatatableHelper = NgxDatatableHelper;
@@ -38,6 +42,7 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
         private _estudianteService: EstudianteServiceProxy,
         private _nacionalidadService: NacionalidadServiceProxy,
         private _telefonoEstudianteService: TelefonoEstudianteServiceProxy,
+        private _tipoTelefonoService: TipoTelefonoServiceProxy,
         private modalHelper: ModalHelper,
 
     ) {
@@ -46,7 +51,8 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
 
     ngOnInit(): void {
         this.getNacionalidades();
-        this.getTelefonosEstudiante();
+        // this.getTelefonosEstudiante();
+        this.getTipoTelefonos();
         this.defaultValues();
     }
 
@@ -74,11 +80,15 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     }
 
     getTelefonosEstudiante() {
-        this._telefonoEstudianteService.getAllForSelect()
-            .subscribe((result: TelefonoEstudianteDto[]) => {
-                this.telefonos = result;
-            });
 
+
+    }
+
+    getTipoTelefonos() {
+        this._tipoTelefonoService.getAllForSelect()
+        .subscribe((result: TipoTelefonoDto[]) => {
+            this.tipoTelefonos = result;
+        });
     }
 
     close(): void {
@@ -90,11 +100,14 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
         this.estudiante.init({ estado: 1 });
     }
 
-    mostrarModalTelefonos() {
-        this.modal = this.modalHelper.getSmallModal(this.modal);
+    mostrarModalTelefonos(content) {
+        this.modal = this.modalHelper.getMediumModal(content);
     }
 
     agregarTelefono() {
+        this.telefonos.push(this.telefono);
+        this.telefonos = this.telefonos.slice();
         this.modal.close();
+        this.telefono = new TelefonoEstudianteDto();
     }
 }
