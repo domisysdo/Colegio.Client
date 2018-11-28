@@ -4,7 +4,7 @@
         <div class="ibox">
 
             <div class="ibox-head">
-                <div class="ibox-title">{{l("Estudiante")}}</div>
+                <!-- <div class="ibox-title">{{l("Estudiante")}}</div> -->
 
                 <!-- <ul class="nav nav-tabs tabs-line">
                     <li class="nav-item">
@@ -17,15 +17,23 @@
                         <a class="nav-link" href="#tab-1-3" data-toggle="tab">Padecimientos</a>
                     </li>
                 </ul> -->
+                <ngb-tabset [justify]="end" class="nav nav-tabs tabs-line">
+                    <ngb-tab class="nav-item" title="Datos generales">
+                        <ng-template ngbTabContent>
+                            
+                            
+                        </ng-template>
+                    </ngb-tab>
 
-                <ngb-tabset title="Datos generales">
-                    <p>Familiares</p>
+                        <ngb-tab class="nav-item" title="Familiares">
+                        <ng-template ngbTabContent>
+                            <p>cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh
+                                dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum
+                                iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui</p>
+                        </ng-template>
+                        </ngb-tab>
                 </ngb-tabset>
-    
-                <ngb-tabset title="Familiares">
-                    <p>Padecimiento</p>
-                </ngb-tabset>
-    
+
             </div>
 
 
