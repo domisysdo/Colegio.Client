@@ -1,4 +1,4 @@
-import { OnInit, Component, Input } from '@angular/core';
+import { OnInit, Component, Input, Injector } from '@angular/core';
 import {
   TelefonoEstudianteDto,
   TipoTelefonoServiceProxy,
@@ -10,12 +10,13 @@ import { ModalHelper } from '@shared/helpers/ModalHelper';
 import { MessageHelper } from '@app/shared/MessageHelper';
 import { MascarasConstantes } from '@shared/helpers/mascaras-constantes';
 import { NgxDatatableHelper } from '@shared/helpers/NgxDatatableHelper';
+import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
   selector: 'app-telefono-estudiante',
   templateUrl: './telefono-estudiante.component.html'
 })
-export class TelefonoEstudianteComponent implements OnInit {
+export class TelefonoEstudianteComponent extends AppComponentBase implements OnInit {
   indexElementoSeleccionado = -1;
   elementoLista: any;
   elementoSelect: any;
@@ -28,9 +29,12 @@ export class TelefonoEstudianteComponent implements OnInit {
   @Input() telefonos: TelefonoEstudianteDto[] = [];
 
   constructor(
+    injector: Injector,
     private _tipoTelefonoService: TipoTelefonoServiceProxy,
     private modalHelper: ModalHelper
-  ) {}
+  ) {
+      super(injector)
+  }
 
     ngOnInit(): void {
         this.obtenerTiposTelefono();

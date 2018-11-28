@@ -1,34 +1,39 @@
-import { OnInit, Component, Input } from '@angular/core';
+import { OnInit, Component, Input, Injector } from '@angular/core';
 import {
   EmailEstudianteDto,
   TipoEmailServiceProxy,
   TipoEmailDto
 } from '@shared/service-proxies/service-proxies';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
 import { ModalHelper } from '@shared/helpers/ModalHelper';
 import { MessageHelper } from '@app/shared/MessageHelper';
 import { NgxDatatableHelper } from '@shared/helpers/NgxDatatableHelper';
+import { AppComponentBase } from '@shared/app-component-base';
+import { EMAIL_PATTERN } from '@shared/helpers/constantes-globales';
 
 @Component({
   selector: 'app-email-estudiante',
   templateUrl: './email-estudiante.component.html'
 })
-export class EmailEstudianteComponent implements OnInit {
+export class EmailEstudianteComponent extends AppComponentBase implements OnInit {
   indexElementoSeleccionado = -1;
   elementoLista: any;
   elementoSelect: any;
   tiposEmail: TipoEmailDto[];
   ngxDatatableHelper = NgxDatatableHelper;
 
+  emailPattern = EMAIL_PATTERN;
   public modal: NgbModalRef;
 
   @Input() emails: EmailEstudianteDto[] = [];
 
   constructor(
+    injector: Injector,
     private _tipoEmailService: TipoEmailServiceProxy,
     private modalHelper: ModalHelper
-  ) {}
+  ) {
+      super(injector)
+  }
 
     ngOnInit(): void {
         this.obtenerTiposEmail();

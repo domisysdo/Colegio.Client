@@ -27,7 +27,7 @@
                         <ngx-datatable-column 
                             [width]="150"
                             name="Telefono" 
-                            prop="telefono">
+                            prop="numero">
                         </ngx-datatable-column>
                                     
                         <ngx-datatable-column 
@@ -84,8 +84,9 @@
                             id="telefono" 
                             class="form-control no-shadow" 
                             type="telefono"
+                            [textMask]="{mask: maskTelefono.maskTelefono}" 
                             #telefono = "ngModel" 
-                            [(ngModel)]="elementoLista.telefono" 
+                            [(ngModel)]="elementoLista.numero" 
                             name="Telefono" 
                             required
                             minlength="2" 
