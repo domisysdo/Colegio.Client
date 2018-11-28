@@ -25,6 +25,9 @@ import { EditTipoTelefonoComponent } from './tipo-telefono/edit-tipo-telefono/ed
 import { CreateTipoDireccionComponent } from './tipo-direccion/create-tipo-direccion/create-tipo-direccion.component';
 import { EditTipoDireccionComponent } from './tipo-direccion/edit-tipo-direccion/edit-tipo-direccion.component';
 import { TipoDireccionComponent } from './tipo-direccion/tipo-direccion.component';
+import { TipoEmailComponent } from './tipo-email/tipo-email.component';
+import { EditTipoEmailComponent } from './tipo-email/edit-tipo-email/edit-tipo-email.component';
+import { CreateTipoEmailComponent } from './tipo-email/create-tipo-email/create-tipo-email.component';
 
 @NgModule({
 
@@ -58,7 +61,11 @@ import { TipoDireccionComponent } from './tipo-direccion/tipo-direccion.componen
         EditTipoTelefonoComponent,
         TipoDireccionComponent,
         CreateTipoDireccionComponent,
-        EditTipoDireccionComponent
+        EditTipoDireccionComponent,
+        CreateTipoEmailComponent,
+        EditTipoEmailComponent,
+        TipoEmailComponent
+        
     ]
 })
 export class GeneralesModule {}

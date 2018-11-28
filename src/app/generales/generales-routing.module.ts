@@ -20,6 +20,9 @@ import { EditTipoTelefonoComponent } from './tipo-telefono/edit-tipo-telefono/ed
 import { TipoDireccionComponent } from './tipo-direccion/tipo-direccion.component';
 import { CreateTipoDireccionComponent } from './tipo-direccion/create-tipo-direccion/create-tipo-direccion.component';
 import { EditTipoDireccionComponent } from './tipo-direccion/edit-tipo-direccion/edit-tipo-direccion.component';
+import { CreateTipoEmailComponent } from './tipo-email/create-tipo-email/create-tipo-email.component';
+import { EditTipoEmailComponent } from './tipo-email/edit-tipo-email/edit-tipo-email.component';
+import { TipoEmailComponent } from './tipo-email/tipo-email.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
@@ -97,6 +100,18 @@ const routes: Routes = [
         {
           path: 'generales/tipo-direccion/edit-tipo-direccion/:id',
           component: EditTipoDireccionComponent
+        },
+        {
+          path: 'generales/tipo-email',
+          component: TipoEmailComponent, canActivate: [AppRouteGuard]
+        },
+        {
+          path: 'generales/tipo-email/create-tipo-email',
+          component: CreateTipoEmailComponent
+        },
+        {
+          path: 'generales/tipo-email/edit-tipo-email/:id',
+          component: EditTipoEmailComponent
         }
       ]
     }
