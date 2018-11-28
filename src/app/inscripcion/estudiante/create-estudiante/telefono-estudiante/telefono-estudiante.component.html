@@ -1,0 +1,124 @@
+<div class="page-content fade-in-up">
+    <div class="col-md-8 offset-md-2">
+        <div class="ibox">
+            <div class="ibox-head">
+                <div class="ibox-title">Teléfonos</div>
+                <div class="ibox-tools">
+                    <a class="ibox-collapse"><i class="ti-angle-down"></i></a>
+                </div>
+            </div>
+
+            <!-- Detalle de telefonos -->
+            <div class="ibox-body">
+                <form class="form-horizontal" id="form-sample-1" method="post" novalidate="novalidate">
+         
+                    <ngx-datatable
+                        class="bootstrap"
+                        [columnMode]="ngxDatatableHelper.columnMode"
+                        [headerHeight]="ngxDatatableHelper.headerHeight"
+                        [footerHeight]="0"
+                        [rowHeight]="ngxDatatableHelper.rowHeight"
+                        [rows]="telefonos" 
+                        [selectionType]="ngxDatatableHelper.selectionType"
+                        [selectAllRowsOnPage]="ngxDatatableHelper.selectAllRowsOnPage"
+                        [reorderable]="ngxDatatableHelper.reorderable"
+                        [messages]="ngxDatatableHelper.ngxDatatableMesagges">
+                        
+                        <ngx-datatable-column 
+                            [width]="150"
+                            name="Telefono" 
+                            prop="telefono">
+                        </ngx-datatable-column>
+                                    
+                        <ngx-datatable-column 
+                            [width]="20"
+                            name="Tipo" 
+                            prop="tipoTelefonoNombre">
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column  [width]="20" >
+                            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                <div class="text-center">
+                                    <a class="text-light mr-3 font-16" href="javascript:;"><i (click)="editarTelefono(row, telefonoForm)" class="ti-pencil"></i></a>
+                                    <a class="text-light font-16" href="javascript:;"><i (click)="eliminarElementoLista(telefonos, row)" class="ti-trash"></i></a>
+                                </div>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                    <div class="flexbox mb-4"><div class="flexbox"></div></div>
+                    <div class="flexbox mb-4">
+                        <div class="flexbox">
+                        </div>
+                        <div class="flexbox">                            
+                            <a class="btn btn-primary btn-block"  (click)="agregarTelefono(telefonoForm)" href="javascript:;">
+                                <span class="btn-icon"><i class="la la-plus"></i>Agregar nuevo</span>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Fin de detalle de telefono -->
+        </div>
+    </div>
+</div>
+
+
+<!-- Inicio modal de telefonos -->
+<ng-template #telefonoForm let-c="close" let-d="dismiss">
+
+    <div class="modal-header">
+        <h4 class="modal-title">NUEVO TELEFONO</h4>
+        <button type = "button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true"> &times;</span>
+        </button>
+    </div>
+
+    <form #formAgregarTelefono="ngForm" (ngSubmit)="registrarTelefonos()">
+        <div class="modal-body">
+            <div class="inbox">
+                <div class="inbox-body">
+                    <div [ngClass]="(telefono.invalid && telefono.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
+                        <label class="col-form-label">{{l("Teléfono")}}<span class="text-danger"> *</span> </label>
+                        <span *ngIf="telefono.invalid && telefono.touched" class="input-icon input-icon-right text-danger"></span>
+                        <input 
+                            id="telefono" 
+                            class="form-control no-shadow" 
+                            type="telefono"
+                            #telefono = "ngModel" 
+                            [(ngModel)]="elementoLista.telefono" 
+                            name="Telefono" 
+                            required
+                            minlength="2" 
+                            maxlength="32" 
+                            placeholder="(000) 000-0000"/>
+                        <app-input-validation [input]="telefono"></app-input-validation>
+                    </div>
+
+                    <div [ngClass]="(tipoTelefonoModel.invalid && tipoTelefonoModel.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
+                        <label class="col-form-label">{{l("Tipo")}}<span class="text-danger"> *</span> </label>                            
+                        <ng-select [items]="tiposTelefono"
+                            name="nacionalidadSelect"
+                            bindLabel="descripcion"
+                            bindValue="id"
+                            required
+                            #tipoTelefonoModel = "ngModel"
+                            (change)="onTipoTelefonoChange($event)"
+                            [(ngModel)]="elementoLista.tipoTelefonoId">
+                            <ng-template ng-option-tmp let-item="item">
+                                {{item.descripcion}}
+                            </ng-template>
+                        </ng-select>
+                        <app-input-validation [input]="tipoTelefonoModel"></app-input-validation>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary ripple light" [disabled]="!formAgregarTelefono.valid">Agregar</button>
+            <button type="button" class="btn btn-inverse btn-outline-inverse ripple light" (click)="d('Cross click')">Cancelar</button>
+        </div>
+
+    </form>
+</ng-template>
+<!-- Fin modal de telefonos -->
