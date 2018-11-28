@@ -12675,6 +12675,10 @@ export class EstudianteDto implements IEstudianteDto {
     estadoCivil: EstudianteDtoEstadoCivil | undefined;
     estado: EstudianteDtoEstado | undefined;
     nacionalidadId: number | undefined;
+    listaTelefonos: TelefonoEstudianteDto[] | undefined;
+    listaPadecimientos: PadecimientoDto[] | undefined;
+    listaEmail: EmailEstudianteDto[] | undefined;
+    listaDireccionEstudiante: DireccionEstudianteDto[] | undefined;
     id: number | undefined;
 
     constructor(data?: IEstudianteDto) {
@@ -12697,6 +12701,26 @@ export class EstudianteDto implements IEstudianteDto {
             this.estadoCivil = data["estadoCivil"];
             this.estado = data["estado"];
             this.nacionalidadId = data["nacionalidadId"];
+            if (data["listaTelefonos"] && data["listaTelefonos"].constructor === Array) {
+                this.listaTelefonos = [];
+                for (let item of data["listaTelefonos"])
+                    this.listaTelefonos.push(TelefonoEstudianteDto.fromJS(item));
+            }
+            if (data["listaPadecimientos"] && data["listaPadecimientos"].constructor === Array) {
+                this.listaPadecimientos = [];
+                for (let item of data["listaPadecimientos"])
+                    this.listaPadecimientos.push(PadecimientoDto.fromJS(item));
+            }
+            if (data["listaEmail"] && data["listaEmail"].constructor === Array) {
+                this.listaEmail = [];
+                for (let item of data["listaEmail"])
+                    this.listaEmail.push(EmailEstudianteDto.fromJS(item));
+            }
+            if (data["listaDireccionEstudiante"] && data["listaDireccionEstudiante"].constructor === Array) {
+                this.listaDireccionEstudiante = [];
+                for (let item of data["listaDireccionEstudiante"])
+                    this.listaDireccionEstudiante.push(DireccionEstudianteDto.fromJS(item));
+            }
             this.id = data["id"];
         }
     }
@@ -12719,6 +12743,26 @@ export class EstudianteDto implements IEstudianteDto {
         data["estadoCivil"] = this.estadoCivil;
         data["estado"] = this.estado;
         data["nacionalidadId"] = this.nacionalidadId;
+        if (this.listaTelefonos && this.listaTelefonos.constructor === Array) {
+            data["listaTelefonos"] = [];
+            for (let item of this.listaTelefonos)
+                data["listaTelefonos"].push(item.toJSON());
+        }
+        if (this.listaPadecimientos && this.listaPadecimientos.constructor === Array) {
+            data["listaPadecimientos"] = [];
+            for (let item of this.listaPadecimientos)
+                data["listaPadecimientos"].push(item.toJSON());
+        }
+        if (this.listaEmail && this.listaEmail.constructor === Array) {
+            data["listaEmail"] = [];
+            for (let item of this.listaEmail)
+                data["listaEmail"].push(item.toJSON());
+        }
+        if (this.listaDireccionEstudiante && this.listaDireccionEstudiante.constructor === Array) {
+            data["listaDireccionEstudiante"] = [];
+            for (let item of this.listaDireccionEstudiante)
+                data["listaDireccionEstudiante"].push(item.toJSON());
+        }
         data["id"] = this.id;
         return data; 
     }
@@ -12741,6 +12785,124 @@ export interface IEstudianteDto {
     estadoCivil: EstudianteDtoEstadoCivil | undefined;
     estado: EstudianteDtoEstado | undefined;
     nacionalidadId: number | undefined;
+    listaTelefonos: TelefonoEstudianteDto[] | undefined;
+    listaPadecimientos: PadecimientoDto[] | undefined;
+    listaEmail: EmailEstudianteDto[] | undefined;
+    listaDireccionEstudiante: DireccionEstudianteDto[] | undefined;
+    id: number | undefined;
+}
+
+export class TelefonoEstudianteDto implements ITelefonoEstudianteDto {
+    numero: string | undefined;
+    estudianteId: number | undefined;
+    tipoTelefonoId: number | undefined;
+    tipoTelefonoNombre: string | undefined;
+    id: number | undefined;
+
+    constructor(data?: ITelefonoEstudianteDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.numero = data["numero"];
+            this.estudianteId = data["estudianteId"];
+            this.tipoTelefonoId = data["tipoTelefonoId"];
+            this.tipoTelefonoNombre = data["tipoTelefonoNombre"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TelefonoEstudianteDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TelefonoEstudianteDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["numero"] = this.numero;
+        data["estudianteId"] = this.estudianteId;
+        data["tipoTelefonoId"] = this.tipoTelefonoId;
+        data["tipoTelefonoNombre"] = this.tipoTelefonoNombre;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TelefonoEstudianteDto {
+        const json = this.toJSON();
+        let result = new TelefonoEstudianteDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITelefonoEstudianteDto {
+    numero: string | undefined;
+    estudianteId: number | undefined;
+    tipoTelefonoId: number | undefined;
+    tipoTelefonoNombre: string | undefined;
+    id: number | undefined;
+}
+
+export class PadecimientoDto implements IPadecimientoDto {
+    descripcion: string | undefined;
+    nota: string | undefined;
+    estudianteId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IPadecimientoDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            this.nota = data["nota"];
+            this.estudianteId = data["estudianteId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): PadecimientoDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PadecimientoDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        data["nota"] = this.nota;
+        data["estudianteId"] = this.estudianteId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): PadecimientoDto {
+        const json = this.toJSON();
+        let result = new PadecimientoDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPadecimientoDto {
+    descripcion: string | undefined;
+    nota: string | undefined;
+    estudianteId: number | undefined;
     id: number | undefined;
 }
 
@@ -13595,61 +13757,6 @@ export class PagedResultDtoOfPadecimientoDto implements IPagedResultDtoOfPadecim
 export interface IPagedResultDtoOfPadecimientoDto {
     totalCount: number | undefined;
     items: PadecimientoDto[] | undefined;
-}
-
-export class PadecimientoDto implements IPadecimientoDto {
-    descripcion: string | undefined;
-    nota: string | undefined;
-    estudianteId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: IPadecimientoDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.descripcion = data["descripcion"];
-            this.nota = data["nota"];
-            this.estudianteId = data["estudianteId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): PadecimientoDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PadecimientoDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["descripcion"] = this.descripcion;
-        data["nota"] = this.nota;
-        data["estudianteId"] = this.estudianteId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): PadecimientoDto {
-        const json = this.toJSON();
-        let result = new PadecimientoDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPadecimientoDto {
-    descripcion: string | undefined;
-    nota: string | undefined;
-    estudianteId: number | undefined;
-    id: number | undefined;
 }
 
 export class PagedResultDtoOfPaisDto implements IPagedResultDtoOfPaisDto {
@@ -15077,61 +15184,6 @@ export class PagedResultDtoOfTelefonoEstudianteDto implements IPagedResultDtoOfT
 export interface IPagedResultDtoOfTelefonoEstudianteDto {
     totalCount: number | undefined;
     items: TelefonoEstudianteDto[] | undefined;
-}
-
-export class TelefonoEstudianteDto implements ITelefonoEstudianteDto {
-    numero: string | undefined;
-    estudianteId: number | undefined;
-    tipoTelefonoId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: ITelefonoEstudianteDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.numero = data["numero"];
-            this.estudianteId = data["estudianteId"];
-            this.tipoTelefonoId = data["tipoTelefonoId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): TelefonoEstudianteDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TelefonoEstudianteDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["numero"] = this.numero;
-        data["estudianteId"] = this.estudianteId;
-        data["tipoTelefonoId"] = this.tipoTelefonoId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): TelefonoEstudianteDto {
-        const json = this.toJSON();
-        let result = new TelefonoEstudianteDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ITelefonoEstudianteDto {
-    numero: string | undefined;
-    estudianteId: number | undefined;
-    tipoTelefonoId: number | undefined;
-    id: number | undefined;
 }
 
 export class PagedResultDtoOfTelefonoFamiliarEstudianteDto implements IPagedResultDtoOfTelefonoFamiliarEstudianteDto {

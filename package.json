@@ -41,6 +41,7 @@
     "abp-web-resources": "^3.8.2",
     "angular-bootstrap-datetimepicker": "^2.2.1",
     "angular2-datetimepicker": "^1.1.1",
+    "angular2-text-mask": "^9.0.0",
     "animate.css": "^3.6.1",
     "block-ui": "^2.70.1",
     "bootstrap": "4.0.0",

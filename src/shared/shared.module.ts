@@ -13,6 +13,7 @@ import { InputDateComponent } from './components/input-date/input-date-component
 import { NgbModule, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { ModalHelper } from './helpers/ModalHelper';
+import { TextMaskModule } from 'angular2-text-mask';
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import { ModalHelper } from './helpers/ModalHelper';
         CommonModule,
         AbpModule,
         RouterModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
     ],
     declarations: [
         MaterialInput,
@@ -34,6 +35,7 @@ import { ModalHelper } from './helpers/ModalHelper';
         MaterialInput,
         InputValidationComponent,
         TableItemsDeleteComponent,
+        TextMaskModule,
         InputDateComponent
     ],
     providers: [

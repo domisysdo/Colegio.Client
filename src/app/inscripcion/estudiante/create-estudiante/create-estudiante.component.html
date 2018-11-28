@@ -143,14 +143,6 @@
                             </div>
                         </div>
 
-
-
-                        <div class="ibox-footer row">
-                            <div class="col-sm-12 ml-sm-auto">
-                                <button type="submit" class="btn btn-primary mr-2">{{l("Registrar")}}</button>
-                                <button [disabled]="saving" [routerLink]="['../../estudiante']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
-                            </div>
-                        </div>
                     </div>
                 </form>
             </div>
@@ -167,6 +159,8 @@
                     <a class="ibox-collapse"><i class="ti-angle-down"></i></a>
                 </div>
             </div>
+
+            <!-- Detalle de telefonos TODO: (pasar a componente) -->
             <div class="ibox-body">
                 <form class="form-horizontal" id="form-sample-1" method="post" novalidate="novalidate">
          
@@ -187,18 +181,18 @@
                             name="Número" 
                             prop="numero">
                         </ngx-datatable-column>
-                        
+                                    
                         <ngx-datatable-column 
                             [width]="20"
                             name="Tipo" 
-                            prop="numero">
+                            prop="tipoTelefonoNombre">
                         </ngx-datatable-column>
 
                         <ngx-datatable-column  [width]="20" >
                             <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                                 <div class="text-center">
-                                    <a [routerLink] = "['edit-estudiante', row.id]" class="text-light mr-3 font-16" href="javascript:;"><i class="ti-pencil"></i></a>
-                                    <a class="text-light font-16" href="javascript:;"><i (click)="delete(row)" class="ti-trash"></i></a>
+                                    <a class="text-light mr-3 font-16" href="javascript:;"><i (click)="editarTelefono(row, telefonoForm)" class="ti-pencil"></i></a>
+                                    <a class="text-light font-16" href="javascript:;"><i (click)="eliminarElementoLista(telefonos, row)" class="ti-trash"></i></a>
                                 </div>
                             </ng-template>
                         </ngx-datatable-column>
@@ -208,18 +202,99 @@
                         <div class="flexbox">
                         </div>
                         <div class="flexbox">                            
-                            <a class="btn btn-primary btn-block"  (click)="mostrarModalTelefonos(telefonoForm)" href="javascript:;">
+                            <a class="btn btn-primary btn-block"  (click)="agregarTelefono(telefonoForm)" href="javascript:;">
                                 <span class="btn-icon"><i class="la la-plus"></i>Agregar nuevo</span>
                             </a>
                         </div>
                     </div>
                 </form>
             </div>
+            <!-- Fin de detalle de telefonos -->
         </div>
     </div>
 </div>
 
+<div class="page-content fade-in-up">
+        <div class="col-md-8 offset-md-2">
+            <div class="ibox">
+                <div class="ibox-head">
+                    <div class="ibox-title">Emails</div>
+                    <div class="ibox-tools">
+                        <a class="ibox-collapse"><i class="ti-angle-down"></i></a>
+                    </div>
+                </div>
+    
+                <!-- Detalle de emails TODO: (pasar a componente) -->
+                <div class="ibox-body">
+                    <form class="form-horizontal" id="form-sample-1" method="post" novalidate="novalidate">
+             
+                        <ngx-datatable
+                            class="bootstrap"
+                            [columnMode]="ngxDatatableHelper.columnMode"
+                            [headerHeight]="ngxDatatableHelper.headerHeight"
+                            [footerHeight]="0"
+                            [rowHeight]="ngxDatatableHelper.rowHeight"
+                            [rows]="emails" 
+                            [selectionType]="ngxDatatableHelper.selectionType"
+                            [selectAllRowsOnPage]="ngxDatatableHelper.selectAllRowsOnPage"
+                            [reorderable]="ngxDatatableHelper.reorderable"
+                            [messages]="ngxDatatableHelper.ngxDatatableMesagges">
+                            
+                            <ngx-datatable-column 
+                                [width]="150"
+                                name="Email" 
+                                prop="email">
+                            </ngx-datatable-column>
+                                        
+                            <ngx-datatable-column 
+                                [width]="20"
+                                name="Tipo" 
+                                prop="tipoEmailNombre">
+                            </ngx-datatable-column>
+    
+                            <ngx-datatable-column  [width]="20" >
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                    <div class="text-center">
+                                        <a class="text-light mr-3 font-16" href="javascript:;"><i (click)="editarEmail(row, emailForm)" class="ti-pencil"></i></a>
+                                        <a class="text-light font-16" href="javascript:;"><i (click)="eliminarElementoLista(emails, row)" class="ti-trash"></i></a>
+                                    </div>
+                                </ng-template>
+                            </ngx-datatable-column>
+                        </ngx-datatable>
+                        <div class="flexbox mb-4"><div class="flexbox"></div></div>
+                        <div class="flexbox mb-4">
+                            <div class="flexbox">
+                            </div>
+                            <div class="flexbox">                            
+                                <a class="btn btn-primary btn-block"  (click)="agregarEmail(emailForm)" href="javascript:;">
+                                    <span class="btn-icon"><i class="la la-plus"></i>Agregar nuevo</span>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Fin de detalle de email -->
+            </div>
+        </div>
+    </div>
 
+
+<!-- Inicio botones registrar y cancelar -->
+<div class="page-content fade-in-up">
+    <div class="col-md-8 offset-md-2">
+        <div class="ibox">
+            <div class="ibox-footer row">
+                <div class="col-sm-12 ml-sm-auto">
+                    <button type="submit" (click)="save(estudianteForm)" class="btn btn-primary mr-2">{{l("Registrar")}}</button>
+                    <button [disabled]="saving" [routerLink]="['../../estudiante']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin botones registrar y cancelar -->
+
+<!-- Inicio modal de telefonos TODO: (pasar a componente) -->
 <ng-template #telefonoForm let-c="close" let-d="dismiss">
 
     <div class="modal-header">
@@ -229,7 +304,7 @@
         </button>
     </div>
 
-    <form #formAgregarTelefono="ngForm" (ngSubmit)="agregarTelefono()">
+    <form #formAgregarTelefono="ngForm" (ngSubmit)="registrarTelefonos()">
         <div class="modal-body">
             <div class="inbox">
                 <div class="inbox-body">
@@ -240,8 +315,9 @@
                             id="nombres" 
                             class="form-control no-shadow" 
                             type="text"
+                            [textMask]="{mask: maskTelefono.maskTelefono}"
                             #nombres = "ngModel" 
-                            [(ngModel)]="telefono.numero" 
+                            [(ngModel)]="elementoLista.numero" 
                             name="Nombres" 
                             required
                             minlength="2" 
@@ -251,14 +327,15 @@
                     </div>
 
                     <div [ngClass]="(sexoModel.invalid && sexoModel.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
-                        <label class="col-form-label">{{l("Número de teléfono")}}<span class="text-danger"> *</span> </label>                            
-                        <ng-select [items]="tipoTelefonos"
+                        <label class="col-form-label">{{l("Tipo")}}<span class="text-danger"> *</span> </label>                            
+                        <ng-select [items]="tiposTelefono"
                             name="nacionalidadSelect"
                             bindLabel="descripcion"
                             bindValue="id"
                             required
                             #sexoModel = "ngModel"
-                            [(ngModel)]="telefono.tipoTelefonoId">
+                            (change)="onTipoTelefonoChange($event)"
+                            [(ngModel)]="elementoLista.tipoTelefonoId">
                             <ng-template ng-option-tmp let-item="item">
                                 {{item.descripcion}}
                             </ng-template>
@@ -276,3 +353,64 @@
 
     </form>
 </ng-template>
+<!-- Fin modal de telefonos -->
+
+<!-- Inicio modal de telefonos TODO: (pasar a componente) -->
+<ng-template #emailForm let-c="close" let-d="dismiss">
+
+        <div class="modal-header">
+            <h4 class="modal-title">NUEVO EMAIL</h4>
+            <button type = "button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true"> &times;</span>
+            </button>
+        </div>
+    
+        <form #formAgregarEmail="ngForm" (ngSubmit)="registrarEmails()">
+            <div class="modal-body">
+                <div class="inbox">
+                    <div class="inbox-body">
+                        <div [ngClass]="(email.invalid && email.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
+                            <label class="col-form-label">{{l("Email")}}<span class="text-danger"> *</span> </label>
+                            <span *ngIf="email.invalid && email.touched" class="input-icon input-icon-right text-danger"></span>
+                            <input 
+                                id="email" 
+                                class="form-control no-shadow" 
+                                type="email"
+                                #email = "ngModel" 
+                                [(ngModel)]="elementoLista.email" 
+                                name="Email" 
+                                required
+                                minlength="2" 
+                                maxlength="32" 
+                                placeholder="email@example.com"/>
+                            <app-input-validation [input]="email"></app-input-validation>
+                        </div>
+    
+                        <div [ngClass]="(tipoEmailModel.invalid && tipoEmailModel.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
+                            <label class="col-form-label">{{l("Tipo")}}<span class="text-danger"> *</span> </label>                            
+                            <ng-select [items]="tiposEmail"
+                                name="nacionalidadSelect"
+                                bindLabel="descripcion"
+                                bindValue="id"
+                                required
+                                #tipoEmailModel = "ngModel"
+                                (change)="onTipoEmailChange($event)"
+                                [(ngModel)]="elementoLista.tipoEmailId">
+                                <ng-template ng-option-tmp let-item="item">
+                                    {{item.descripcion}}
+                                </ng-template>
+                            </ng-select>
+                            <app-input-validation [input]="tipoEmailModel"></app-input-validation>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary ripple light" [disabled]="!formAgregarEmail.valid">Agregar</button>
+                <button type="button" class="btn btn-inverse btn-outline-inverse ripple light" (click)="d('Cross click')">Cancelar</button>
+            </div>
+    
+        </form>
+    </ng-template>
+    <!-- Fin modal de telefonos -->
