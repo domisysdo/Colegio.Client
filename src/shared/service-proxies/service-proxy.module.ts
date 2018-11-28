@@ -27,6 +27,7 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.TipoTelefonoServiceProxy,
         ApiServiceProxies.EmailEstudianteServiceProxy,
         ApiServiceProxies.TipoEmailServiceProxy,
+        ApiServiceProxies.ProfesionServiceProxy,
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]
 })

@@ -12449,6 +12449,7 @@ export class EmailEstudianteDto implements IEmailEstudianteDto {
     email: string | undefined;
     estudianteId: number | undefined;
     tipoEmailId: number | undefined;
+    tipoEmailNombre: number | undefined;
     id: number | undefined;
 
     constructor(data?: IEmailEstudianteDto) {
@@ -12465,6 +12466,7 @@ export class EmailEstudianteDto implements IEmailEstudianteDto {
             this.email = data["email"];
             this.estudianteId = data["estudianteId"];
             this.tipoEmailId = data["tipoEmailId"];
+            this.tipoEmailNombre = data["tipoEmailNombre"];
             this.id = data["id"];
         }
     }
@@ -12481,6 +12483,7 @@ export class EmailEstudianteDto implements IEmailEstudianteDto {
         data["email"] = this.email;
         data["estudianteId"] = this.estudianteId;
         data["tipoEmailId"] = this.tipoEmailId;
+        data["tipoEmailNombre"] = this.tipoEmailNombre;
         data["id"] = this.id;
         return data; 
     }
@@ -12497,6 +12500,7 @@ export interface IEmailEstudianteDto {
     email: string | undefined;
     estudianteId: number | undefined;
     tipoEmailId: number | undefined;
+    tipoEmailNombre: number | undefined;
     id: number | undefined;
 }
 
