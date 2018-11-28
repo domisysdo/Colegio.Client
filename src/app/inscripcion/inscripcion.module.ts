@@ -16,6 +16,8 @@ import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 import { CreateGrupoComponent } from './grupo/create-grupo/create-grupo.component';
 import { GrupoComponent } from './grupo/grupo.component';
 import { EditGrupoComponent } from './grupo/edit-grupo/edit-grupo.component';
+import { EmailEstudianteComponent } from './estudiante/create-estudiante/email-estudiante/email-estudiante.component';
+import { TelefonoEstudianteComponent } from './estudiante/create-estudiante/telefono-estudiante/telefono-estudiante.component';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { EditGrupoComponent } from './grupo/edit-grupo/edit-grupo.component';
         EditEstudianteComponent,
         GrupoComponent,
         CreateGrupoComponent,
-        EditGrupoComponent
+        EditGrupoComponent,
+        EmailEstudianteComponent,
+        TelefonoEstudianteComponent
     ],
     providers: [
         ScriptLoaderService
