@@ -23,6 +23,9 @@ import { EditTipoDireccionComponent } from './tipo-direccion/edit-tipo-direccion
 import { CreateTipoEmailComponent } from './tipo-email/create-tipo-email/create-tipo-email.component';
 import { EditTipoEmailComponent } from './tipo-email/edit-tipo-email/edit-tipo-email.component';
 import { TipoEmailComponent } from './tipo-email/tipo-email.component';
+import { ProfesionComponent } from './profesion/profesion.component';
+import { CreateProfesionComponent } from './profesion/create-profesion/create-profesion.component';
+import { EditProfesionComponent } from './profesion/edit-profesion/edit-profesion.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
@@ -112,6 +115,18 @@ const routes: Routes = [
         {
           path: 'generales/tipo-email/edit-tipo-email/:id',
           component: EditTipoEmailComponent
+        },
+        {
+          path: 'generales/profesion',
+          component: ProfesionComponent, canActivate: [AppRouteGuard]
+        },
+        {
+          path: 'generales/profesion/create-profesion',
+          component: CreateProfesionComponent
+        },
+        {
+          path: 'generales/profesion/edit-profesion/:id',
+          component: EditProfesionComponent
         }
       ]
     }
