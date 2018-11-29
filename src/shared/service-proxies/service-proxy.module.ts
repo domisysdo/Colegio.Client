@@ -29,6 +29,7 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.TipoEmailServiceProxy,
         ApiServiceProxies.SectorServiceProxy,
         ApiServiceProxies.ParentescoServiceProxy,
+        ApiServiceProxies.ProfesionServiceProxy,
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]
 })
