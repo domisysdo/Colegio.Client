@@ -162,7 +162,9 @@
                             </ngb-tab>
 
                             <ngb-tab title="Familiares">
-                                <app-familiar-estudiante [familiares]="familiares"></app-familiar-estudiante>
+                                <ng-template ngbTabContent>
+                                    <app-familiar-estudiante [familiares]="familiares"></app-familiar-estudiante>
+                                </ng-template>
                             </ngb-tab>
 
                             <ngb-tab title="Padecimientos">

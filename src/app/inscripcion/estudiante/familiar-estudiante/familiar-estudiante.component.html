@@ -23,20 +23,8 @@
             
             <ngx-datatable-column 
                 [width]="20"
-                name="Nombres" 
-                prop="nombres">
-            </ngx-datatable-column>
-
-            <ngx-datatable-column 
-                [width]="10"
-                name="Primer apellido" 
-                prop="primerApellido">
-            </ngx-datatable-column>
-
-            <ngx-datatable-column 
-                [width]="10"
-                name="Segundo apellido" 
-                prop="segundoApellido">
+                name="Nombre completo" 
+                prop="nombreCompleto">
             </ngx-datatable-column>
 
             <ngx-datatable-column 
@@ -159,7 +147,7 @@
                             (change)="$event">
                         </app-input-date>                            
 
-                        <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
+                        <div [ngClass]="(nacionalidad.invalid && nacionalidad.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
                             <label class="col-form-label">{{l("Nacionalidad")}}<span class="text-danger"> *</span> </label>                            
                             <ng-select [items]="nacionalidades"
                                 name="nacionalidadSelect"
@@ -184,6 +172,7 @@
                                 bindValue="id"
                                 required
                                 #parentesco = "ngModel"
+                                (change)="onParentescoChange($event)"
                                 [(ngModel)]="elementoLista.parentescoId">
                                 <ng-template ng-option-tmp let-item="item">
                                     {{item.descripcion}}
@@ -195,7 +184,7 @@
                         <div [ngClass]="(profesion.invalid && profesion.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
                                 <label class="col-form-label">{{l("Profesión")}}<span class="text-danger"> *</span> </label>                            
                                 <ng-select [items]="profesiones"
-                                    name="parentescoSelect"
+                                    name="profesionSelect"
                                     bindLabel="descripcion"
                                     bindValue="id"
                                     required
@@ -232,22 +221,22 @@
                             <app-input-validation [input]="estadoCivilModel"></app-input-validation>
                         </div>
 
+                        <!-- Inicio componente telefonos -->
+                        <app-telefono-estudiante [telefonos]="telefonosFamiliar"></app-telefono-estudiante>
+                        <!-- Fin componente telefonos -->
+
+                        <!-- Inicio componente emails -->
+                        <app-email-estudiante [emails]="emailsFamiliar"></app-email-estudiante>
+                        <!-- Fin componente emails -->
+
+                        <!-- Inicio componente direcciones -->
+                        <app-direccion-estudiante [direcciones]="direccionesFamiliar"></app-direccion-estudiante>
+                        <!-- Fin componente direcciones -->
+
                 </div>
             </div>
         </div>
-
-        <!-- Inicio componente telefonos -->
-        <app-telefono-estudiante [telefonos]="telefonosFamiliar"></app-telefono-estudiante>
-        <!-- Fin componente telefonos -->
-
-        <!-- Inicio componente emails -->
-        <app-email-estudiante [emails]="emailsFamiliar"></app-email-estudiante>
-        <!-- Fin componente emails -->
-
-        <!-- Inicio componente direcciones -->
-        <app-direccion-estudiante [direcciones]="direccionesFamiliar"></app-direccion-estudiante>
-        <!-- Fin componente direcciones -->
-        
+<pre>{{elementoLista | json}}</pre>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary ripple light" [disabled]="!formAgregarFamiliar.valid">Agregar</button>
             <button type="button" class="btn btn-inverse btn-outline-inverse ripple light" (click)="d('Cross click')">Cancelar</button>

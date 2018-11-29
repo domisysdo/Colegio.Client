@@ -1,7 +1,8 @@
 import { OnInit, Component, Input, Injector } from '@angular/core';
 import { FamiliarEstudianteDto, TelefonoFamiliarEstudianteDto,
          EmailFamiliarEstudianteDto, DireccionFamiliarEstudianteDto,
-         ParentescoDto, ParentescoServiceProxy, ProfesionServiceProxy, ProfesionDto } from '@shared/service-proxies/service-proxies';
+         ParentescoDto, ParentescoServiceProxy, ProfesionServiceProxy, ProfesionDto,
+         NacionalidadDto, NacionalidadServiceProxy } from '@shared/service-proxies/service-proxies';
 
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalHelper } from '@shared/helpers/ModalHelper';
@@ -18,7 +19,7 @@ import { SexoArray } from '@app/inscripcion/shared/inscripcion-arrays';
 export class FamiliarEstudianteComponent extends AppComponentBase implements OnInit {
   indexElementoSeleccionado = -1;
   elementoLista: any;
-  elementoSelect: any;
+  parentescoSelect: any;
 
   sexo = SexoArray.Sexo;
   estadoCivil = SexoArray.EstadoCivil;
@@ -28,6 +29,7 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
   direccionesFamiliar: DireccionFamiliarEstudianteDto[] = [];
   parentescos: ParentescoDto[] = [];
   profesiones: ProfesionDto[] = [];
+  nacionalidades: NacionalidadDto[] = [];
 
   emailPattern = EMAIL_PATTERN;
   public modal: NgbModalRef;
@@ -38,6 +40,7 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
     injector: Injector,
     private _parentescoService: ParentescoServiceProxy,
     private _profesionService: ProfesionServiceProxy,
+    private _nacionalidadService: NacionalidadServiceProxy,
     private modalHelper: ModalHelper
   ) {
       super(injector)
@@ -46,12 +49,20 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
     ngOnInit(): void {
         this.obtenerParentescos();
         this.obtenerProfesiones();
+        this.obtenerNacionalidades();
     }
 
     obtenerParentescos() {
         this._parentescoService.getAllForSelect()
             .subscribe((result: ParentescoDto[]) => {
                 this.parentescos = result;
+            });
+    }
+
+    obtenerNacionalidades() {
+        this._nacionalidadService.getAllForSelect()
+            .subscribe((result: NacionalidadDto[]) => {
+                this.nacionalidades = result;
             });
     }
 
@@ -65,18 +76,20 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
     agregarFamiliar(content) {
         this.indexElementoSeleccionado = -1;
         this.elementoLista = new FamiliarEstudianteDto();
-        this.modal = this.modalHelper.getMediumModal(content);
+        this.modal = this.modalHelper.getLargeModal(content);
     }
 
     editarFamiliar(familiar: FamiliarEstudianteDto, content) {
         this.indexElementoSeleccionado = this.familiares.indexOf(familiar);
         this.elementoLista = JSON.parse(JSON.stringify(familiar));
-        this.modal = this.modalHelper.getMediumModal(content);
+        this.modal = this.modalHelper.getLargeModal(content);
     }
 
     registrarFamiliares() {
         if (!this.familiarExisteDetalle()) {
-            this.elementoLista.tipoFamiliarNombre = this.elementoSelect.descripcion;
+            this.elementoLista.nombreCompleto = this.elementoLista.nombres + ' ' +
+            this.elementoLista.primerApellido + ' ' + this.elementoLista.segundoApellido;
+            this.elementoLista.parentescoNombre = this.parentescoSelect.descripcion;
 
             if (this.indexElementoSeleccionado >= 0) {
                 this.familiares[this.indexElementoSeleccionado] = this.elementoLista;
@@ -105,8 +118,8 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
         return false;
     }
 
-    onTipoFamiliarChange(event: any) {
-        this.elementoSelect = event;
+    onParentescoChange(event: any) {
+        this.parentescoSelect = event;
     }
 
     eliminarElementoLista(lista: any[], row) {

@@ -10,18 +10,18 @@ import { NgbDateFRParserFormatter } from './ngb-formatter';
 
 })
 export class InputDateComponent implements OnInit {
-  private _date: string | null;
+  private _date: Date | null;
 
   @Input() tittle: string;
   @Input()
-  set date(value: string | null) {
+  set date(value: Date | null) {
     if (this._date !== value) {
       this._date = value;
       this.updateDate();
 
     }
   }
-  get date(): string | null {
+  get date(): Date | null {
     return this._date;
   }
 
@@ -63,16 +63,16 @@ export class InputDateComponent implements OnInit {
     }
   }
 
-  private getDate(): string | null {
+  private getDate(): Date | null {
     if (!this.isDate(this.model)) {
       return null;
     }
-    return new Date(this.model.day, this.model.month - 1, this.model.year).toDateString();
+    return new Date(this.model.year, this.model.month - 1, this.model.day);
   }
 
   private updateDate(): void {
     if (this.date != null) {
-      this.model = this.convertValueToDate(new Date(this.date));
+      this.model = this.convertValueToDate(this.date);
     } else {
       this.model = null;
     }

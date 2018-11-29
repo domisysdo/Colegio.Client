@@ -68,10 +68,9 @@ import { ProfesionComponent } from './profesion/profesion.component';
         CreateTipoEmailComponent,
         EditTipoEmailComponent,
         TipoEmailComponent,
+        ProfesionComponent,
         CreateProfesionComponent,
-        EditProfesionComponent,
-        ProfesionComponent
-        
+        EditProfesionComponent
     ]
 })
 export class GeneralesModule {}
