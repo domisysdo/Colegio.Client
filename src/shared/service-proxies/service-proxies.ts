@@ -12197,10 +12197,9 @@ export class DireccionEstudianteDto implements IDireccionEstudianteDto {
     descripcion: string | undefined;
     estudianteId: number | undefined;
     tipoDireccionId: number | undefined;
-    paisId: number | undefined;
-    provinciaId: number | undefined;
-    municipioId: number | undefined;
     sectorId: number | undefined;
+    sectorNombre: string | undefined;
+    tipoDireccionNombre: string | undefined;
     id: number | undefined;
 
     constructor(data?: IDireccionEstudianteDto) {
@@ -12217,10 +12216,9 @@ export class DireccionEstudianteDto implements IDireccionEstudianteDto {
             this.descripcion = data["descripcion"];
             this.estudianteId = data["estudianteId"];
             this.tipoDireccionId = data["tipoDireccionId"];
-            this.paisId = data["paisId"];
-            this.provinciaId = data["provinciaId"];
-            this.municipioId = data["municipioId"];
             this.sectorId = data["sectorId"];
+            this.sectorNombre = data["sectorNombre"];
+            this.tipoDireccionNombre = data["tipoDireccionNombre"];
             this.id = data["id"];
         }
     }
@@ -12237,10 +12235,9 @@ export class DireccionEstudianteDto implements IDireccionEstudianteDto {
         data["descripcion"] = this.descripcion;
         data["estudianteId"] = this.estudianteId;
         data["tipoDireccionId"] = this.tipoDireccionId;
-        data["paisId"] = this.paisId;
-        data["provinciaId"] = this.provinciaId;
-        data["municipioId"] = this.municipioId;
         data["sectorId"] = this.sectorId;
+        data["sectorNombre"] = this.sectorNombre;
+        data["tipoDireccionNombre"] = this.tipoDireccionNombre;
         data["id"] = this.id;
         return data; 
     }
@@ -12257,10 +12254,9 @@ export interface IDireccionEstudianteDto {
     descripcion: string | undefined;
     estudianteId: number | undefined;
     tipoDireccionId: number | undefined;
-    paisId: number | undefined;
-    provinciaId: number | undefined;
-    municipioId: number | undefined;
     sectorId: number | undefined;
+    sectorNombre: string | undefined;
+    tipoDireccionNombre: string | undefined;
     id: number | undefined;
 }
 
@@ -12449,6 +12445,7 @@ export class EmailEstudianteDto implements IEmailEstudianteDto {
     email: string | undefined;
     estudianteId: number | undefined;
     tipoEmailId: number | undefined;
+    tipoEmailNombre: number | undefined;
     id: number | undefined;
 
     constructor(data?: IEmailEstudianteDto) {
@@ -12465,6 +12462,7 @@ export class EmailEstudianteDto implements IEmailEstudianteDto {
             this.email = data["email"];
             this.estudianteId = data["estudianteId"];
             this.tipoEmailId = data["tipoEmailId"];
+            this.tipoEmailNombre = data["tipoEmailNombre"];
             this.id = data["id"];
         }
     }
@@ -12481,6 +12479,7 @@ export class EmailEstudianteDto implements IEmailEstudianteDto {
         data["email"] = this.email;
         data["estudianteId"] = this.estudianteId;
         data["tipoEmailId"] = this.tipoEmailId;
+        data["tipoEmailNombre"] = this.tipoEmailNombre;
         data["id"] = this.id;
         return data; 
     }
@@ -12497,6 +12496,7 @@ export interface IEmailEstudianteDto {
     email: string | undefined;
     estudianteId: number | undefined;
     tipoEmailId: number | undefined;
+    tipoEmailNombre: number | undefined;
     id: number | undefined;
 }
 

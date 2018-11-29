@@ -7,6 +7,9 @@ import { EditEstudianteComponent } from './estudiante/edit-estudiante/edit-estud
 import { GrupoComponent } from './grupo/grupo.component';
 import { CreateGrupoComponent } from './grupo/create-grupo/create-grupo.component';
 import { EditGrupoComponent } from './grupo/edit-grupo/edit-grupo.component';
+import { ParentescoComponent } from './parentesco/parentesco.component';
+import { CreateParentescoComponent } from './parentesco/create-parentesco/create-parentesco.component';
+import { EditParentescoComponent } from './parentesco/edit-parentesco/edit-parentesco.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
@@ -36,6 +39,18 @@ const routes: Routes = [
       {
         path: 'inscripcion/grupo/edit-grupo/:id',
         component: EditGrupoComponent
+      },
+      {
+        path: 'inscripcion/parentesco',
+        component: ParentescoComponent, canActivate: [AppRouteGuard]
+      },
+      {
+        path: 'inscripcion/parentesco/create-parentesco',
+        component: CreateParentescoComponent
+      },
+      {
+        path: 'inscripcion/parentesco/edit-parentesco/:id',
+        component: EditParentescoComponent
       },
     ]
   }
