@@ -5,9 +5,7 @@ import { NgbDateFRParserFormatter } from './ngb-formatter';
 @Component({
   selector: 'app-input-date',
   templateUrl: './input-date.component.html',
-  providers: [{provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter}],
-  styleUrls: ['./input-date-component.css']
-
+  providers: [{provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter}]
 })
 export class InputDateComponent implements OnInit {
   private _date: Date | null;
@@ -26,7 +24,6 @@ export class InputDateComponent implements OnInit {
   }
 
   @Input() autocomplete: string;
-  @Input() container: string;
   @Output() change = new EventEmitter();
 
   public mostrarTitulo = true;
@@ -37,17 +34,6 @@ export class InputDateComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this.container === undefined) {
-      this.container = 'body';
-    }
-
-    if (this.container === 'modal') {
-      this.container = undefined;
-    }
-
-    if (this.autocomplete === undefined) {
-      this.autocomplete = 'off';
-    }
   }
 
   public setDate(emitt: boolean): void {
@@ -89,9 +75,7 @@ export class InputDateComponent implements OnInit {
       month: fecha.getMonth() + 1,
       year: fecha.getFullYear(),
     };
-    return this.ngbDateParserFormatter.parse(date.day + '-' + date.month + '-' + date.year);
-
-
+    return this.ngbDateParserFormatter.parse(date.year + '-' +  date.month + '-' + date.day);
   }
 
   public isDate(argument: any): argument is NgbDateStruct {

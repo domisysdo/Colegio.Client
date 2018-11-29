@@ -78,7 +78,6 @@ import { TipoIdentificacionComponent } from './tipo-identificacion/tipo-identifi
         CreateTipoIdentificacionComponent,
         EditTipoIdentificacionComponent,
         TipoIdentificacionComponent
-        
     ]
 })
 export class GeneralesModule {}

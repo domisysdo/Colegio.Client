@@ -90,7 +90,7 @@
                                     <app-input-date
                                         tittle="Fecha de nacimiento"
                                         [date]="estudiante.fechaNacimiento"
-                                        (change)="$event">
+                                        (change)="estudiante.fechaNacimiento=$event">
                                     </app-input-date>                            
 
                                     <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
@@ -158,6 +158,8 @@
                                     <!-- Inicio componente direcciones -->
                                     <app-direccion-estudiante [direcciones]="direccionesEstudiante"></app-direccion-estudiante>
                                     <!-- Fin componente direcciones -->
+                                    <pre>{{estudiante | json}}</pre>
+
                                 </ng-template>
                             </ngb-tab>
 
