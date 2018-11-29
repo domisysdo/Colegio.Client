@@ -34,6 +34,12 @@ import { ProfesionComponent } from './profesion/profesion.component';
 import { CreateTipoIdentificacionComponent } from './tipo-identificacion/create-tipo-identificacion/create-tipo-identificacion.component';
 import { EditTipoIdentificacionComponent } from './tipo-identificacion/edit-tipo-identificacion/edit-tipo-identificacion.component';
 import { TipoIdentificacionComponent } from './tipo-identificacion/tipo-identificacion.component';
+import { CreateTipoIncidenciaComponent } from './tipo-incidencia/create-tipo-incidencia/create-tipo-incidencia.component';
+import { EditTipoIncidenciaComponent } from './tipo-incidencia/edit-tipo-incidencia/edit-tipo-incidencia.component';
+import { TipoIncidenciaComponent } from './tipo-incidencia/tipo-incidencia.component';
+import { CreateTipoPadecimientoComponent } from './tipo-padecimiento/create-tipo-padecimiento/create-tipo-padecimiento.component';
+import { EditTipoPadecimientoComponent } from './tipo-padecimiento/edit-tipo-padecimiento/edit-tipo-padecimientocomponent';
+import { TipoPadecimientoComponent } from './tipo-padecimiento/tipo-padecimiento.component';
 
 @NgModule({
 
@@ -77,7 +83,13 @@ import { TipoIdentificacionComponent } from './tipo-identificacion/tipo-identifi
         ProfesionComponent,
         CreateTipoIdentificacionComponent,
         EditTipoIdentificacionComponent,
-        TipoIdentificacionComponent
+        TipoIdentificacionComponent,
+        CreateTipoIncidenciaComponent,
+        EditTipoIncidenciaComponent,
+        TipoIncidenciaComponent,
+        CreateTipoPadecimientoComponent,
+        EditTipoPadecimientoComponent,
+        TipoPadecimientoComponent
     ]
 })
 export class GeneralesModule {}
