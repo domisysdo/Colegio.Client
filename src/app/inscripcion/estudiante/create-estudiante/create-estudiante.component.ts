@@ -2,7 +2,7 @@ import { Component, ViewChild, Injector, ElementRef, OnInit } from '@angular/cor
 
 import {
     EstudianteDto, EstudianteServiceProxy, NacionalidadServiceProxy, NacionalidadDto, TelefonoEstudianteDto,
-    TipoTelefonoDto, EmailEstudianteDto, TipoEmailDto
+    TipoTelefonoDto, EmailEstudianteDto, TipoEmailDto, DireccionEstudianteDto, FamiliarEstudianteDto
 } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { NgForm } from '@angular/forms';
 import { SexoArray } from '@app/inscripcion/shared/inscripcion-arrays';
 import { NgxDatatableHelper } from '@shared/helpers/NgxDatatableHelper';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { MascarasConstantes } from '@shared/helpers/mascaras-constantes';
+
 
 
 @Component({
@@ -26,8 +26,10 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     nacionalidades: NacionalidadDto[];
     tiposTelefono: TipoTelefonoDto[];
     tiposEmail: TipoEmailDto[];
-    telefonos: TelefonoEstudianteDto[] = [];
-    emails: EmailEstudianteDto[] = [];
+    telefonosEstudiante: TelefonoEstudianteDto[] = [];
+    emailsEstudiante: EmailEstudianteDto[] = [];
+    direccionesEstudiante: DireccionEstudianteDto[] = [];
+    familiares: FamiliarEstudianteDto[] = [];
 
     active = false;
     saving = false;
@@ -84,8 +86,9 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     }
 
     agregarRelaciones() {
-        this.estudiante.listaTelefonos = this.telefonos;
-        this.estudiante.listaEmail = this.emails;
+        this.estudiante.listaTelefonos = this.telefonosEstudiante;
+        this.estudiante.listaEmail = this.emailsEstudiante;
+        this.estudiante.listaDireccionEstudiante = this.direccionesEstudiante;
     }
 
     close(): void {

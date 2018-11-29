@@ -71,6 +71,7 @@ import { TipoIdentificacionComponent } from './tipo-identificacion/tipo-identifi
         CreateTipoEmailComponent,
         EditTipoEmailComponent,
         TipoEmailComponent,
+        ProfesionComponent,
         CreateProfesionComponent,
         EditProfesionComponent,
         ProfesionComponent,

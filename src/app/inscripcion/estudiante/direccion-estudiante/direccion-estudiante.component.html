@@ -1,0 +1,139 @@
+<div class="ibox-head">
+    <div class="ibox-title">Direcciones</div>
+</div>
+
+<!-- Detalle de direcciones -->
+<div class="ibox-body">
+    <form class="form-horizontal" id="form-sample-1" method="post" novalidate="novalidate">
+
+        <ngx-datatable
+            class="bootstrap"
+            [columnMode]="ngxDatatableHelper.columnMode"
+            [headerHeight]="ngxDatatableHelper.headerHeight"
+            [footerHeight]="0"
+            [rowHeight]="ngxDatatableHelper.rowHeight"
+            [rows]="direcciones" 
+            [selectionType]="ngxDatatableHelper.selectionType"
+            [selectAllRowsOnPage]="ngxDatatableHelper.selectAllRowsOnPage"
+            [reorderable]="ngxDatatableHelper.reorderable"
+            [messages]="ngxDatatableHelper.ngxDatatableMesagges">
+        
+            <ngx-datatable-column 
+                [width]="70"
+                name="Sector" 
+                prop="sectorNombre">
+            </ngx-datatable-column>
+            
+            <ngx-datatable-column 
+                [width]="20"
+                name="Tipo" 
+                prop="tipoDireccionNombre">
+            </ngx-datatable-column>
+
+            <ngx-datatable-column 
+                [width]="150"
+                name="Direccion" 
+                prop="descripcion">
+            </ngx-datatable-column>
+
+            <ngx-datatable-column  [width]="20" >
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <div class="text-center">
+                        <a class="text-light mr-3 font-16" href="javascript:;"><i (click)="editarDireccion(row, direccionForm)" class="ti-pencil"></i></a>
+                        <a class="text-light font-16" href="javascript:;"><i (click)="eliminarElementoLista(direcciones, row)" class="ti-trash"></i></a>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+        <div class="flexbox mb-4"><div class="flexbox"></div></div>
+        <div class="flexbox mb-4">
+            <div class="flexbox">
+            </div>
+            <div class="flexbox">                            
+                <a class="btn btn-primary btn-block"  (click)="agregarDireccion(direccionForm)" href="javascript:;">
+                    <span class="btn-icon"><i class="la la-plus"></i>Agregar nuevo</span>
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Fin de detalle de direcciones -->
+
+
+<!-- Inicio modal de direccions -->
+<ng-template #direccionForm let-c="close" let-d="dismiss">
+
+    <div class="modal-header">
+        <h4 class="modal-title">NUEVA DIRECCION</h4>
+        <button type = "button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true"> &times;</span>
+        </button>
+    </div>
+
+    <form #formAgregarDireccion="ngForm" (ngSubmit)="registrarDireccions()">
+        <div class="modal-body">
+            <div class="inbox">
+                <div class="inbox-body">                    
+                    <div [ngClass]="(sectorModel.invalid && sectorModel.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
+                            <label class="col-form-label">{{l("Sector")}}<span class="text-danger"> *</span> </label>                            
+                            <ng-select [items]="sectores"
+                                name="sectorSelect"
+                                bindLabel="nombre"
+                                bindValue="id"
+                                required
+                                #sectorModel="ngModel"
+                                (change)="onSectorChange($event)"
+                                [(ngModel)]="elementoLista.sectorId">
+                                <ng-template ng-option-tmp let-item="item">
+                                    {{item.nombre}}
+                                </ng-template>
+                            </ng-select>
+                            <app-input-validation [input]="sectorModel"></app-input-validation>
+                    </div>
+                    
+                    <div [ngClass]="(tipoDireccionModel.invalid && tipoDireccionModel.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
+                            <label class="col-form-label">{{l("Tipo de dirección")}}<span class="text-danger"> *</span> </label>                            
+                            <ng-select [items]="tiposDireccion"
+                                name="nacionalidadSelect"
+                                bindLabel="descripcion"
+                                bindValue="id"
+                                required
+                                #tipoDireccionModel = "ngModel"
+                                (change)="onTipoDireccionChange($event)"
+                                [(ngModel)]="elementoLista.tipoDireccionId">
+                                <ng-template ng-option-tmp let-item="item">
+                                    {{item.descripcion}}
+                                </ng-template>
+                            </ng-select>
+                            <app-input-validation [input]="tipoDireccionModel"></app-input-validation>
+                    </div>
+
+                    <div [ngClass]="(direccion.invalid && direccion.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
+                        <label class="col-form-label">{{l("Dirección")}}<span class="text-danger"> *</span> </label>
+                        <span *ngIf="direccion.invalid && direccion.touched" class="input-icon input-icon-right text-danger"></span>
+                        <textarea 
+                            id="direccion" 
+                            class="form-control no-shadow" 
+                            type="direccion"
+                            #direccion = "ngModel" 
+                            [(ngModel)]="elementoLista.descripcion" 
+                            name="Direccion" 
+                            required
+                            cols="6"
+                            minlength="2" 
+                            maxlength="100" 
+                            placeholder="Ingrese la dirección"></textarea>
+                        <app-input-validation [input]="direccion"></app-input-validation>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary ripple light" [disabled]="!formAgregarDireccion.valid">Agregar</button>
+            <button type="button" class="btn btn-inverse btn-outline-inverse ripple light" (click)="d('Cross click')">Cancelar</button>
+        </div>
+
+    </form>
+</ng-template>
+<!-- Fin modal de direccions -->
