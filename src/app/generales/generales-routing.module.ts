@@ -26,6 +26,9 @@ import { TipoEmailComponent } from './tipo-email/tipo-email.component';
 import { ProfesionComponent } from './profesion/profesion.component';
 import { CreateProfesionComponent } from './profesion/create-profesion/create-profesion.component';
 import { EditProfesionComponent } from './profesion/edit-profesion/edit-profesion.component';
+import { TipoIdentificacionComponent } from './tipo-identificacion/tipo-identificacion.component';
+import { CreateTipoIdentificacionComponent } from './tipo-identificacion/create-tipo-identificacion/create-tipo-identificacion.component';
+import { EditTipoIdentificacionComponent } from './tipo-identificacion/edit-tipo-identificacion/edit-tipo-identificacion.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
@@ -127,6 +130,18 @@ const routes: Routes = [
         {
           path: 'generales/profesion/edit-profesion/:id',
           component: EditProfesionComponent
+        },
+        {
+          path: 'generales/tipo-identificacion',
+          component: TipoIdentificacionComponent, canActivate: [AppRouteGuard]
+        },
+        {
+          path: 'generales/tipo-identificacion/create-tipo-identificacion',
+          component: CreateTipoIdentificacionComponent
+        },
+        {
+          path: 'generales/tipo-identificacion/edit-tipo-identificacion/:id',
+          component: EditTipoIdentificacionComponent
         }
       ]
     }

@@ -31,6 +31,9 @@ import { CreateTipoEmailComponent } from './tipo-email/create-tipo-email/create-
 import { CreateProfesionComponent } from './profesion/create-profesion/create-profesion.component';
 import { EditProfesionComponent } from './profesion/edit-profesion/edit-profesion.component';
 import { ProfesionComponent } from './profesion/profesion.component';
+import { CreateTipoIdentificacionComponent } from './tipo-identificacion/create-tipo-identificacion/create-tipo-identificacion.component';
+import { EditTipoIdentificacionComponent } from './tipo-identificacion/edit-tipo-identificacion/edit-tipo-identificacion.component';
+import { TipoIdentificacionComponent } from './tipo-identificacion/tipo-identificacion.component';
 
 @NgModule({
 
@@ -70,7 +73,10 @@ import { ProfesionComponent } from './profesion/profesion.component';
         TipoEmailComponent,
         CreateProfesionComponent,
         EditProfesionComponent,
-        ProfesionComponent
+        ProfesionComponent,
+        CreateTipoIdentificacionComponent,
+        EditTipoIdentificacionComponent,
+        TipoIdentificacionComponent
         
     ]
 })
