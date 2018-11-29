@@ -11,6 +11,8 @@ import { NgxDatatableHelper } from '@shared/helpers/NgxDatatableHelper';
 import { AppComponentBase } from '@shared/app-component-base';
 import { EMAIL_PATTERN } from '@shared/helpers/constantes-globales';
 import { SexoArray } from '@app/inscripcion/shared/inscripcion-arrays';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-familiar-estudiante',
@@ -90,13 +92,14 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
             this.elementoLista.nombreCompleto = this.elementoLista.nombres + ' ' +
             this.elementoLista.primerApellido + ' ' + this.elementoLista.segundoApellido;
             this.elementoLista.parentescoNombre = this.parentescoSelect.descripcion;
+            // this.elementoLista.fechaNacimiento = moment(this.elementoLista.fechaNacimiento); // .format('YYYY/MM/DD');
 
             if (this.indexElementoSeleccionado >= 0) {
                 this.familiares[this.indexElementoSeleccionado] = this.elementoLista;
             } else {
                 this.familiares.push(this.elementoLista);
             }
-
+            console.log(this.familiares);
             this.familiares = [...this.familiares];
             this.indexElementoSeleccionado = -1;
             this.elementoLista = null;
@@ -107,10 +110,8 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
     familiarExisteDetalle(): boolean {
         for (const item of this.familiares) {
             if (this.familiares.indexOf(item) !== this.indexElementoSeleccionado &&
-                item.identificador === this.elementoLista.identificador ||
-                (item.nombres === this.elementoLista.nombres &&
-                 item.primerApellido === this.elementoLista.primerApellido &&
-                 item.segundoApellido === this.elementoLista.segundoApellido )) {
+                item.identificador === this.elementoLista.identificador
+                ) {
                 MessageHelper.show('El familiar ya existe en el detalle', 'Ya existe');
                 return true;
             }

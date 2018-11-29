@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, forwardRef, Output, EventEmitter } from '@angular/core';
 import { NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateFRParserFormatter } from './ngb-formatter';
+import { MascarasConstantes } from '@shared/helpers/mascaras-constantes';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-input-date',
@@ -31,13 +33,13 @@ export class InputDateComponent implements OnInit {
   public model: NgbDateStruct;
 
   ngbDateParserFormatter = new NgbDateFRParserFormatter();
+  mask =  MascarasConstantes;
 
   ngOnInit() {
 
   }
 
   public setDate(emitt: boolean): void {
-
     if (!this.validate()) {
       this._date = null;
     } else {
@@ -53,7 +55,8 @@ export class InputDateComponent implements OnInit {
     if (!this.isDate(this.model)) {
       return null;
     }
-    return new Date(this.model.year, this.model.month - 1, this.model.day);
+    const da = moment(this.model);
+    return da.toDate(); // Date(this.model.year, this.model.month - 1, this.model.day);
   }
 
   private updateDate(): void {
@@ -70,12 +73,14 @@ export class InputDateComponent implements OnInit {
   }
 
   private convertValueToDate(fecha: Date): NgbDateStruct {
+    const newFecha = moment(fecha).toDate();
+
     const date = <NgbDateStruct>{
-      day: fecha.getDate(),
-      month: fecha.getMonth() + 1,
-      year: fecha.getFullYear(),
+      day: newFecha.getDate(),
+      month: newFecha.getMonth() + 1,
+      year: newFecha.getFullYear(),
     };
-    return this.ngbDateParserFormatter.parse(date.year + '-' +  date.month + '-' + date.day);
+    return date; // this.ngbDateParserFormatter.parse(date.year + '-' +  date.month + '-' + date.day);
   }
 
   public isDate(argument: any): argument is NgbDateStruct {

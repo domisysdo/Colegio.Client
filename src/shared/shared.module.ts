@@ -23,6 +23,7 @@ import { TextMaskModule } from 'angular2-text-mask';
         AbpModule,
         RouterModule,
         NgbModule.forRoot(),
+        TextMaskModule,
     ],
     declarations: [
         MaterialInput,
