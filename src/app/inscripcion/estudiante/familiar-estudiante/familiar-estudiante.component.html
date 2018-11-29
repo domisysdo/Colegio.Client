@@ -144,8 +144,25 @@
                         <app-input-date
                             tittle="Fecha de nacimiento"
                             [date]="elementoLista.fechaNacimiento"
-                            (change)="$event">
+                            (change)="elementoLista.fechaNacimiento=$event">
                         </app-input-date>                            
+
+                        <!-- <div class="inbox-body">
+                            <div class="form-group" id="date_1">
+                                <div [ngClass]="(!validDate)?'form-group has-error mb-4':'form-group mb-4'">
+                                <label class="col-form-label">Fecha de nacimiento</label>
+                                <div (click)="date.toggle()" class="input-group-icon input-group-icon-left">
+                                    <span style="cursor:pointer" class="input-icon input-icon-left"><i class="fa fa-calendar"></i></span>
+                                    
+                                    <input class="form-control no-shadow" placeholder="dd/mm/yyyy" name="datePicker" maxlength="10" [container]="container"
+                                    [(ngModel)]="elementoLista.fechaNacimiento" [autocomplete]="true" ngbDatepicker #date="ngbDatepicker"
+                                    >
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                             -->
+
 
                         <div [ngClass]="(nacionalidad.invalid && nacionalidad.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
                             <label class="col-form-label">{{l("Nacionalidad")}}<span class="text-danger"> *</span> </label>                            
