@@ -141,6 +141,24 @@
                             </div>
                         </div>
 
+                        <div [ngClass]="(dp.invalid && dp.touched)?'form-group mb-4 has-error ':'form-group mb-4'">                        
+                                <label class="col-form-label">Fecha de nacimiento</label>
+                                <div class="input-group-icon input-group-icon-left">
+                                    <span (click)="dp.show()" style="cursor:pointer" class="input-icon input-icon-left"><i class="fa fa-calendar"></i></span>
+                                    <input 
+                                        placeholder="Datepicker"  
+                                        placement="bottom left" 
+                                        [bsConfig]="{ containerClass: 'theme-dark-blue' }" 
+                                        [(ngModel)]="elementoLista.fechaNacimiento" 
+                                        name="fecha" 
+                                        type="text" 
+                                        placeholder="Ingrese una fecha"
+                                        class="form-control" 
+                                        bsDatepicker 
+                                        #dp="bsDatepicker">
+                                        <app-input-validation [input]="dp"></app-input-validation>
+                                </div>
+                            </div>
                         <!-- <app-input-date
                             tittle="Fecha de nacimiento"
                             [date]="elementoLista.fechaNacimiento"

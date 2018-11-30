@@ -34,10 +34,9 @@
               placeholder="Ingrese una fecha"  
               autocomplete="off" 
               placement="bottom left" 
-              [bsConfig]="{ containerClass: 'theme-dark-blue' }" 
+              [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
               name="fecha" 
-             
-              (bsValueChange)="setDate($event)"
+              [(ngModel)]="model"
               type="text" class="form-control no-shadow" 
               bsDatepicker #dp="bsDatepicker">
     </div>

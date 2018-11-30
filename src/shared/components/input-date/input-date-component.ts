@@ -34,7 +34,7 @@ defineLocale('es', esDoLocale);
 
 //   public mostrarTitulo = true;
 //   public validDate = true;
-//   public model: NgbDateStruct;
+//   public model;
 
 //   ngbDateParserFormatter = new NgbDateFRParserFormatter();
 //   mask =  MascarasConstantes;
@@ -116,7 +116,7 @@ export class InputDateComponent implements OnInit {
   set date(value: Date | null) {
     if (this._date !== value) {
       this._date = value;
-      // this.updateDate();
+      this.updateDate();
     }
   }
   public model: Date;
@@ -124,7 +124,7 @@ export class InputDateComponent implements OnInit {
   constructor(
     private localeService: BsLocaleService
   ) {
-    this.localeService.use('es')
+
   }
 
   get date(): Date | null {
@@ -140,17 +140,19 @@ export class InputDateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.localeService.use('es')
   }
 
   public setDate(date): void {
-    // this._date = this.model;
+     this._date = this.model;
 
     console.log(date);
-    if (isDateValid(date)) {
-      this.change.emit(date);
-    } {
-      this.change.emit(null);
-    }
+     this.change.emit(this.model);
+
+    // if (isDate(date.toLocaleDateString())) {
+    //   this.change.emit(date);
+    // } else {
+    //   this.change.emit(null);
+    // }
   }
 }
