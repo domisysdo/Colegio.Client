@@ -14,6 +14,8 @@ import { NgbModule, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { ModalHelper } from './helpers/ModalHelper';
 import { TextMaskModule } from 'angular2-text-mask';
+import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
+import { BsDatepickerModule } from 'ngx-bootstrap';
 
 
 @NgModule({
@@ -24,6 +26,8 @@ import { TextMaskModule } from 'angular2-text-mask';
         RouterModule,
         NgbModule.forRoot(),
         TextMaskModule,
+        NgxMyDatePickerModule.forRoot(),
+        BsDatepickerModule.forRoot()
     ],
     declarations: [
         MaterialInput,
@@ -37,7 +41,9 @@ import { TextMaskModule } from 'angular2-text-mask';
         InputValidationComponent,
         TableItemsDeleteComponent,
         TextMaskModule,
-        InputDateComponent
+        InputDateComponent,
+        NgxMyDatePickerModule,
+        BsDatepickerModule
     ],
     providers: [
         ModalHelper

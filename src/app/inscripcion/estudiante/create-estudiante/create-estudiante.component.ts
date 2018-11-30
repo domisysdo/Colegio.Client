@@ -11,7 +11,8 @@ import { NgForm } from '@angular/forms';
 import { SexoArray } from '@app/inscripcion/shared/inscripcion-arrays';
 import { NgxDatatableHelper } from '@shared/helpers/NgxDatatableHelper';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-
+import { BsLocaleService, defineLocale, esDoLocale } from 'ngx-bootstrap';
+defineLocale('es', esDoLocale);
 
 
 @Component({
@@ -30,7 +31,7 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     emailsEstudiante: EmailEstudianteDto[] = [];
     direccionesEstudiante: DireccionEstudianteDto[] = [];
     familiares: FamiliarEstudianteDto[] = [];
-
+    model;
     active = false;
     saving = false;
 
@@ -48,12 +49,14 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
         injector: Injector,
         private _router: Router,
         private _estudianteService: EstudianteServiceProxy,
-        private _nacionalidadService: NacionalidadServiceProxy
+        private _nacionalidadService: NacionalidadServiceProxy,
+        private localeService: BsLocaleService
     ) {
         super(injector);
     }
 
     ngOnInit(): void {
+        this.localeService.use('es')
         this.obtenerNacionalidades();
         this.obtenerValoresDefecto();
     }

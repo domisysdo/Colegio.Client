@@ -21,6 +21,7 @@ import { CreateUserComponent } from '@app/users/create-user/create-user.componen
 import { EditUserComponent } from '@app/users/edit-user/edit-user.component';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 
+
 @NgModule({
   imports:
   [
@@ -31,7 +32,7 @@ import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
     ModalModule.forRoot(),
     FormsModule,
     AngularDateTimePickerModule,
-    SharedModule
+    SharedModule,
   ],
 
   declarations: [
