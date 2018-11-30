@@ -148,8 +148,9 @@
                                     <input 
                                         placeholder="Datepicker"  
                                         placement="bottom left" 
-                                        [bsConfig]="{ containerClass: 'theme-dark-blue' }" 
-                                        [(ngModel)]="elementoLista.fechaNacimiento" 
+                                        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
+                                        [(bsValue)]="elementoLista.fechaNacimiento"
+                                        value="{{ elementoLista.fechaNacimiento | date:'dd/MM/yyyy'}}"
                                         name="fecha" 
                                         type="text" 
                                         placeholder="Ingrese una fecha"

@@ -11,8 +11,6 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 
-import * as moment from 'moment';
-
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 @Injectable()
@@ -12670,7 +12668,7 @@ export class EstudianteDto implements IEstudianteDto {
     nombres: string | undefined;
     primerApellido: string | undefined;
     segundoApellido: string | undefined;
-    fechaNacimiento: moment.Moment | undefined;
+    fechaNacimiento: Date | undefined;
     sexo: EstudianteDtoSexo | undefined;
     estadoCivil: EstudianteDtoEstadoCivil | undefined;
     estado: EstudianteDtoEstado | undefined;
@@ -12696,7 +12694,7 @@ export class EstudianteDto implements IEstudianteDto {
             this.nombres = data["nombres"];
             this.primerApellido = data["primerApellido"];
             this.segundoApellido = data["segundoApellido"];
-            this.fechaNacimiento = data["fechaNacimiento"] ? moment(data["fechaNacimiento"].toString()) : <any>undefined;
+            this.fechaNacimiento = data["fechaNacimiento"] ? new Date(data["fechaNacimiento"].toString()) : <any>undefined;
             this.sexo = data["sexo"];
             this.estadoCivil = data["estadoCivil"];
             this.estado = data["estado"];
@@ -12780,7 +12778,7 @@ export interface IEstudianteDto {
     nombres: string | undefined;
     primerApellido: string | undefined;
     segundoApellido: string | undefined;
-    fechaNacimiento: moment.Moment | undefined;
+    fechaNacimiento: Date | undefined;
     sexo: EstudianteDtoSexo | undefined;
     estadoCivil: EstudianteDtoEstadoCivil | undefined;
     estado: EstudianteDtoEstado | undefined;
@@ -12966,7 +12964,7 @@ export class FamiliarEstudianteDto implements IFamiliarEstudianteDto {
     nombres: string | undefined;
     primerApellido: string | undefined;
     segundoApellido: string | undefined;
-    fechaNacimiento: moment.Moment | undefined;
+    fechaNacimiento: Date | undefined;
     sexo: FamiliarEstudianteDtoSexo | undefined;
     estadoCivil: FamiliarEstudianteDtoEstadoCivil | undefined;
     estado: FamiliarEstudianteDtoEstado | undefined;
@@ -12995,7 +12993,7 @@ export class FamiliarEstudianteDto implements IFamiliarEstudianteDto {
             this.nombres = data["nombres"];
             this.primerApellido = data["primerApellido"];
             this.segundoApellido = data["segundoApellido"];
-            this.fechaNacimiento = data["fechaNacimiento"] ? moment(data["fechaNacimiento"].toString()) : <any>undefined;
+            this.fechaNacimiento = data["fechaNacimiento"] ? new Date(data["fechaNacimiento"].toString()) : <any>undefined;
             this.sexo = data["sexo"];
             this.estadoCivil = data["estadoCivil"];
             this.estado = data["estado"];
@@ -13077,7 +13075,7 @@ export interface IFamiliarEstudianteDto {
     nombres: string | undefined;
     primerApellido: string | undefined;
     segundoApellido: string | undefined;
-    fechaNacimiento: moment.Moment | undefined;
+    fechaNacimiento: Date | undefined;
     sexo: FamiliarEstudianteDtoSexo | undefined;
     estadoCivil: FamiliarEstudianteDtoEstadoCivil | undefined;
     estado: FamiliarEstudianteDtoEstado | undefined;
@@ -13311,7 +13309,7 @@ export interface IPagedResultDtoOfIncidenciaEstudianteDto {
 export class IncidenciaEstudianteDto implements IIncidenciaEstudianteDto {
     justificada: boolean | undefined;
     descripcion: string | undefined;
-    fecha: moment.Moment | undefined;
+    fecha: Date | undefined;
     materiaId: number | undefined;
     estudianteId: number | undefined;
     tipoIncidenciaId: number | undefined;
@@ -13330,7 +13328,7 @@ export class IncidenciaEstudianteDto implements IIncidenciaEstudianteDto {
         if (data) {
             this.justificada = data["justificada"];
             this.descripcion = data["descripcion"];
-            this.fecha = data["fecha"] ? moment(data["fecha"].toString()) : <any>undefined;
+            this.fecha = data["fecha"] ? new Date(data["fecha"].toString()) : <any>undefined;
             this.materiaId = data["materiaId"];
             this.estudianteId = data["estudianteId"];
             this.tipoIncidenciaId = data["tipoIncidenciaId"];
@@ -13368,7 +13366,7 @@ export class IncidenciaEstudianteDto implements IIncidenciaEstudianteDto {
 export interface IIncidenciaEstudianteDto {
     justificada: boolean | undefined;
     descripcion: string | undefined;
-    fecha: moment.Moment | undefined;
+    fecha: Date | undefined;
     materiaId: number | undefined;
     estudianteId: number | undefined;
     tipoIncidenciaId: number | undefined;
@@ -14394,7 +14392,7 @@ export class RoleListDto implements IRoleListDto {
     displayName: string | undefined;
     isStatic: boolean | undefined;
     isDefault: boolean | undefined;
-    creationTime: moment.Moment | undefined;
+    creationTime: Date | undefined;
     id: number | undefined;
 
     constructor(data?: IRoleListDto) {
@@ -14412,7 +14410,7 @@ export class RoleListDto implements IRoleListDto {
             this.displayName = data["displayName"];
             this.isStatic = data["isStatic"];
             this.isDefault = data["isDefault"];
-            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
             this.id = data["id"];
         }
     }
@@ -14448,7 +14446,7 @@ export interface IRoleListDto {
     displayName: string | undefined;
     isStatic: boolean | undefined;
     isDefault: boolean | undefined;
-    creationTime: moment.Moment | undefined;
+    creationTime: Date | undefined;
     id: number | undefined;
 }
 
@@ -14961,7 +14959,7 @@ export interface IGetCurrentLoginInformationsOutput {
 
 export class ApplicationInfoDto implements IApplicationInfoDto {
     version: string | undefined;
-    releaseDate: moment.Moment | undefined;
+    releaseDate: Date | undefined;
     features: { [key: string] : boolean; } | undefined;
 
     constructor(data?: IApplicationInfoDto) {
@@ -14976,7 +14974,7 @@ export class ApplicationInfoDto implements IApplicationInfoDto {
     init(data?: any) {
         if (data) {
             this.version = data["version"];
-            this.releaseDate = data["releaseDate"] ? moment(data["releaseDate"].toString()) : <any>undefined;
+            this.releaseDate = data["releaseDate"] ? new Date(data["releaseDate"].toString()) : <any>undefined;
             if (data["features"]) {
                 this.features = {};
                 for (let key in data["features"]) {
@@ -15018,7 +15016,7 @@ export class ApplicationInfoDto implements IApplicationInfoDto {
 
 export interface IApplicationInfoDto {
     version: string | undefined;
-    releaseDate: moment.Moment | undefined;
+    releaseDate: Date | undefined;
     features: { [key: string] : boolean; } | undefined;
 }
 
@@ -16364,8 +16362,8 @@ export class UserDto implements IUserDto {
     emailAddress: string;
     isActive: boolean | undefined;
     fullName: string | undefined;
-    lastLoginTime: moment.Moment | undefined;
-    creationTime: moment.Moment | undefined;
+    lastLoginTime: Date | undefined;
+    creationTime: Date | undefined;
     roleNames: string[] | undefined;
     id: number | undefined;
 
@@ -16386,8 +16384,8 @@ export class UserDto implements IUserDto {
             this.emailAddress = data["emailAddress"];
             this.isActive = data["isActive"];
             this.fullName = data["fullName"];
-            this.lastLoginTime = data["lastLoginTime"] ? moment(data["lastLoginTime"].toString()) : <any>undefined;
-            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.lastLoginTime = data["lastLoginTime"] ? new Date(data["lastLoginTime"].toString()) : <any>undefined;
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
             if (data["roleNames"] && data["roleNames"].constructor === Array) {
                 this.roleNames = [];
                 for (let item of data["roleNames"])
@@ -16438,8 +16436,8 @@ export interface IUserDto {
     emailAddress: string;
     isActive: boolean | undefined;
     fullName: string | undefined;
-    lastLoginTime: moment.Moment | undefined;
-    creationTime: moment.Moment | undefined;
+    lastLoginTime: Date | undefined;
+    creationTime: Date | undefined;
     roleNames: string[] | undefined;
     id: number | undefined;
 }

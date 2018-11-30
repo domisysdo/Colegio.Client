@@ -26,19 +26,23 @@
           -->
 
 
-<div class= "form-group mb-4">
+<div class= "form-group mb-4" >
     <label class="col-form-label">{{ tittle }}</label>
     <div class="input-group-icon input-group-icon-left">
         <span (click)="dp.show()" style="cursor:pointer" class="input-icon input-icon-left"><i class="fa fa-calendar"></i></span>
         <input
-              placeholder="Ingrese una fecha"  
-              autocomplete="off" 
-              placement="bottom left" 
-              [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
-              name="fecha" 
-              [(ngModel)]="model"
-              type="text" class="form-control no-shadow" 
-              bsDatepicker #dp="bsDatepicker">
+            placeholder="Datepicker"  
+            placement="bottom left" 
+            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
+            [(bsValue)]="model"
+            value="{{ model | date:'dd/MM/yyyy'}}"
+            name="fecha" 
+            type="text" 
+            (bsValueChange)="setDate($event)" data-format="dd/MM/yyyy"
+            placeholder="Ingrese una fecha"
+            class="form-control" 
+            bsDatepicker 
+            #dp="bsDatepicker">
     </div>
 </div>
 

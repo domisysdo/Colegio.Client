@@ -11,11 +11,10 @@ import { InputValidationComponent } from './components/validation/input-validati
 import { TableItemsDeleteComponent } from './components/tables/table-items-delete/table-items-delete.component';
 import { InputDateComponent } from './components/input-date/input-date-component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalHelper } from './helpers/ModalHelper';
 import { TextMaskModule } from 'angular2-text-mask';
-import { BsDatepickerModule } from 'ngx-bootstrap';
-
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
     imports: [
@@ -25,7 +24,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
         RouterModule,
         NgbModule.forRoot(),
         TextMaskModule,
-        BsDatepickerModule.forRoot()
+        BsDatepickerModule.forRoot(),
     ],
     declarations: [
         MaterialInput,

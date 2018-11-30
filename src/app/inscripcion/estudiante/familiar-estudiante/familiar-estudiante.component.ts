@@ -84,6 +84,7 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
     editarFamiliar(familiar: FamiliarEstudianteDto, content) {
         this.indexElementoSeleccionado = this.familiares.indexOf(familiar);
         this.elementoLista = JSON.parse(JSON.stringify(familiar));
+        console.log(this.elementoLista);
         this.modal = this.modalHelper.getLargeModal(content);
     }
 
@@ -92,6 +93,11 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
             this.elementoLista.nombreCompleto = this.elementoLista.nombres + ' ' +
             this.elementoLista.primerApellido + ' ' + this.elementoLista.segundoApellido;
             this.elementoLista.parentescoNombre = this.parentescoSelect.descripcion;
+
+            // const date = new Date(this.elementoLista.fechaNacimiento);
+            // console.log(date);
+            // this.elementoLista.fechaNacimiento = new Date(moment(this.elementoLista.fechaNacimient).format('YYYY/MM/DD'));
+            // console.log(this.elementoLista.fechaNacimiento);
             // this.elementoLista.fechaNacimiento = moment(this.elementoLista.fechaNacimiento); // .format('YYYY/MM/DD');
 
             if (this.indexElementoSeleccionado >= 0) {

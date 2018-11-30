@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { BsLocaleService, defineLocale, esDoLocale, isDate, isDateValid } from 'ngx-bootstrap';
-defineLocale('es', esDoLocale);
+
 
 // import { Component, OnInit, Input, forwardRef, Output, EventEmitter } from '@angular/core';
 // import { NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
@@ -115,14 +114,16 @@ export class InputDateComponent implements OnInit {
   @Input()
   set date(value: Date | null) {
     if (this._date !== value) {
+      console.log(value);
       this._date = value;
       this.updateDate();
     }
+    this._date = new Date();
   }
   public model: Date;
 
   constructor(
-    private localeService: BsLocaleService
+
   ) {
 
   }
@@ -140,16 +141,15 @@ export class InputDateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.localeService.use('es')
+
   }
 
-  public setDate(date): void {
-     this._date = this.model;
-
+  public setDate(date: Date): void {
+    //  this._date = this.model;
     console.log(date);
-     this.change.emit(this.model);
+     this.change.emit(date);
 
-    // if (isDate(date.toLocaleDateString())) {
+    // if (isDateValid(date)) {
     //   this.change.emit(date);
     // } else {
     //   this.change.emit(null);
