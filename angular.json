@@ -37,7 +37,7 @@
               "node_modules/@swimlane/ngx-datatable/release/assets/icons.css",
               "node_modules/@ng-select/ng-select/themes/default.theme.css",
               "node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css",
-              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",             
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"           
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
