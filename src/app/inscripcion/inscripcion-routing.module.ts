@@ -10,6 +10,9 @@ import { EditGrupoComponent } from './grupo/edit-grupo/edit-grupo.component';
 import { ParentescoComponent } from './parentesco/parentesco.component';
 import { CreateParentescoComponent } from './parentesco/create-parentesco/create-parentesco.component';
 import { EditParentescoComponent } from './parentesco/edit-parentesco/edit-parentesco.component';
+import { PeriodoComponent } from './periodo/periodo.component';
+import { CreatePeriodoComponent } from './periodo/create-periodo/create-periodo.component';
+import { EditPeriodoComponent } from './periodo/edit-periodo/edit-periodo.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
@@ -51,6 +54,18 @@ const routes: Routes = [
       {
         path: 'inscripcion/parentesco/edit-parentesco/:id',
         component: EditParentescoComponent
+      },
+      {
+        path: 'inscripcion/periodo',
+        component: PeriodoComponent, canActivate: [AppRouteGuard]
+      },
+      {
+        path: 'inscripcion/periodo/create-periodo',
+        component: CreatePeriodoComponent
+      },
+      {
+        path: 'inscripcion/periodo/edit-periodo/:id',
+        component: EditPeriodoComponent
       },
     ]
   }
