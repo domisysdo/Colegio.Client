@@ -22,6 +22,7 @@ import { ParentescoComponent } from './parentesco/parentesco.component';
 import { CreateParentescoComponent } from './parentesco/create-parentesco/create-parentesco.component';
 import { EditParentescoComponent } from './parentesco/edit-parentesco/edit-parentesco.component';
 import { FamiliarEstudianteComponent } from './estudiante/familiar-estudiante/familiar-estudiante.component';
+import { PadecimientoEstudianteComponent } from './estudiante/padecimiento-estudiante/padecimiento-estudiante.component';
 
 @NgModule({
 
@@ -51,7 +52,8 @@ import { FamiliarEstudianteComponent } from './estudiante/familiar-estudiante/fa
         ParentescoComponent,
         CreateParentescoComponent,
         EditParentescoComponent,
-        FamiliarEstudianteComponent
+        FamiliarEstudianteComponent,
+        PadecimientoEstudianteComponent
     ],
     providers: [
         ScriptLoaderService

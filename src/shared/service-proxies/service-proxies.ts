@@ -12317,9 +12317,6 @@ export class DireccionFamiliarEstudianteDto implements IDireccionFamiliarEstudia
     descripcion: string | undefined;
     familiarEstudianteId: number | undefined;
     tipoDireccionId: number | undefined;
-    paisId: number | undefined;
-    provinciaId: number | undefined;
-    municipioId: number | undefined;
     sectorId: number | undefined;
     id: number | undefined;
 
@@ -12337,9 +12334,6 @@ export class DireccionFamiliarEstudianteDto implements IDireccionFamiliarEstudia
             this.descripcion = data["descripcion"];
             this.familiarEstudianteId = data["familiarEstudianteId"];
             this.tipoDireccionId = data["tipoDireccionId"];
-            this.paisId = data["paisId"];
-            this.provinciaId = data["provinciaId"];
-            this.municipioId = data["municipioId"];
             this.sectorId = data["sectorId"];
             this.id = data["id"];
         }
@@ -12357,9 +12351,6 @@ export class DireccionFamiliarEstudianteDto implements IDireccionFamiliarEstudia
         data["descripcion"] = this.descripcion;
         data["familiarEstudianteId"] = this.familiarEstudianteId;
         data["tipoDireccionId"] = this.tipoDireccionId;
-        data["paisId"] = this.paisId;
-        data["provinciaId"] = this.provinciaId;
-        data["municipioId"] = this.municipioId;
         data["sectorId"] = this.sectorId;
         data["id"] = this.id;
         return data; 
@@ -12377,9 +12368,6 @@ export interface IDireccionFamiliarEstudianteDto {
     descripcion: string | undefined;
     familiarEstudianteId: number | undefined;
     tipoDireccionId: number | undefined;
-    paisId: number | undefined;
-    provinciaId: number | undefined;
-    municipioId: number | undefined;
     sectorId: number | undefined;
     id: number | undefined;
 }
@@ -12677,6 +12665,7 @@ export class EstudianteDto implements IEstudianteDto {
     listaPadecimientos: PadecimientoDto[] | undefined;
     listaEmail: EmailEstudianteDto[] | undefined;
     listaDireccionEstudiante: DireccionEstudianteDto[] | undefined;
+    listaFamiliarEstudiante: FamiliarEstudianteDto[] | undefined;
     id: number | undefined;
 
     constructor(data?: IEstudianteDto) {
@@ -12718,6 +12707,11 @@ export class EstudianteDto implements IEstudianteDto {
                 this.listaDireccionEstudiante = [];
                 for (let item of data["listaDireccionEstudiante"])
                     this.listaDireccionEstudiante.push(DireccionEstudianteDto.fromJS(item));
+            }
+            if (data["listaFamiliarEstudiante"] && data["listaFamiliarEstudiante"].constructor === Array) {
+                this.listaFamiliarEstudiante = [];
+                for (let item of data["listaFamiliarEstudiante"])
+                    this.listaFamiliarEstudiante.push(FamiliarEstudianteDto.fromJS(item));
             }
             this.id = data["id"];
         }
@@ -12761,6 +12755,11 @@ export class EstudianteDto implements IEstudianteDto {
             for (let item of this.listaDireccionEstudiante)
                 data["listaDireccionEstudiante"].push(item.toJSON());
         }
+        if (this.listaFamiliarEstudiante && this.listaFamiliarEstudiante.constructor === Array) {
+            data["listaFamiliarEstudiante"] = [];
+            for (let item of this.listaFamiliarEstudiante)
+                data["listaFamiliarEstudiante"].push(item.toJSON());
+        }
         data["id"] = this.id;
         return data; 
     }
@@ -12787,6 +12786,7 @@ export interface IEstudianteDto {
     listaPadecimientos: PadecimientoDto[] | undefined;
     listaEmail: EmailEstudianteDto[] | undefined;
     listaDireccionEstudiante: DireccionEstudianteDto[] | undefined;
+    listaFamiliarEstudiante: FamiliarEstudianteDto[] | undefined;
     id: number | undefined;
 }
 
@@ -12853,6 +12853,8 @@ export class PadecimientoDto implements IPadecimientoDto {
     descripcion: string | undefined;
     nota: string | undefined;
     estudianteId: number | undefined;
+    tipoPadecimientoId: number | undefined;
+    tipoPadecimientoDescripcion: string | undefined;
     id: number | undefined;
 
     constructor(data?: IPadecimientoDto) {
@@ -12869,6 +12871,8 @@ export class PadecimientoDto implements IPadecimientoDto {
             this.descripcion = data["descripcion"];
             this.nota = data["nota"];
             this.estudianteId = data["estudianteId"];
+            this.tipoPadecimientoId = data["tipoPadecimientoId"];
+            this.tipoPadecimientoDescripcion = data["tipoPadecimientoDescripcion"];
             this.id = data["id"];
         }
     }
@@ -12885,6 +12889,8 @@ export class PadecimientoDto implements IPadecimientoDto {
         data["descripcion"] = this.descripcion;
         data["nota"] = this.nota;
         data["estudianteId"] = this.estudianteId;
+        data["tipoPadecimientoId"] = this.tipoPadecimientoId;
+        data["tipoPadecimientoDescripcion"] = this.tipoPadecimientoDescripcion;
         data["id"] = this.id;
         return data; 
     }
@@ -12901,62 +12907,9 @@ export interface IPadecimientoDto {
     descripcion: string | undefined;
     nota: string | undefined;
     estudianteId: number | undefined;
+    tipoPadecimientoId: number | undefined;
+    tipoPadecimientoDescripcion: string | undefined;
     id: number | undefined;
-}
-
-export class PagedResultDtoOfFamiliarEstudianteDto implements IPagedResultDtoOfFamiliarEstudianteDto {
-    totalCount: number | undefined;
-    items: FamiliarEstudianteDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfFamiliarEstudianteDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [];
-                for (let item of data["items"])
-                    this.items.push(FamiliarEstudianteDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfFamiliarEstudianteDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfFamiliarEstudianteDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-
-    clone(): PagedResultDtoOfFamiliarEstudianteDto {
-        const json = this.toJSON();
-        let result = new PagedResultDtoOfFamiliarEstudianteDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedResultDtoOfFamiliarEstudianteDto {
-    totalCount: number | undefined;
-    items: FamiliarEstudianteDto[] | undefined;
 }
 
 export class FamiliarEstudianteDto implements IFamiliarEstudianteDto {
@@ -12971,10 +12924,11 @@ export class FamiliarEstudianteDto implements IFamiliarEstudianteDto {
     nacionalidadId: number | undefined;
     parentescoId: number | undefined;
     profesionId: number | undefined;
+    tipoIdentificacionId: number | undefined;
     parentescoNombre: string | undefined;
     nombreCompleto: string | undefined;
     listaTelefonos: TelefonoFamiliarEstudianteDto[] | undefined;
-    listaEmail: EmailFamiliarEstudianteDto[] | undefined;
+    listaEmails: EmailFamiliarEstudianteDto[] | undefined;
     listaDirecciones: DireccionFamiliarEstudianteDto[] | undefined;
     id: number | undefined;
 
@@ -13000,6 +12954,7 @@ export class FamiliarEstudianteDto implements IFamiliarEstudianteDto {
             this.nacionalidadId = data["nacionalidadId"];
             this.parentescoId = data["parentescoId"];
             this.profesionId = data["profesionId"];
+            this.tipoIdentificacionId = data["tipoIdentificacionId"];
             this.parentescoNombre = data["parentescoNombre"];
             this.nombreCompleto = data["nombreCompleto"];
             if (data["listaTelefonos"] && data["listaTelefonos"].constructor === Array) {
@@ -13007,10 +12962,10 @@ export class FamiliarEstudianteDto implements IFamiliarEstudianteDto {
                 for (let item of data["listaTelefonos"])
                     this.listaTelefonos.push(TelefonoFamiliarEstudianteDto.fromJS(item));
             }
-            if (data["listaEmail"] && data["listaEmail"].constructor === Array) {
-                this.listaEmail = [];
-                for (let item of data["listaEmail"])
-                    this.listaEmail.push(EmailFamiliarEstudianteDto.fromJS(item));
+            if (data["listaEmails"] && data["listaEmails"].constructor === Array) {
+                this.listaEmails = [];
+                for (let item of data["listaEmails"])
+                    this.listaEmails.push(EmailFamiliarEstudianteDto.fromJS(item));
             }
             if (data["listaDirecciones"] && data["listaDirecciones"].constructor === Array) {
                 this.listaDirecciones = [];
@@ -13041,6 +12996,7 @@ export class FamiliarEstudianteDto implements IFamiliarEstudianteDto {
         data["nacionalidadId"] = this.nacionalidadId;
         data["parentescoId"] = this.parentescoId;
         data["profesionId"] = this.profesionId;
+        data["tipoIdentificacionId"] = this.tipoIdentificacionId;
         data["parentescoNombre"] = this.parentescoNombre;
         data["nombreCompleto"] = this.nombreCompleto;
         if (this.listaTelefonos && this.listaTelefonos.constructor === Array) {
@@ -13048,10 +13004,10 @@ export class FamiliarEstudianteDto implements IFamiliarEstudianteDto {
             for (let item of this.listaTelefonos)
                 data["listaTelefonos"].push(item.toJSON());
         }
-        if (this.listaEmail && this.listaEmail.constructor === Array) {
-            data["listaEmail"] = [];
-            for (let item of this.listaEmail)
-                data["listaEmail"].push(item.toJSON());
+        if (this.listaEmails && this.listaEmails.constructor === Array) {
+            data["listaEmails"] = [];
+            for (let item of this.listaEmails)
+                data["listaEmails"].push(item.toJSON());
         }
         if (this.listaDirecciones && this.listaDirecciones.constructor === Array) {
             data["listaDirecciones"] = [];
@@ -13082,10 +13038,11 @@ export interface IFamiliarEstudianteDto {
     nacionalidadId: number | undefined;
     parentescoId: number | undefined;
     profesionId: number | undefined;
+    tipoIdentificacionId: number | undefined;
     parentescoNombre: string | undefined;
     nombreCompleto: string | undefined;
     listaTelefonos: TelefonoFamiliarEstudianteDto[] | undefined;
-    listaEmail: EmailFamiliarEstudianteDto[] | undefined;
+    listaEmails: EmailFamiliarEstudianteDto[] | undefined;
     listaDirecciones: DireccionFamiliarEstudianteDto[] | undefined;
     id: number | undefined;
 }
@@ -13143,6 +13100,61 @@ export interface ITelefonoFamiliarEstudianteDto {
     tipoTelefonoId: number | undefined;
     familiarEstudianteId: number | undefined;
     id: number | undefined;
+}
+
+export class PagedResultDtoOfFamiliarEstudianteDto implements IPagedResultDtoOfFamiliarEstudianteDto {
+    totalCount: number | undefined;
+    items: FamiliarEstudianteDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfFamiliarEstudianteDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.totalCount = data["totalCount"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(FamiliarEstudianteDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfFamiliarEstudianteDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfFamiliarEstudianteDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): PagedResultDtoOfFamiliarEstudianteDto {
+        const json = this.toJSON();
+        let result = new PagedResultDtoOfFamiliarEstudianteDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPagedResultDtoOfFamiliarEstudianteDto {
+    totalCount: number | undefined;
+    items: FamiliarEstudianteDto[] | undefined;
 }
 
 export class PagedResultDtoOfGrupoDto implements IPagedResultDtoOfGrupoDto {

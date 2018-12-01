@@ -2,7 +2,7 @@ import { Component, ViewChild, Injector, ElementRef, OnInit } from '@angular/cor
 
 import {
     EstudianteDto, EstudianteServiceProxy, NacionalidadServiceProxy, NacionalidadDto, TelefonoEstudianteDto,
-    TipoTelefonoDto, EmailEstudianteDto, TipoEmailDto, DireccionEstudianteDto, FamiliarEstudianteDto
+    TipoTelefonoDto, EmailEstudianteDto, TipoEmailDto, DireccionEstudianteDto, FamiliarEstudianteDto, PadecimientoDto
 } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
@@ -11,8 +11,7 @@ import { NgForm } from '@angular/forms';
 import { SexoArray } from '@app/inscripcion/shared/inscripcion-arrays';
 import { NgxDatatableHelper } from '@shared/helpers/NgxDatatableHelper';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-// import { BsLocaleService, defineLocale, deLocale, esDoLocale } from 'ngx-bootstrap';
-// defineLocale('es', esDoLocale);
+import { defineLocale, esDoLocale, BsLocaleService } from 'ngx-bootstrap';
 
 
 @Component({
@@ -31,6 +30,7 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     emailsEstudiante: EmailEstudianteDto[] = [];
     direccionesEstudiante: DireccionEstudianteDto[] = [];
     familiares: FamiliarEstudianteDto[] = [];
+    // padecimientos: PadecimientoDto[];
     model;
     active = false;
     saving = false;
@@ -50,13 +50,14 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
         private _router: Router,
         private _estudianteService: EstudianteServiceProxy,
         private _nacionalidadService: NacionalidadServiceProxy,
-        // private localeService: BsLocaleService
+        private localeService: BsLocaleService
     ) {
         super(injector);
     }
 
     ngOnInit(): void {
-        // this.localeService.use('es')
+        defineLocale('es', esDoLocale);
+        this.localeService.use('es')
         this.obtenerNacionalidades();
         this.obtenerValoresDefecto();
     }
@@ -85,13 +86,17 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     }
 
     obtenerValoresDefecto() {
-        this.estudiante.init({ estado: 1 });
+        this.estudiante.init({ estado: 1, listaPadecimientos: [] });
     }
 
     agregarRelaciones() {
         this.estudiante.listaTelefonos = this.telefonosEstudiante;
         this.estudiante.listaEmail = this.emailsEstudiante;
         this.estudiante.listaDireccionEstudiante = this.direccionesEstudiante;
+        this.estudiante.listaFamiliarEstudiante = this.familiares;
+        // this.estudiante.listaPadecimientos = this.padecimientos;
+        console.log('vamos');
+        console.log(this.estudiante.listaPadecimientos);
     }
 
     close(): void {

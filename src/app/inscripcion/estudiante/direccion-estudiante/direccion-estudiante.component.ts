@@ -1,10 +1,10 @@
 import { OnInit, Component, Input, Injector } from '@angular/core';
 import {
-  DireccionEstudianteDto,
-  TipoDireccionServiceProxy,
-  TipoDireccionDto,
-  SectorServiceProxy,
-  SectorDto
+    DireccionEstudianteDto,
+    TipoDireccionServiceProxy,
+    TipoDireccionDto,
+    SectorServiceProxy,
+    SectorDto
 } from '@shared/service-proxies/service-proxies';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalHelper } from '@shared/helpers/ModalHelper';
@@ -14,31 +14,34 @@ import { NgxDatatableHelper } from '@shared/helpers/NgxDatatableHelper';
 import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
-  selector: 'app-direccion-estudiante',
-  templateUrl: './direccion-estudiante.component.html'
+    selector: 'app-direccion-estudiante',
+    templateUrl: './direccion-estudiante.component.html'
 })
 export class DireccionEstudianteComponent extends AppComponentBase implements OnInit {
-  indexElementoSeleccionado = -1;
-  elementoLista: any;
-  direccionSelect: any;
-  sectorSelect: any;
-  tiposDireccion: TipoDireccionDto[];
-  sectores: SectorDto[];
-  maskDireccion = MascarasConstantes;
-  ngxDatatableHelper = NgxDatatableHelper;
 
-  public modal: NgbModalRef;
+    direccion: any;
+    direccionSelect: any;
+    sectorSelect: any;
+    tiposDireccion: TipoDireccionDto[];
+    sectores: SectorDto[];
+    listaVisualizacionDireccion: DireccionEstudianteDto[] = [];
 
-  @Input() direcciones: DireccionEstudianteDto[] = [];
+    maskDireccion = MascarasConstantes;
+    ngxDatatableHelper = NgxDatatableHelper;
+    indexElementoSeleccionado = -1;
 
-  constructor(
-    injector: Injector,
-    private _tipoDireccionService: TipoDireccionServiceProxy,
-    private _sectorService: SectorServiceProxy,
-    private modalHelper: ModalHelper
-  ) {
-      super(injector)
-  }
+    public modal: NgbModalRef;
+
+    @Input() direcciones: DireccionEstudianteDto[] = [];
+
+    constructor(
+        injector: Injector,
+        private _tipoDireccionService: TipoDireccionServiceProxy,
+        private _sectorService: SectorServiceProxy,
+        private modalHelper: ModalHelper
+    ) {
+        super(injector)
+    }
 
     ngOnInit(): void {
         this.obtenerTiposDireccion();
@@ -47,10 +50,10 @@ export class DireccionEstudianteComponent extends AppComponentBase implements On
 
 
     obtenerTiposDireccion() {
-    this._tipoDireccionService.getAllForSelect()
-        .subscribe((result: TipoDireccionDto[]) => {
-            this.tiposDireccion = result;
-        });
+        this._tipoDireccionService.getAllForSelect()
+            .subscribe((result: TipoDireccionDto[]) => {
+                this.tiposDireccion = result;
+            });
     }
 
     obtenerSectores() {
@@ -58,34 +61,34 @@ export class DireccionEstudianteComponent extends AppComponentBase implements On
             .subscribe((result: SectorDto[]) => {
                 this.sectores = result;
             });
-        }
+    }
 
     agregarDireccion(content) {
         this.indexElementoSeleccionado = -1;
-        this.elementoLista = new DireccionEstudianteDto();
+        this.direccion = new DireccionEstudianteDto();
         this.modal = this.modalHelper.getMediumModal(content);
     }
 
     editarDireccion(direccion: DireccionEstudianteDto, content) {
         this.indexElementoSeleccionado = this.direcciones.indexOf(direccion);
-        this.elementoLista = JSON.parse(JSON.stringify(direccion));
+        this.direccion = JSON.parse(JSON.stringify(direccion));
         this.modal = this.modalHelper.getMediumModal(content);
     }
 
     registrarDireccions() {
         if (!this.direccionExisteDetalle()) {
-            this.elementoLista.tipoDireccionNombre = this.direccionSelect.descripcion;
-            this.elementoLista.sectorNombre = this.sectorSelect.nombre;
+            this.direccion.tipoDireccionNombre = this.direccionSelect.descripcion;
+            this.direccion.sectorNombre = this.sectorSelect.nombre;
 
             if (this.indexElementoSeleccionado >= 0) {
-                this.direcciones[this.indexElementoSeleccionado] = this.elementoLista;
+                this.direcciones[this.indexElementoSeleccionado] = this.direccion;
             } else {
-                this.direcciones.push(this.elementoLista);
+                this.direcciones.push(this.direccion);
             }
 
-            this.direcciones = [...this.direcciones];
+            this.listaVisualizacionDireccion = [...this.direcciones];
             this.indexElementoSeleccionado = -1;
-            this.elementoLista = null;
+            this.direccion = null;
             this.modal.close();
         }
     }
@@ -93,7 +96,7 @@ export class DireccionEstudianteComponent extends AppComponentBase implements On
     direccionExisteDetalle(): boolean {
         for (const item of this.direcciones) {
             if (this.direcciones.indexOf(item) !== this.indexElementoSeleccionado &&
-                item.descripcion === this.elementoLista.descripcion) {
+                item.descripcion === this.direccion.descripcion) {
                 MessageHelper.show('La dirección ya existe en el detalle', 'Ya existe');
                 return true;
             }
