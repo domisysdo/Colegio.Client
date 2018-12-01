@@ -35,8 +35,10 @@
               "src/assets/css/ngx-datatable.css",               
               "node_modules/toastr/build/toastr.min.css",
               "node_modules/@swimlane/ngx-datatable/release/assets/icons.css",
-              "node_modules/@ng-select/ng-select/themes/default.theme.css"
-             ],
+              "node_modules/@ng-select/ng-select/themes/default.theme.css",
+              "node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"           
+            ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/jquery-migrate/dist/jquery-migrate.min.js",
@@ -71,6 +73,7 @@
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js",
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js", 
               "src/assets/js/app.js",
+              "node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
               {
                 "input": "node_modules/popper.js/dist/umd/popper.min.js"
               },
@@ -181,6 +184,7 @@
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js",
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js",
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js",
+              "node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
               "src/assets/js/app.js",
               {
                 "input": "node_modules/jquery/dist/jquery.min.js"
@@ -219,7 +223,8 @@
               "src/bsb-theme/css/style.css",
               "src/bsb-theme/css/themes/all-themes.css",
               "src/shared/core.less",
-              "node_modules/@ng-select/ng-select/themes/default.theme.css"
+              "node_modules/@ng-select/ng-select/themes/default.theme.css",
+              "node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css"
             ],
             "assets": [
               "src/assets",

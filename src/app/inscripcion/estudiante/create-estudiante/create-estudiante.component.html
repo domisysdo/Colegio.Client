@@ -1,0 +1,209 @@
+﻿
+<div class="page-content fade-in-up" >
+    <div class="col-md-8 offset-md-2">
+        <div class="ibox">
+            
+            <!-- Inicio de Header del formulario -->
+            <div class="ibox-head alert alert-primary alert-bordered">
+                <h4>Mantenimiento de estudiante</h4>
+            </div>
+            <!-- Fin de Header del formulario -->
+
+            <!-- Inicio de contenido del formulario -->
+            <div #content>
+                <form class="form-horizontal" #estudianteForm="ngForm" method="post" novalidate (ngSubmit)="save(estudianteForm)">
+                    <div class="ibox-body">   
+                        <ngb-tabset [destroyOnHide]=false class="tabs-line">
+                            <ngb-tab title="Datos generales">
+                                <ng-template ngbTabContent>
+                                    <div [ngClass]="(identificador.invalid && identificador.touched)?' form-group mb-4 has-error ':' form-group mb-4'">                        
+                                        <label class="col-form-label">{{l("Identificador")}}<span class="text-danger"> *</span></label>
+                                        <span *ngIf = "identificador.invalid && identificador.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                        <input 
+                                        id="identificador" 
+                                        class="form-control no-shadow" 
+                                        type="text" 
+                                        #identificador="ngModel"
+                                        [(ngModel)]="estudiante.identificador" 
+                                        name="Identificador" 
+                                        required
+                                        minlength="2" 
+                                        maxlength="32" 
+                                        placeholder="Identificador"/>
+                                        <app-input-validation [input]="identificador"></app-input-validation>
+                                    </div>
+
+                                    <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
+                                        <label class="col-form-label">{{l("Nombres")}}<span class="text-danger"> *</span> </label>
+                                        <span *ngIf="nombres.invalid && nombres.touched" class="input-icon input-icon-right text-danger"></span>
+                                        <input 
+                                        id="nombres" 
+                                        class="form-control no-shadow" 
+                                        type="text"
+                                        #nombres = "ngModel" 
+                                        [(ngModel)]="estudiante.nombres" 
+                                        name="Nombres" 
+                                        required
+                                        minlength="2" 
+                                        maxlength="32" 
+                                        placeholder="Nombres"/>
+                                        <app-input-validation [input]="nombres"></app-input-validation>
+                                    </div>
+
+                                    <div class="row"> 
+                                        <div [ngClass]="(primerApellido.invalid && primerApellido.touched)?'col-sm-6 form-group has-error mb-4':'col-sm-6 form-group mb-4'">                        
+                                            <label class="col-form-label">{{l("Primer apellido")}}<span class="text-danger"> *</span></label>
+                                            <span *ngIf = "primerApellido.invalid && primerApellido.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                            <input 
+                                            id="primerApellido" 
+                                            class="form-control no-shadow" 
+                                            type="text" 
+                                            #primerApellido = "ngModel"
+                                            [(ngModel)]="estudiante.primerApellido" 
+                                            name="PrimerApellido" 
+                                            required
+                                            minlength="2" 
+                                            maxlength="32" 
+                                            placeholder="Primer apellido"/>
+                                            <app-input-validation [input]="primerApellido"></app-input-validation>
+                                            </div>
+
+                                        <div [ngClass]="(segundoApellido.invalid && segundoApellido.touched)?'col-sm-6 form-group mb-4 has-error ':'col-sm-6 form-group mb-4'">                        
+                                            <label class="col-form-label" for="segundoapellido">{{l("Segundo apellido")}}<span class="text-danger"> *</span></label>            
+                                            <span *ngIf = "(segundoApellido.invalid && segundoApellido.touched)" class="input-icon input-icon-right text-danger"></span>                                
+                                            <input 
+                                            id="segundoapellido"
+                                            class="form-control no-shadow" 
+                                            type="text" 
+                                            #segundoApellido = "ngModel"
+                                            [(ngModel)]="estudiante.segundoApellido" 
+                                            name="SegundoApellido" 
+                                            required
+                                            minlength="2" 
+                                            maxlength="32" 
+                                            placeholder="Segundo apellido"/>
+                                            <app-input-validation [input]="segundoApellido"></app-input-validation>
+
+                                        </div>
+                                    </div>
+
+                                    <div [ngClass]="(dp.invalid && dp.touched)?'form-group mb-4 has-error ':'form-group mb-4'">                        
+                                        <label class="col-form-label">Fecha de nacimiento</label>
+                                        <div class="input-group-icon input-group-icon-left">
+                                            <span (click)="dp.show()" style="cursor:pointer" class="input-icon input-icon-left"><i class="fa fa-calendar"></i></span>
+                                            <input 
+                                                placeholder="Datepicker"  
+                                                placement="bottom left" 
+                                                [bsConfig]="{ containerClass: 'theme-dark-blue' }" 
+                                                [(ngModel)]="estudiante.fechaNacimiento" 
+                                                name="fecha" 
+                                                type="text" 
+                                                placeholder="Ingrese una fecha"
+                                                class="form-control" 
+                                                bsDatepicker 
+                                                #dp="bsDatepicker">
+                                                <app-input-validation [input]="dp"></app-input-validation>
+                                        </div>
+                                    </div>
+                                                            
+
+                                    <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
+                                        <label class="col-form-label">{{l("Nacionalidad")}}<span class="text-danger"> *</span> </label>                            
+                                        <ng-select [items]="nacionalidades"
+                                        name="nacionalidadSelect"
+                                        bindLabel="descripcion"
+                                        bindValue="id"
+                                        required
+                                        #nacionalidad = "ngModel"
+                                        [(ngModel)]="estudiante.nacionalidadId">
+                                        <ng-template ng-option-tmp let-item="item">
+                                        {{item.descripcion}} <br />
+                                        <small class="text-muted">{{item.identificador}}</small>
+                                        </ng-template>
+                                        </ng-select>
+                                        <app-input-validation [input]="nacionalidad"></app-input-validation>
+                                    </div>
+
+                                    <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
+                                        <label class="col-form-label">{{l("Sexo")}}<span class="text-danger"> *</span> </label>                            
+                                        <ng-select 
+                                            [(ngModel)]="estudiante.sexo" 
+                                            name= "sexoSelect" 
+                                            #sexoModel = "ngModel" 
+                                            required>
+                                            <ng-option *ngFor="let sex of sexo" [value]="sex.value">{{sex.name}}</ng-option>
+                                        </ng-select>
+                                        <app-input-validation [input]="sexoModel"></app-input-validation>
+                                    </div>
+
+                                    <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
+                                        <label class="col-form-label">{{l("Estado civil")}}<span class="text-danger"> *</span> </label>                            
+                                        <ng-select 
+                                            [(ngModel)]="estudiante.estadoCivil" 
+                                            name= "estadoCivilSelect" 
+                                            #estadoCivilModel = "ngModel" 
+                                            required>
+                                            <ng-option *ngFor="let estado of estadoCivil" [value]="estado.value">{{estado.name}}</ng-option>
+                                        </ng-select>
+                                        <app-input-validation [input]="estadoCivilModel"></app-input-validation>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-form-label">{{l("Estado")}}<span class="text-danger"> *</span> </label>
+                                        <div>
+                                            <label class="radio radio-inline radio-primary">
+                                            <input [value]="1" [(ngModel)]="estudiante.estado" name="a" type="radio" checked="checked">
+                                            <span class="input-span"></span>Activo</label>
+
+                                            <label class="radio radio-inline radio-primary">
+                                            <input [value]="0" [(ngModel)]="estudiante.estado" name="a" type="radio">
+                                            <span class="input-span"></span>Inactivo</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Inicio componente telefonos -->
+                                    <app-telefono-estudiante [telefonos]="telefonosEstudiante"></app-telefono-estudiante>
+                                    <!-- Fin componente telefonos -->
+
+                                    <!-- Inicio componente emails -->
+                                    <app-email-estudiante [emails]="emailsEstudiante"></app-email-estudiante>
+                                    <!-- Fin componente emails -->
+
+                                    <!-- Inicio componente direcciones -->
+                                    <app-direccion-estudiante [direcciones]="direccionesEstudiante"></app-direccion-estudiante>
+                                    <!-- Fin componente direcciones -->
+                                </ng-template>
+                            </ngb-tab>
+
+                            <ngb-tab title="Familiares">
+                                <ng-template ngbTabContent>
+                                    <app-familiar-estudiante [familiares]="familiares"></app-familiar-estudiante>
+                                </ng-template>
+                            </ngb-tab>
+
+                            <ngb-tab title="Padecimientos">
+
+                            </ngb-tab>
+                        </ngb-tabset>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin de contenido del formulario -->
+
+<!-- Inicio botones registrar y cancelar -->
+<div class="page-content fade-in-up">
+    <div class="col-md-8 offset-md-2">
+        <div class="ibox">
+            <div class="ibox-footer row">
+                <div class="col-sm-12 ml-sm-auto">
+                    <button type="submit" (click)="save(estudianteForm)" class="btn btn-primary mr-2">{{l("Registrar")}}</button>
+                    <button [disabled]="saving" [routerLink]="['../../estudiante']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin botones registrar y cancelar -->

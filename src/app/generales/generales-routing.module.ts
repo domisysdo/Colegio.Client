@@ -20,6 +20,21 @@ import { EditTipoTelefonoComponent } from './tipo-telefono/edit-tipo-telefono/ed
 import { TipoDireccionComponent } from './tipo-direccion/tipo-direccion.component';
 import { CreateTipoDireccionComponent } from './tipo-direccion/create-tipo-direccion/create-tipo-direccion.component';
 import { EditTipoDireccionComponent } from './tipo-direccion/edit-tipo-direccion/edit-tipo-direccion.component';
+import { CreateTipoEmailComponent } from './tipo-email/create-tipo-email/create-tipo-email.component';
+import { EditTipoEmailComponent } from './tipo-email/edit-tipo-email/edit-tipo-email.component';
+import { TipoEmailComponent } from './tipo-email/tipo-email.component';
+import { ProfesionComponent } from './profesion/profesion.component';
+import { CreateProfesionComponent } from './profesion/create-profesion/create-profesion.component';
+import { EditProfesionComponent } from './profesion/edit-profesion/edit-profesion.component';
+import { TipoIdentificacionComponent } from './tipo-identificacion/tipo-identificacion.component';
+import { CreateTipoIdentificacionComponent } from './tipo-identificacion/create-tipo-identificacion/create-tipo-identificacion.component';
+import { EditTipoIdentificacionComponent } from './tipo-identificacion/edit-tipo-identificacion/edit-tipo-identificacion.component';
+import { CreateTipoIncidenciaComponent } from './tipo-incidencia/create-tipo-incidencia/create-tipo-incidencia.component';
+import { TipoIncidenciaComponent } from './tipo-incidencia/tipo-incidencia.component';
+import { EditTipoIncidenciaComponent } from './tipo-incidencia/edit-tipo-incidencia/edit-tipo-incidencia.component';
+import { TipoPadecimientoComponent } from './tipo-padecimiento/tipo-padecimiento.component';
+import { CreateTipoPadecimientoComponent } from './tipo-padecimiento/create-tipo-padecimiento/create-tipo-padecimiento.component';
+import { EditTipoPadecimientoComponent } from './tipo-padecimiento/edit-tipo-padecimiento/edit-tipo-padecimientocomponent';
 
 const routes: Routes = [
     { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
@@ -97,6 +112,66 @@ const routes: Routes = [
         {
           path: 'generales/tipo-direccion/edit-tipo-direccion/:id',
           component: EditTipoDireccionComponent
+        },
+        {
+          path: 'generales/tipo-email',
+          component: TipoEmailComponent, canActivate: [AppRouteGuard]
+        },
+        {
+          path: 'generales/tipo-email/create-tipo-email',
+          component: CreateTipoEmailComponent
+        },
+        {
+          path: 'generales/tipo-email/edit-tipo-email/:id',
+          component: EditTipoEmailComponent
+        },
+        {
+          path: 'generales/profesion',
+          component: ProfesionComponent, canActivate: [AppRouteGuard]
+        },
+        {
+          path: 'generales/profesion/create-profesion',
+          component: CreateProfesionComponent
+        },
+        {
+          path: 'generales/profesion/edit-profesion/:id',
+          component: EditProfesionComponent
+        },
+        {
+          path: 'generales/tipo-identificacion',
+          component: TipoIdentificacionComponent, canActivate: [AppRouteGuard]
+        },
+        {
+          path: 'generales/tipo-identificacion/create-tipo-identificacion',
+          component: CreateTipoIdentificacionComponent
+        },
+        {
+          path: 'generales/tipo-identificacion/edit-tipo-identificacion/:id',
+          component: EditTipoIdentificacionComponent
+        },
+        {
+          path: 'generales/tipo-incidencia',
+          component: TipoIncidenciaComponent, canActivate: [AppRouteGuard]
+        },
+        {
+          path: 'generales/tipo-incidencia/create-tipo-incidencia',
+          component: CreateTipoIncidenciaComponent
+        },
+        {
+          path: 'generales/tipo-incidencia/edit-tipo-incidencia/:id',
+          component: EditTipoIncidenciaComponent
+        },
+        {
+          path: 'generales/tipo-padecimiento',
+          component: TipoPadecimientoComponent, canActivate: [AppRouteGuard]
+        },
+        {
+          path: 'generales/tipo-padecimiento/create-tipo-padecimiento',
+          component: CreateTipoPadecimientoComponent
+        },
+        {
+          path: 'generales/tipo-padecimiento/edit-tipo-padecimiento/:id',
+          component: EditTipoPadecimientoComponent
         }
       ]
     }

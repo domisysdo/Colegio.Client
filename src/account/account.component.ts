@@ -23,7 +23,7 @@ export class AccountComponent extends AppComponentBase implements OnInit {
         super(injector);
 
         this.currentYear = new Date().getFullYear();
-         this.versionText = this.appSession.application.version + ' [' + this.appSession.application.releaseDate.format('YYYYDDMM') + ']';
+         this.versionText = this.appSession.application.version + ' [' + this.appSession.application.releaseDate.toLocaleString() + ']';
     }
 
     showTenantChange(): boolean {
