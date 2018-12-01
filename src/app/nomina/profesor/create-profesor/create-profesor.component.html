@@ -1,0 +1,93 @@
+﻿
+<div class="page-content fade-in-up" >
+    <div class="col-md-8 offset-md-2">
+        <div class="ibox ibox-body">
+
+            <div class="ibox-head">
+                <div class="ibox-title">{{l("Registrar nuevo profesor")}}</div>
+            </div>
+
+            <div #content>
+                <form class="form-horizontal" #profesorForm="ngForm" method="post" novalidate (ngSubmit)="save(profesorForm)">
+                    <div class="ibox-body">   
+
+                        <div [ngClass]="(identificador.invalid && identificador.touched)?'col-sm-6 form-group has-error mb-4':'col-sm-6 form-group mb-4'">                        
+                            <label>{{l("Identificador")}}<span class="text-danger"> *</span></label>
+                                <span *ngIf = "identificador.invalid && identificador.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                <input 
+                                    id="identificador" 
+                                    class="form-control no-shadow" 
+                                    type="text" 
+                                    #identificador = "ngModel"
+                                    [(ngModel)]="profesor.identificador" 
+                                    name="Identificador" 
+                                    required
+                                    minlength="2" 
+                                    maxlength="32" 
+                                    placeholder="Identificador"/>
+                                    <app-input-validation [input]="identificador"></app-input-validation>
+                        </div>
+
+                        <div [ngClass]="(nombres.invalid && nombres.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">
+                            <label>{{l("Nombre")}}<span class="text-danger"> *</span> </label>
+                                <span *ngIf="nombres.invalid && nombres.touched" class="input-icon input-icon-right text-danger"></span>
+                                <input 
+                                    id="nombres" 
+                                    class="form-control no-shadow" 
+                                    type="text"
+                                    #nombres = "ngModel" 
+                                    [(ngModel)]="profesor.nombres" 
+                                    name="Nombres" 
+                                    required
+                                    minlength="2" 
+                                    maxlength="32" 
+                                    placeholder="Nombres"/>
+                                    <app-input-validation [input]="nombres"></app-input-validation>
+                        </div>
+
+                        <div [ngClass]="(primerApellido.invalid && primerApellido.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">
+                            <label>{{l("Primer Apellido")}}<span class="text-danger"> *</span> </label>
+                                <span *ngIf="primerApellido.invalid && primerApellido.touched" class="input-icon input-icon-right text-danger"></span>
+                                <input 
+                                    id="primerApellido" 
+                                    class="form-control no-shadow" 
+                                    type="text"
+                                    #primerApellido = "ngModel" 
+                                    [(ngModel)]="profesor.primerApellido" 
+                                    name="PrimerApellido" 
+                                    required
+                                    minlength="2" 
+                                    maxlength="32" 
+                                    placeholder="Primer Apellido"/>
+                                    <app-input-validation [input]="primerApellido"></app-input-validation>
+                        </div>
+
+                        <div [ngClass]="(segundoApellido.invalid && segundoApellido.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">
+                            <label>{{l("Segundo Apellido")}}<span class="text-danger"> *</span> </label>
+                                <span *ngIf="segundoApellido.invalid && segundoApellido.touched" class="input-icon input-icon-right text-danger"></span>
+                                <input 
+                                    id="segundoApellido" 
+                                    class="form-control no-shadow" 
+                                    type="text"
+                                    #segundoApellido = "ngModel" 
+                                    [(ngModel)]="profesor.segundoApellido" 
+                                    name="PrimerApellido" 
+                                    required
+                                    minlength="2" 
+                                    maxlength="32" 
+                                    placeholder="Primer Apellido"/>
+                                    <app-input-validation [input]="segundoApellido"></app-input-validation>
+                        </div>
+
+                        <div class="ibox-footer row">
+                            <div class="col-sm-12 ml-sm-auto">
+                                <button type="submit" class="btn btn-primary mr-2">{{l("Registrar")}}</button>
+                                <button [disabled]="saving" [routerLink]="['../../profesor']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+﻿
+<div class="page-content fade-in-up" >
+    <div class="col-md-8 offset-md-2">
+        <div class="ibox ibox-body">
+
+            <div class="ibox-head">
+                <div class="ibox-title">{{l("Registrar nuevo periodo")}}</div>
+            </div>
+
+            <div #content>
+                <form class="form-horizontal" #periodoForm="ngForm" method="post" novalidate (ngSubmit)="save(periodoForm)">
+                    <div class="ibox-body">   
+
+                        <div [ngClass]="(identificador.invalid && identificador.touched)?'col-sm-6 form-group has-error mb-4':'col-sm-6 form-group mb-4'">                        
+                            <label>{{l("Identificador")}}<span class="text-danger"> *</span></label>
+                                <span *ngIf = "identificador.invalid && identificador.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                <input 
+                                    id="identificador" 
+                                    class="form-control no-shadow" 
+                                    type="text" 
+                                    #identificador = "ngModel"
+                                    [(ngModel)]="periodo.identificador" 
+                                    name="Identificador" 
+                                    required
+                                    minlength="2" 
+                                    maxlength="32" 
+                                    placeholder="Identificador"/>
+                                    <app-input-validation [input]="identificador"></app-input-validation>
+                        </div>
+  
+                        <div [ngClass]="(dp.invalid && dp.touched)?'form-group mb-4 has-error ':'form-group mb-4'">                        
+                            <label class="col-form-label">Fecha de inicio</label>
+                            <div class="input-group-icon input-group-icon-left">
+                                <span (click)="dp.show()" style="cursor:pointer" class="input-icon input-icon-left"><i class="fa fa-calendar"></i></span>
+                                <input 
+                                    placeholder="Datepicker"  
+                                    placement="bottom left" 
+                                    [bsConfig]="{ containerClass: 'theme-dark-blue' }" 
+                                    [(ngModel)]="periodo.fechaInicio" 
+                                    name="fechaInicio" 
+                                    type="text" 
+                                    placeholder="Ingrese una fecha"
+                                    class="form-control" 
+                                    bsDatepicker 
+                                    #dp="bsDatepicker">
+                                    <app-input-validation [input]="dp"></app-input-validation>
+                            </div>
+                        </div>
+
+                        <div [ngClass]="(dp.invalid && dp.touched)?'form-group mb-4 has-error ':'form-group mb-4'">                        
+                            <label class="col-form-label">Fecha de fin</label>
+                            <div class="input-group-icon input-group-icon-left">
+                                <span (click)="dp.show()" style="cursor:pointer" class="input-icon input-icon-left"><i class="fa fa-calendar"></i></span>
+                                <input 
+                                    placeholder="Datepicker"  
+                                    placement="bottom left" 
+                                    [bsConfig]="{ containerClass: 'theme-dark-blue' }" 
+                                    [(ngModel)]="periodo.fechaFin" 
+                                    name="fechaFin" 
+                                    type="text" 
+                                    placeholder="Ingrese una fecha"
+                                    class="form-control" 
+                                    bsDatepicker 
+                                    #dp="bsDatepicker">
+                                    <app-input-validation [input]="dp"></app-input-validation>
+                            </div>
+                        </div>
+
+
+                        <div class="ibox-footer row">
+                            <div class="col-sm-12 ml-sm-auto">
+                                <button type="submit" class="btn btn-primary mr-2">{{l("Registrar")}}</button>
+                                <button [disabled]="saving" [routerLink]="['../../periodo']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

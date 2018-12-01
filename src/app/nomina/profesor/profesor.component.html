@@ -3,14 +3,14 @@
             <div class="ibox-body">
                 <div class="flexbox mb-4">
                     <div class="flexbox">
-                        <h5 class="font-strong mb-4">LISTADO DE PROVINCIAS</h5>
+                        <h5 class="font-strong mb-4">LISTADO DE PROFESORES</h5>
                     </div>
                     <div class="flexbox">
                         <div class="input-group-icon input-group-icon-left mr-3">
                             <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
                             <input #searchBox class="form-control form-control-rounded form-control-solid no-shadow" id="key-search" (input)="searchData(searchBox.value)" type="text" placeholder="Buscar...">
                         </div>
-                        <button class="btn btn-primary btn-md btn-rounded btn-icon" (click)="createGrupo()" >
+                        <button class="btn btn-primary btn-md btn-rounded btn-icon" (click)="createProfesor()" >
                             <span class="btn-icon">
                                 <li class="la la-plus"></li>
                                 Agregar nuevo
@@ -26,7 +26,7 @@
                     [footerHeight]="ngxDatatableHelper.footerHeight"
                     [rowHeight]="ngxDatatableHelper.rowHeight"
                     [selected]="selected"
-                    [rows]="grupos" 
+                    [rows]="profesores" 
                     [selectionType]="ngxDatatableHelper.selectionType"
                     [selectAllRowsOnPage]="ngxDatatableHelper.selectAllRowsOnPage"
                     [reorderable]="ngxDatatableHelper.reorderable"
@@ -45,11 +45,23 @@
                         name="Identificador" 
                         prop="identificador">
                     </ngx-datatable-column>
+                    
+                    <ngx-datatable-column 
+                        [width]="250"
+                        name="Nombre" 
+                        prop="nombres">
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column 
+                        [width]="250"
+                        name="Apellido" 
+                        prop="primerApellido">
+                    </ngx-datatable-column>
 
                     <ngx-datatable-column  [width]="50" >
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <div class="text-center">
-                                <a [routerLink] = "['edit-grupo', row.id]" class="text-light mr-3 font-16" href="javascript:;"><i class="ti-pencil"></i></a>
+                                <a [routerLink] = "['edit-profesor', row.id]" class="text-light mr-3 font-16" href="javascript:;"><i class="ti-pencil"></i></a>
                                 <a class="text-light font-16" href="javascript:;"><i (click)="delete(row)" class="ti-trash"></i></a>
                             </div>
                         </ng-template>
