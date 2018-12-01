@@ -20,6 +20,11 @@ const routes: Routes = [
   {
     path: '',
     component: MainComponent,
+    loadChildren: '../../app/nomina/nomina.module#NominaModule',
+  },
+  {
+    path: '',
+    component: MainComponent,
     children: [
       {
         path: 'dashboard',

@@ -12,7 +12,6 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.UserServiceProxy,
         ApiServiceProxies.TokenAuthServiceProxy,
         ApiServiceProxies.AccountServiceProxy,
-        ApiServiceProxies.EstudianteServiceProxy,
         ApiServiceProxies.ConfigurationServiceProxy,
         ApiServiceProxies.PaisServiceProxy,
         ApiServiceProxies.ProvinciaServiceProxy,
@@ -20,6 +19,7 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.SectorServiceProxy,
         ApiServiceProxies.TipoTelefonoServiceProxy,
         ApiServiceProxies.TipoDireccionServiceProxy,
+        ApiServiceProxies.ProfesorServiceProxy,
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]
 })
