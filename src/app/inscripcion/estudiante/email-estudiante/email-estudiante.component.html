@@ -69,14 +69,14 @@
         <div class="modal-body">
             <div class="inbox">
                 <div class="inbox-body">
-                    <div [ngClass]="(email.invalid && email.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
+                    <div [ngClass]="(emailModel.invalid && emailModel.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
                         <label class="col-form-label">{{l("Email")}}<span class="text-danger"> *</span> </label>
-                        <span *ngIf="email.invalid && email.touched" class="input-icon input-icon-right text-danger"></span>
+                        <span *ngIf="emailModel.invalid && emailModel.touched" class="input-icon input-icon-right text-danger"></span>
                         <input 
-                            id="email" 
+                            id="emailModel" 
                             class="form-control no-shadow" 
-                            type="email"
-                            #email = "ngModel" 
+                            type="emailModel"
+                            #emailModel = "ngModel" 
                             [(ngModel)]="email.email" 
                             name="Email" 
                             required
@@ -84,7 +84,7 @@
                             minlength="2" 
                             maxlength="32" 
                             placeholder="email@example.com"/>
-                        <app-input-validation [input]="email"></app-input-validation>
+                        <app-input-validation [input]="emailModel"></app-input-validation>
                     </div>
 
                     <div [ngClass]="(tipoEmailModel.invalid && tipoEmailModel.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">

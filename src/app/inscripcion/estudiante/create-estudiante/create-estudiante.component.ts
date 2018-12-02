@@ -63,7 +63,6 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     save(form: NgForm): void {
         if (form.valid) {
 
-            this.agregarRelaciones();
             this.saving = true;
             this._estudianteService.create(this.estudiante)
                 .pipe(finalize(() => { this.saving = false; }))
@@ -86,17 +85,10 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     obtenerValoresDefecto() {
         defineLocale('es', esDoLocale);
         this.localeService.use('es')
-        this.estudiante.init({ estado: 1, listaPadecimientos: [] });
-    }
-
-    agregarRelaciones() {
-        this.estudiante.listaTelefonos = this.telefonosEstudiante;
-        this.estudiante.listaEmail = this.emailsEstudiante;
-        this.estudiante.listaDireccionEstudiante = this.direccionesEstudiante;
-        this.estudiante.listaFamiliarEstudiante = this.familiares;
-        // this.estudiante.listaPadecimientos = this.padecimientos;
-        console.log('vamos');
-        console.log(this.estudiante.listaPadecimientos);
+        this.estudiante.init({ estado: 1, listaPadecimientos: [],
+                               listaEmail: [], listaTelefonos: [],
+                                listaDireccionEstudiante: [],
+                                listaFamiliarEstudiante: [] });
     }
 
     close(): void {

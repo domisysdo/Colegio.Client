@@ -100,7 +100,7 @@ import { NacionalidadComponent } from './nacionalidad/nacionalidad.component';
         IncidenciaEstudianteComponent,
         CreateIncidenciaEstudianteComponent,
         EditIncidenciaEstudianteComponent,
-        ConsultaEstudianteComponent
+        ConsultaEstudianteComponent,
         TipoPadecimientoComponent,
         CreateNacionalidadComponent,
         EditNacionalidadComponent,

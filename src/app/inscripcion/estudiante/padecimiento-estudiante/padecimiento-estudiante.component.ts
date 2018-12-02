@@ -94,6 +94,7 @@ export class PadecimientoEstudianteComponent extends AppComponentBase implements
             '¿Desea borrarlo?',
             () => {
                 lista.splice(lista.indexOf(row), 1);
+                this.listaVisualizacionpadecimientos.splice(this.listaVisualizacionpadecimientos.indexOf(row), 1);
             }
         );
     }

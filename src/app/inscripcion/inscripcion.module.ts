@@ -64,9 +64,7 @@ import { EditMateriaComponent } from './materia/edit-materia/edit-materia.compon
         PeriodoComponent,
         CreatePeriodoComponent,
         EditPeriodoComponent,
-
-        PadecimientoEstudianteComponent
-
+        PadecimientoEstudianteComponent,
         InscripcionComponent,
         MateriaComponent,
         CreateMateriaComponent,

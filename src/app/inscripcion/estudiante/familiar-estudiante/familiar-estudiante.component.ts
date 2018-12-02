@@ -40,7 +40,7 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
     estadoCivil = SexoArray.EstadoCivil;
     ngxDatatableHelper = NgxDatatableHelper;
 
-    @Input() familiares: FamiliarEstudianteDto[] = [];
+    @Input() familiares: FamiliarEstudianteDto[];
 
     constructor(
         injector: Injector,
@@ -128,8 +128,6 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
             }
 
             this.listaVisualizacionFamiliares = [...this.familiares];
-            this.indexElementoSeleccionado = -1;
-            this.familiar = null;
             this.modal.close();
         }
     }
@@ -168,6 +166,7 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
             '¿Desea borrarlo?',
             () => {
                 lista.splice(lista.indexOf(row), 1);
+                this.listaVisualizacionFamiliares.splice(this.listaVisualizacionFamiliares.indexOf(row), 1);
             }
         );
     }

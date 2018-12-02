@@ -77,6 +77,7 @@ export class DireccionEstudianteComponent extends AppComponentBase implements On
 
     registrarDireccions() {
         if (!this.direccionExisteDetalle()) {
+
             this.direccion.tipoDireccionNombre = this.direccionSelect.descripcion;
             this.direccion.sectorNombre = this.sectorSelect.nombre;
 

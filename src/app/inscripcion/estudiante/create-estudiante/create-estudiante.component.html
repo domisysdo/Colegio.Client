@@ -165,22 +165,22 @@
                                     </div>
 
                                     <!-- Inicio componente telefonos -->
-                                    <app-telefono-estudiante [telefonos]="telefonosEstudiante"></app-telefono-estudiante>
+                                    <app-telefono-estudiante [telefonos]="estudiante.listaTelefonos"></app-telefono-estudiante>
                                     <!-- Fin componente telefonos -->
 
                                     <!-- Inicio componente emails -->
-                                    <app-email-estudiante [emails]="emailsEstudiante"></app-email-estudiante>
+                                    <app-email-estudiante [emails]="estudiante.listaEmail"></app-email-estudiante>
                                     <!-- Fin componente emails -->
 
                                     <!-- Inicio componente direcciones -->
-                                    <app-direccion-estudiante [direcciones]="direccionesEstudiante"></app-direccion-estudiante>
+                                    <app-direccion-estudiante [direcciones]="estudiante.listaDireccionEstudiante"></app-direccion-estudiante>
                                     <!-- Fin componente direcciones -->
                                 </ng-template>
                             </ngb-tab>
 
                             <ngb-tab title="Familiares">
                                 <ng-template ngbTabContent>
-                                    <app-familiar-estudiante [familiares]="familiares"></app-familiar-estudiante>
+                                    <app-familiar-estudiante [familiares]="estudiante.listaFamiliarEstudiante"></app-familiar-estudiante>
                                 </ng-template>
                             </ngb-tab>
 

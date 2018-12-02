@@ -67,15 +67,11 @@ export class EmailEstudianteComponent extends AppComponentBase implements OnInit
 
             if (this.indexElementoSeleccionado >= 0) {
                 this.emails[this.indexElementoSeleccionado] = this.email;
-                this.listaVisualizacionEmail[this.indexElementoSeleccionado] = this.email;
             } else {
                 this.emails.push(this.email);
-                this.listaVisualizacionEmail.push(this.email);
             }
 
-            this.listaVisualizacionEmail = [...this.listaVisualizacionEmail];
-            this.indexElementoSeleccionado = -1;
-            this.email = null;
+            this.listaVisualizacionEmail = [...this.emails];
             this.modal.close();
         }
     }
@@ -102,6 +98,7 @@ export class EmailEstudianteComponent extends AppComponentBase implements OnInit
             '¿Desea borrarlo?',
             () => {
                 lista.splice(lista.indexOf(row), 1);
+                this.listaVisualizacionEmail.splice(this.listaVisualizacionEmail.indexOf(row), 1);
             }
         );
     }

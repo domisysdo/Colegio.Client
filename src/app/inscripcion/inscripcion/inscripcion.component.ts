@@ -1,5 +1,5 @@
 import { Component, ViewChild, Injector, ElementRef, OnInit } from '@angular/core';
-import { InscripcionDto, InscripcionServiceProxy, MateriaDto, MateriaServiceProxy, 
+import { InscripcionDto, InscripcionServiceProxy, MateriaDto, MateriaServiceProxy,
          GrupoDto, GrupoServiceProxy, EstudianteDto, EstudianteServiceProxy,
          PeriodoDto, PeriodoServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';

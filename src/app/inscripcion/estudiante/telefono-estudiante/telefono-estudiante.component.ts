@@ -72,8 +72,6 @@ export class TelefonoEstudianteComponent extends AppComponentBase implements OnI
             }
 
             this.listaTelefonosVisualizacion = [...this.telefonos];
-            this.indexElementoSeleccionado = -1;
-            this.telefono = null;
             this.modal.close();
         }
     }
