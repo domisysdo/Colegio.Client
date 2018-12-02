@@ -13,6 +13,10 @@ import { EditParentescoComponent } from './parentesco/edit-parentesco/edit-paren
 import { PeriodoComponent } from './periodo/periodo.component';
 import { CreatePeriodoComponent } from './periodo/create-periodo/create-periodo.component';
 import { EditPeriodoComponent } from './periodo/edit-periodo/edit-periodo.component';
+import { InscripcionComponent } from './inscripcion/inscripcion.component';
+import { MateriaComponent } from './materia/materia.component';
+import { CreateMateriaComponent } from './materia/create-materia/create-materia.component';
+import { EditMateriaComponent } from './materia/edit-materia/edit-materia.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
@@ -67,6 +71,23 @@ const routes: Routes = [
         path: 'inscripcion/periodo/edit-periodo/:id',
         component: EditPeriodoComponent
       },
+      {
+        path: 'inscripcion/inscripcion',
+        component: InscripcionComponent, canActivate: [AppRouteGuard]
+      },
+      {
+        path: 'inscripcion/materia',
+        component: MateriaComponent, canActivate: [AppRouteGuard]
+      },
+      {
+        path: 'inscripcion/materia/create-materia',
+        component: CreateMateriaComponent
+      },
+      {
+        path: 'inscripcion/materia/edit-materia/:id',
+        component: EditMateriaComponent
+      },
+      
     ]
   }
 ];

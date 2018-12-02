@@ -35,6 +35,9 @@ import { EditTipoIncidenciaComponent } from './tipo-incidencia/edit-tipo-inciden
 import { TipoPadecimientoComponent } from './tipo-padecimiento/tipo-padecimiento.component';
 import { CreateTipoPadecimientoComponent } from './tipo-padecimiento/create-tipo-padecimiento/create-tipo-padecimiento.component';
 import { EditTipoPadecimientoComponent } from './tipo-padecimiento/edit-tipo-padecimiento/edit-tipo-padecimientocomponent';
+import { NacionalidadComponent } from './nacionalidad/nacionalidad.component';
+import { CreateNacionalidadComponent } from './nacionalidad/create-nacionalidad/create-nacionalidad.component';
+import { EditNacionalidadComponent } from './nacionalidad/edit-nacionalidad/edit-nacionalidad.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
@@ -172,6 +175,18 @@ const routes: Routes = [
         {
           path: 'generales/tipo-padecimiento/edit-tipo-padecimiento/:id',
           component: EditTipoPadecimientoComponent
+        },
+        {
+          path: 'generales/nacionalidad',
+          component: NacionalidadComponent, canActivate: [AppRouteGuard]
+        },
+        {
+          path: 'generales/nacionalidad/create-nacionalidad',
+          component: CreateNacionalidadComponent
+        },
+        {
+          path: 'generales/nacionalidad/edit-nacionalidad/:id',
+          component: EditNacionalidadComponent
         }
       ]
     }

@@ -25,6 +25,10 @@ import { FamiliarEstudianteComponent } from './estudiante/familiar-estudiante/fa
 import { PeriodoComponent } from './periodo/periodo.component';
 import { CreatePeriodoComponent } from './periodo/create-periodo/create-periodo.component';
 import { EditPeriodoComponent } from './periodo/edit-periodo/edit-periodo.component';
+import { InscripcionComponent } from './inscripcion/inscripcion.component';
+import { MateriaComponent } from './materia/materia.component';
+import { CreateMateriaComponent } from './materia/create-materia/create-materia.component';
+import { EditMateriaComponent } from './materia/edit-materia/edit-materia.component';
 
 @NgModule({
 
@@ -58,6 +62,10 @@ import { EditPeriodoComponent } from './periodo/edit-periodo/edit-periodo.compon
         PeriodoComponent,
         CreatePeriodoComponent,
         EditPeriodoComponent,
+        InscripcionComponent,
+        MateriaComponent,
+        CreateMateriaComponent,
+        EditMateriaComponent,
     ],
     providers: [
         ScriptLoaderService
