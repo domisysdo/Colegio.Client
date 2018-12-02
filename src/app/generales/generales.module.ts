@@ -44,6 +44,9 @@ import { IncidenciaEstudianteComponent } from './incidencia-estudiante/incidenci
 import { CreateIncidenciaEstudianteComponent } from './incidencia-estudiante/create-incidencia/create-incidencia-estudiante.component';
 import { EditIncidenciaEstudianteComponent } from './incidencia-estudiante/edit-incidencia/edit-incidencia-estudiante.component';
 import { ConsultaEstudianteComponent } from '@app/inscripcion/estudiante/consulta-estudiante/consulta-estudiante.component';
+import { CreateNacionalidadComponent } from './nacionalidad/create-nacionalidad/create-nacionalidad.component';
+import { EditNacionalidadComponent } from './nacionalidad/edit-nacionalidad/edit-nacionalidad.component';
+import { NacionalidadComponent } from './nacionalidad/nacionalidad.component';
 
 @NgModule({
 
@@ -98,6 +101,10 @@ import { ConsultaEstudianteComponent } from '@app/inscripcion/estudiante/consult
         CreateIncidenciaEstudianteComponent,
         EditIncidenciaEstudianteComponent,
         ConsultaEstudianteComponent
+        TipoPadecimientoComponent,
+        CreateNacionalidadComponent,
+        EditNacionalidadComponent,
+        NacionalidadComponent
     ]
 })
 export class GeneralesModule {}

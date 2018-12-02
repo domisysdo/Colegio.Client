@@ -25,15 +25,12 @@ import { FamiliarEstudianteComponent } from './estudiante/familiar-estudiante/fa
 import { PeriodoComponent } from './periodo/periodo.component';
 import { CreatePeriodoComponent } from './periodo/create-periodo/create-periodo.component';
 import { EditPeriodoComponent } from './periodo/edit-periodo/edit-periodo.component';
-<<<<<<< HEAD
 import { PadecimientoEstudianteComponent } from './estudiante/padecimiento-estudiante/padecimiento-estudiante.component';
 import { ConsultaEstudianteComponent } from './estudiante/consulta-estudiante/consulta-estudiante.component';
-=======
 import { InscripcionComponent } from './inscripcion/inscripcion.component';
 import { MateriaComponent } from './materia/materia.component';
 import { CreateMateriaComponent } from './materia/create-materia/create-materia.component';
 import { EditMateriaComponent } from './materia/edit-materia/edit-materia.component';
->>>>>>> b9b33747901b4050002846fb592b6edd89dc995d
 
 @NgModule({
 
@@ -67,14 +64,14 @@ import { EditMateriaComponent } from './materia/edit-materia/edit-materia.compon
         PeriodoComponent,
         CreatePeriodoComponent,
         EditPeriodoComponent,
-<<<<<<< HEAD
+
         PadecimientoEstudianteComponent
-=======
+
         InscripcionComponent,
         MateriaComponent,
         CreateMateriaComponent,
         EditMateriaComponent,
->>>>>>> b9b33747901b4050002846fb592b6edd89dc995d
+
     ],
     providers: [
         ScriptLoaderService
