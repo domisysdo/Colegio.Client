@@ -14137,6 +14137,9 @@ export class IncidenciaEstudianteDto implements IIncidenciaEstudianteDto {
     materiaId: number | undefined;
     estudianteId: number | undefined;
     tipoIncidenciaId: number | undefined;
+    materiaNombre: string | undefined;
+    tipoIncidenciaNombre: string | undefined;
+    estudianteNombreCompleto: string | undefined;
     id: number | undefined;
 
     constructor(data?: IIncidenciaEstudianteDto) {
@@ -14156,6 +14159,9 @@ export class IncidenciaEstudianteDto implements IIncidenciaEstudianteDto {
             this.materiaId = data["materiaId"];
             this.estudianteId = data["estudianteId"];
             this.tipoIncidenciaId = data["tipoIncidenciaId"];
+            this.materiaNombre = data["materiaNombre"];
+            this.tipoIncidenciaNombre = data["tipoIncidenciaNombre"];
+            this.estudianteNombreCompleto = data["estudianteNombreCompleto"];
             this.id = data["id"];
         }
     }
@@ -14175,6 +14181,9 @@ export class IncidenciaEstudianteDto implements IIncidenciaEstudianteDto {
         data["materiaId"] = this.materiaId;
         data["estudianteId"] = this.estudianteId;
         data["tipoIncidenciaId"] = this.tipoIncidenciaId;
+        data["materiaNombre"] = this.materiaNombre;
+        data["tipoIncidenciaNombre"] = this.tipoIncidenciaNombre;
+        data["estudianteNombreCompleto"] = this.estudianteNombreCompleto;
         data["id"] = this.id;
         return data; 
     }
@@ -14194,6 +14203,9 @@ export interface IIncidenciaEstudianteDto {
     materiaId: number | undefined;
     estudianteId: number | undefined;
     tipoIncidenciaId: number | undefined;
+    materiaNombre: string | undefined;
+    tipoIncidenciaNombre: string | undefined;
+    estudianteNombreCompleto: string | undefined;
     id: number | undefined;
 }
 

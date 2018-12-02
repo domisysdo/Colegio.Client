@@ -20,8 +20,8 @@ export class EmailEstudianteComponent extends AppComponentBase implements OnInit
     email: EmailEstudianteDto;
     emailSelect: any;
     tiposEmail: TipoEmailDto[];
-    listaVisualizacionEmail: EmailEstudianteDto[];
-    modal: NgbModalRef;
+    listaVisualizacionEmail: EmailEstudianteDto[] = [];
+    public modal: NgbModalRef;
 
     ngxDatatableHelper = NgxDatatableHelper;
     emailPattern = EMAIL_PATTERN;
@@ -67,11 +67,13 @@ export class EmailEstudianteComponent extends AppComponentBase implements OnInit
 
             if (this.indexElementoSeleccionado >= 0) {
                 this.emails[this.indexElementoSeleccionado] = this.email;
+                this.listaVisualizacionEmail[this.indexElementoSeleccionado] = this.email;
             } else {
                 this.emails.push(this.email);
+                this.listaVisualizacionEmail.push(this.email);
             }
 
-            this.listaVisualizacionEmail = [...this.emails];
+            this.listaVisualizacionEmail = [...this.listaVisualizacionEmail];
             this.indexElementoSeleccionado = -1;
             this.email = null;
             this.modal.close();

@@ -4,6 +4,8 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { MessageHelper } from '@app/shared/MessageHelper';
+import { defineLocale, esDoLocale, BsLocaleService } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-create-periodo',
@@ -23,18 +25,23 @@ export class CreatePeriodoComponent extends AppComponentBase implements OnInit {
         injector: Injector,
         private _router: Router,
         private _periodoService: PeriodoServiceProxy,
-        private _materiaService: MateriaServiceProxy
+        private _materiaService: MateriaServiceProxy,
+        private localeService: BsLocaleService
     ) {
         super(injector);
     }
 
     ngOnInit(): void {
         this.getMaterias();
+        this.obtenerValoresDefecto();
     }
 
     save(form: NgForm): void {
 
         if (form.valid) {
+            if (!this.validar()) {
+                return;
+            }
 
             this.saving = true;
             this._periodoService.create(this.periodo)
@@ -59,4 +66,20 @@ export class CreatePeriodoComponent extends AppComponentBase implements OnInit {
         this._router.navigate(['app/inscripcion/periodo'])
     }
 
+    obtenerValoresDefecto() {
+        defineLocale('es', esDoLocale);
+        this.localeService.use('es')
+    }
+
+    validar(): boolean {
+        if (this.periodo.fechaInicio > this.periodo.fechaFin) {
+            MessageHelper.show('La fecha de inicio no puede ser mayor que la fecha final');
+            return false;
+        } else if (this.periodo.fechaInicio === this.periodo.fechaFin) {
+            MessageHelper.show('La fecha de inicio no puede ser igual que la fecha final');
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

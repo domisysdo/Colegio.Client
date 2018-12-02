@@ -3,6 +3,7 @@ import { PeriodoDto, PeriodoServiceProxy, MateriaDto, MateriaServiceProxy } from
 import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MessageHelper } from '@app/shared/MessageHelper';
 
 @Component({
     selector: 'app-edit-periodo',
@@ -45,6 +46,10 @@ export class EditPeriodoComponent extends AppComponentBase implements OnInit {
     save(): void {
 
         this.saving = true;
+        if (!this.validar()) {
+            return;
+        }
+
         this._periodoService.update(this.periodo)
             .pipe(finalize(() => { this.saving = false; }))
             .subscribe(() => {
@@ -58,6 +63,18 @@ export class EditPeriodoComponent extends AppComponentBase implements OnInit {
         .subscribe((result: MateriaDto[]) => {
             this.materias = result;
         });
+    }
+
+    validar(): boolean {
+        if (this.periodo.fechaInicio > this.periodo.fechaFin) {
+            MessageHelper.show('La fecha de inicio no puede ser mayor que la fecha final');
+            return false;
+        } else if (this.periodo.fechaInicio === this.periodo.fechaFin) {
+            MessageHelper.show('La fecha de inicio no puede ser igual que la fecha final');
+            return false;
+        } else {
+            return true;
+        }
     }
 
     close(): void {

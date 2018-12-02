@@ -77,7 +77,7 @@
                             class="form-control no-shadow" 
                             type="email"
                             #email = "ngModel" 
-                            [(ngModel)]="elementoLista.email" 
+                            [(ngModel)]="email.email" 
                             name="Email" 
                             required
                             [pattern]="emailPattern"
@@ -96,7 +96,7 @@
                             required
                             #tipoEmailModel = "ngModel"
                             (change)="onTipoEmailChange($event)"
-                            [(ngModel)]="elementoLista.tipoEmailId">
+                            [(ngModel)]="email.tipoEmailId">
                             <ng-template ng-option-tmp let-item="item">
                                 {{item.descripcion}}
                             </ng-template>

@@ -56,8 +56,6 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     }
 
     ngOnInit(): void {
-        defineLocale('es', esDoLocale);
-        this.localeService.use('es')
         this.obtenerNacionalidades();
         this.obtenerValoresDefecto();
     }
@@ -86,6 +84,8 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     }
 
     obtenerValoresDefecto() {
+        defineLocale('es', esDoLocale);
+        this.localeService.use('es')
         this.estudiante.init({ estado: 1, listaPadecimientos: [] });
     }
 

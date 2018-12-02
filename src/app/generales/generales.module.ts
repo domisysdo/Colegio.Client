@@ -40,6 +40,10 @@ import { TipoIncidenciaComponent } from './tipo-incidencia/tipo-incidencia.compo
 import { CreateTipoPadecimientoComponent } from './tipo-padecimiento/create-tipo-padecimiento/create-tipo-padecimiento.component';
 import { EditTipoPadecimientoComponent } from './tipo-padecimiento/edit-tipo-padecimiento/edit-tipo-padecimientocomponent';
 import { TipoPadecimientoComponent } from './tipo-padecimiento/tipo-padecimiento.component';
+import { IncidenciaEstudianteComponent } from './incidencia-estudiante/incidencia-estudiante.component';
+import { CreateIncidenciaEstudianteComponent } from './incidencia-estudiante/create-incidencia/create-incidencia-estudiante.component';
+import { EditIncidenciaEstudianteComponent } from './incidencia-estudiante/edit-incidencia/edit-incidencia-estudiante.component';
+import { ConsultaEstudianteComponent } from '@app/inscripcion/estudiante/consulta-estudiante/consulta-estudiante.component';
 
 @NgModule({
 
@@ -89,7 +93,11 @@ import { TipoPadecimientoComponent } from './tipo-padecimiento/tipo-padecimiento
         TipoIncidenciaComponent,
         CreateTipoPadecimientoComponent,
         EditTipoPadecimientoComponent,
-        TipoPadecimientoComponent
+        TipoPadecimientoComponent,
+        IncidenciaEstudianteComponent,
+        CreateIncidenciaEstudianteComponent,
+        EditIncidenciaEstudianteComponent,
+        ConsultaEstudianteComponent
     ]
 })
 export class GeneralesModule {}

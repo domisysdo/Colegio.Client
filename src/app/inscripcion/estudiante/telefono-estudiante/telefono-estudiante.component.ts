@@ -20,7 +20,7 @@ export class TelefonoEstudianteComponent extends AppComponentBase implements OnI
     telefono: TelefonoEstudianteDto;
     telefonoSelect: any;
     tiposTelefono: TipoTelefonoDto[];
-    listaTelefonosVisualizacion: TelefonoEstudianteDto[];
+    listaTelefonosVisualizacion: TelefonoEstudianteDto[] = [];
     modal: NgbModalRef;
 
     maskTelefono = MascarasConstantes;
@@ -100,6 +100,7 @@ export class TelefonoEstudianteComponent extends AppComponentBase implements OnI
             '¿Desea borrarlo?',
             () => {
                 lista.splice(lista.indexOf(row), 1);
+                this.listaTelefonosVisualizacion.splice(this.listaTelefonosVisualizacion.indexOf(row), 1);
             }
         );
     }

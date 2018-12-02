@@ -43,7 +43,6 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/jquery-migrate/dist/jquery-migrate.min.js",
               "node_modules/js-cookie/src/js.cookie.js",
-              "node_modules/bootstrap/dist/js/bootstrap.js",
               "node_modules/lodash/lodash.min.js",
               "node_modules/moment/min/moment.min.js",
               "node_modules/@aspnet/signalr/dist/browser/signalr.min.js",
@@ -74,9 +73,8 @@
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js", 
               "src/assets/js/app.js",
               "node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
-              {
-                "input": "node_modules/popper.js/dist/umd/popper.min.js"
-              },
+              "node_modules/popper.js/dist/umd/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js",
               {
                 "input": "node_modules/bootstrap/dist/js/bootstrap.min.js"
               },
