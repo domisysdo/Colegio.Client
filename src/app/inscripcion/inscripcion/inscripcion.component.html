@@ -1,0 +1,154 @@
+﻿<div class="page-content fade-in-up">
+    <div class="row">
+        <div class="col-xl-7">
+            <div class="ibox">
+                <div class="ibox-body">
+                    <h5 class="font-strong mb-5">Inscripción</h5>
+                    <form  #inscripcionForm="ngForm" method="post" novalidate>
+                        <div class="col-sm-12 form-group mb-4">
+                            <label>{{l("Estudiante")}}<span class="text-danger"> *</span> </label>                            
+                            <ng-select [items]="estudiantes"
+                                name="estudianteSelect"
+                                bindLabel="nombres"
+                                bindValue="id"
+                                required
+                                (change)="onEstudianteChanged($event)"
+                                [(ngModel)]="inscripcion.estudianteId">
+                                <ng-template ng-option-tmp let-item="item">
+                                    {{item.nombres}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+
+                        <div class="col-sm-12 form-group mb-4">
+                            <label>{{l("Materia")}}<span class="text-danger"> *</span> </label>                            
+                            <ng-select [items]="materias"
+                                name="materiaSelect"
+                                bindLabel="nombre"
+                                bindValue="id"
+                                required
+                                (change)="onMateriaChanged($event)"
+                                [(ngModel)]="materiaSeleccionada">
+                                <ng-template ng-option-tmp let-item="item">
+                                    {{item.nombre}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+
+                        <div class="col-sm-12 form-group mb-4">
+                            <label>{{l("Grupo")}}<span class="text-danger"> *</span> </label>                            
+                            <ng-select [items]="grupos"
+                                name="grupoSelect"
+                                bindLabel="identificador"
+                                bindValue="id"
+                                required
+                                [(ngModel)]="inscripcion.grupoId">
+                                <ng-template ng-option-tmp let-item="item">
+                                    {{item.identificador}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+
+                        <div class="col-sm-12 form-group mb-4">
+                            <label>{{l("Período")}}<span class="text-danger"> *</span> </label>                            
+                            <ng-select [items]="periodos"
+                                name="periodoSelect"
+                                bindLabel="identificador"
+                                bindValue="id"
+                                required
+                                [(ngModel)]="inscripcion.periodoId">
+                                <ng-template ng-option-tmp let-item="item">
+                                    {{item.identificador}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                            <div class="text-right" style="width:300px;">
+                                <div class="row mb-2">
+                                    <div class="col-6">Precio Inscripcion</div>
+                                    <div class="col-6">{{ materia.precioInscripcion }}</div>
+                                </div>
+                                <div class="row font-strong font-20">
+                                    <div class="col-6">Precio Total:</div>
+                                    <div class="col-6">
+                                        <div class="h3 font-strong">{{ materia.precioInscripcion }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-5">
+            <div class="ibox">
+                <div class="ibox-body">
+                    <h5 class="font-strong mb-4">Información de Inscripción</h5>
+                    <div class="row align-items-center mb-3">
+                        <div class="col-4 text-light">Precio a Pagar</div>
+                        <div class="col-8 h3 font-strong text-pink mb-0">{{ materia.precioInscripcion }}</div>
+                    </div>
+                    <div class="row align-items-center mb-3">
+                        <div class="col-4 text-light">Fecha</div>
+                        <div class="col-8">{{today | date:'longDate'}}</div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-4 text-light">Pago</div>
+                        <div class="col-8">
+                            <span class="badge badge-success badge-pill">Efectivo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox">
+                <div class="ibox-body">
+                    <h5 class="font-strong mb-4">Información de Estudiante</h5>
+                    <div class="row align-items-center mb-3">
+                            <div class="col-4 text-light">Identificador</div>
+                            <div class="col-8">{{ estudiante.identificador }}</div>
+                        </div>
+                    <div class="row align-items-center mb-3">
+                        <div class="col-4 text-light">Nombre</div>
+                        <div class="col-8">{{ estudiante.nombres }}</div>
+                    </div>
+                    <div class="row align-items-center mb-3">
+                        <div class="col-4 text-light">Dirección</div>
+                        <div class="col-8">
+                            <ng-template ngFor let-item [ngForOf]="estudiante.listaDireccionEstudiante" let-i="item">
+                                {{ item.descripcion }}
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mb-3">
+                        <div class="col-4 text-light">Correo</div>
+                        <div class="col-8">
+                            <ng-template ngFor let-item [ngForOf]="estudiante.listaEmail" let-i="item">
+                                {{ item.email }}
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-4 text-light">Teléfono</div>
+                        <div class="col-8">
+                            <ng-template ngFor let-item [ngForOf]="estudiante.listaTelefonos" let-i="item">
+                                {{ item.numero }}
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flexbox mb-4"><div class="flexbox"></div></div>
+            <div class="flexbox mb-4">
+                <div class="flexbox">
+                </div>
+                <div class="flexbox">                            
+                    <a class="btn btn-primary btn-block"  (click)="save(inscripcionForm)" href="javascript:;">
+                        <span class="btn-icon"><i class="la la-plus"></i>Procesar</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
