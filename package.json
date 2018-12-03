@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve -o",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -64,7 +64,8 @@
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.13",
     "morris.js": "^0.5.0",
-    "ngx-bootstrap": "^3.0.0",
+    "ngx-bootstrap": "^3.1.2",
+    "ngx-mydatepicker": "^2.4.9",
     "ngx-pagination": "^3.0.3",
     "node-waves": "^0.7.5",
     "popper.js": "^1.14.3",

@@ -40,6 +40,13 @@ import { TipoIncidenciaComponent } from './tipo-incidencia/tipo-incidencia.compo
 import { CreateTipoPadecimientoComponent } from './tipo-padecimiento/create-tipo-padecimiento/create-tipo-padecimiento.component';
 import { EditTipoPadecimientoComponent } from './tipo-padecimiento/edit-tipo-padecimiento/edit-tipo-padecimientocomponent';
 import { TipoPadecimientoComponent } from './tipo-padecimiento/tipo-padecimiento.component';
+import { IncidenciaEstudianteComponent } from './incidencia-estudiante/incidencia-estudiante.component';
+import { CreateIncidenciaEstudianteComponent } from './incidencia-estudiante/create-incidencia/create-incidencia-estudiante.component';
+import { EditIncidenciaEstudianteComponent } from './incidencia-estudiante/edit-incidencia/edit-incidencia-estudiante.component';
+import { ConsultaEstudianteComponent } from '@app/inscripcion/estudiante/consulta-estudiante/consulta-estudiante.component';
+import { CreateNacionalidadComponent } from './nacionalidad/create-nacionalidad/create-nacionalidad.component';
+import { EditNacionalidadComponent } from './nacionalidad/edit-nacionalidad/edit-nacionalidad.component';
+import { NacionalidadComponent } from './nacionalidad/nacionalidad.component';
 import { CreateAulaComponent } from './aula/create-aula/create-aula.component';
 import { EditAulaComponent } from './aula/edit-aula/edit-aula.component';
 import { AulaComponent } from './aula/aula.component';
@@ -93,6 +100,15 @@ import { AulaComponent } from './aula/aula.component';
         CreateTipoPadecimientoComponent,
         EditTipoPadecimientoComponent,
         TipoPadecimientoComponent,
+        IncidenciaEstudianteComponent,
+        CreateIncidenciaEstudianteComponent,
+        EditIncidenciaEstudianteComponent,
+        ConsultaEstudianteComponent,
+        TipoPadecimientoComponent,
+        CreateNacionalidadComponent,
+        EditNacionalidadComponent,
+        NacionalidadComponent
+
         CreateAulaComponent,
         EditAulaComponent,
         AulaComponent

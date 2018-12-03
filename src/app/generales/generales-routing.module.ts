@@ -35,6 +35,12 @@ import { EditTipoIncidenciaComponent } from './tipo-incidencia/edit-tipo-inciden
 import { TipoPadecimientoComponent } from './tipo-padecimiento/tipo-padecimiento.component';
 import { CreateTipoPadecimientoComponent } from './tipo-padecimiento/create-tipo-padecimiento/create-tipo-padecimiento.component';
 import { EditTipoPadecimientoComponent } from './tipo-padecimiento/edit-tipo-padecimiento/edit-tipo-padecimientocomponent';
+import { IncidenciaEstudianteComponent } from './incidencia-estudiante/incidencia-estudiante.component';
+import { CreateIncidenciaEstudianteComponent } from './incidencia-estudiante/create-incidencia/create-incidencia-estudiante.component';
+import { EditIncidenciaEstudianteComponent } from './incidencia-estudiante/edit-incidencia/edit-incidencia-estudiante.component';
+import { NacionalidadComponent } from './nacionalidad/nacionalidad.component';
+import { CreateNacionalidadComponent } from './nacionalidad/create-nacionalidad/create-nacionalidad.component';
+import { EditNacionalidadComponent } from './nacionalidad/edit-nacionalidad/edit-nacionalidad.component';
 import { AulaComponent } from './aula/aula.component';
 import { CreateAulaComponent } from './aula/create-aula/create-aula.component';
 import { EditAulaComponent } from './aula/edit-aula/edit-aula.component';
@@ -175,6 +181,30 @@ const routes: Routes = [
         {
           path: 'generales/tipo-padecimiento/edit-tipo-padecimiento/:id',
           component: EditTipoPadecimientoComponent
+        },
+        {
+          path: 'generales/incidencia-estudiante',
+          component: IncidenciaEstudianteComponent, canActivate: [AppRouteGuard]
+        },
+        {
+          path: 'generales/incidencia-estudiante/create-incidencia',
+          component: CreateIncidenciaEstudianteComponent
+        },
+        {
+          path: 'generales/incidencia-estudiante/edit-incidencia/:id',
+          component: EditIncidenciaEstudianteComponent
+        },
+        {
+          path: 'generales/nacionalidad',
+          component: NacionalidadComponent, canActivate: [AppRouteGuard]
+        },
+        {
+          path: 'generales/nacionalidad/create-nacionalidad',
+          component: CreateNacionalidadComponent
+        },
+        {
+          path: 'generales/nacionalidad/edit-nacionalidad/:id',
+          component: EditNacionalidadComponent
         },
         {
           path: 'generales/aula',

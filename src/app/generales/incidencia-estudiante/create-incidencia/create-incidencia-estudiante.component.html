@@ -1,0 +1,111 @@
+﻿
+<app-consulta-estudiante [selected]="estudiante"></app-consulta-estudiante>
+
+<div class="page-content fade-in-up" >
+    <div class="col-md-8 offset-md-2">
+        <div class="ibox ibox-body">
+
+            <div class="ibox-head">
+                <div class="ibox-title">{{l("Datos de la incidencia")}}</div>
+            </div>
+
+            <div #content>
+                
+                <form class="form-horizontal" #incidenciaEstudianteForm="ngForm" method="post" novalidate (ngSubmit)="save(incidenciaEstudianteForm)">
+                    <div class="ibox-body">   
+
+                        <div [ngClass]="(descripcion.invalid && descripcion.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">
+                            <label>{{l("Descripción")}}<span class="text-danger"> *</span> </label>
+                                <span *ngIf="descripcion.invalid && descripcion.touched" class="input-icon input-icon-right text-danger"></span>
+                                <input 
+                                    id="descripcion" 
+                                    class="form-control no-shadow" 
+                                    type="text"
+                                    #descripcion = "ngModel" 
+                                    [(ngModel)]="incidenciaEstudiante.descripcion" 
+                                    name="Nombre" 
+                                    required
+                                    minlength="2" 
+                                    maxlength="32" 
+                                    placeholder="Nombre"/>
+                                    <app-input-validation [input]="descripcion"></app-input-validation>
+                        </div>
+
+                        <div [ngClass]="(tipoIncidencia.invalid && tipoIncidencia.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">
+                                <label>{{l("Tipo de incidencia")}}<span class="text-danger"> *</span> </label>                            
+                                <ng-select [items]="tiposIncidencia"
+                                    name="tipoIncidenciaSelect"
+                                    bindLabel="descripcion"
+                                    bindValue="id"
+                                    required
+                                    #tipoIncidencia="ngModel"
+                                    [(ngModel)]="incidenciaEstudiante.tipoIncidenciaId">
+                                    <ng-template ng-option-tmp let-item="item">
+                                        {{item.descripcion}}
+                                    </ng-template>
+                                </ng-select>
+                                <app-input-validation [input]="tipoIncidencia"></app-input-validation>
+                        </div>
+    
+                        <div [ngClass]="(materia.invalid && materia.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">
+                                <label>{{l("Materia")}}<span class="text-danger"> *</span> </label>                            
+                                <ng-select [items]="materias"
+                                    name="materiasSelect"
+                                    bindLabel="nombre"
+                                    bindValue="id"
+                                    required
+                                    #materia="ngModel"
+                                    [(ngModel)]="incidenciaEstudiante.materiaId">
+                                    <ng-template ng-option-tmp let-item="item">
+                                        {{item.nombre}}
+                                    </ng-template>
+                                </ng-select>
+                                <app-input-validation [input]="materia"></app-input-validation>
+                        </div>
+
+                        <div [ngClass]="(dp.invalid && dp.touched)?'col-sm-6 form-group mb-4 has-error ':'col-sm-6 form-group mb-4'">                        
+                                <label class="col-form-label">Fecha de inicio</label>
+                                <div class="input-group-icon input-group-icon-left">
+                                    <span (click)="dp.show()" style="cursor:pointer" class="input-icon input-icon-left"><i class="fa fa-calendar"></i></span>
+                                    <input 
+                                        placeholder="Datepicker"  
+                                        placement="bottom left" 
+                                        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
+                                        [(bsValue)]="incidenciaEstudiante.fecha"
+                                        value="{{ incidenciaEstudiante.fecha | date:'dd/MM/yyyy'}}"
+                                        name="fecha" 
+                                        autocomplete="off"
+                                        type="text" 
+                                        placeholder="Ingrese una fecha"
+                                        class="form-control no-shadow" 
+                                        bsDatepicker 
+                                        #dp="bsDatepicker">
+                                        <app-input-validation [input]="dp"></app-input-validation>
+                                </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-form-label">{{l("Justificada")}}<span class="text-danger"> *</span> </label>
+                            <div>
+                                <label class="radio radio-inline radio-primary">
+                                <input [value]="1" [(ngModel)]="incidenciaEstudiante.justificada" name="a" type="radio" checked="checked">
+                                <span class="input-span"></span>Sí</label>
+
+                                <label class="radio radio-inline radio-primary">
+                                <input [value]="0" [(ngModel)]="incidenciaEstudiante.justificada" name="a" type="radio">
+                                <span class="input-span"></span>No</label>
+                            </div>
+                        </div>
+
+                        <div class="ibox-footer row">
+                            <div class="col-sm-12 ml-sm-auto">
+                                <button type="submit" class="btn btn-primary mr-2">{{l("Registrar")}}</button>
+                                <button [disabled]="saving" [routerLink]="['../../incidencia-estudiante']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

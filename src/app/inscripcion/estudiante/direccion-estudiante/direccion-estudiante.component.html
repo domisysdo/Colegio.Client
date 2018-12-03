@@ -12,7 +12,7 @@
             [headerHeight]="ngxDatatableHelper.headerHeight"
             [footerHeight]="0"
             [rowHeight]="ngxDatatableHelper.rowHeight"
-            [rows]="direcciones" 
+            [rows]="listaVisualizacionDireccion" 
             [selectionType]="ngxDatatableHelper.selectionType"
             [selectAllRowsOnPage]="ngxDatatableHelper.selectAllRowsOnPage"
             [reorderable]="ngxDatatableHelper.reorderable"
@@ -83,7 +83,7 @@
                                 required
                                 #sectorModel="ngModel"
                                 (change)="onSectorChange($event)"
-                                [(ngModel)]="elementoLista.sectorId">
+                                [(ngModel)]="direccion.sectorId">
                                 <ng-template ng-option-tmp let-item="item">
                                     {{item.nombre}}
                                 </ng-template>
@@ -100,7 +100,7 @@
                                 required
                                 #tipoDireccionModel = "ngModel"
                                 (change)="onTipoDireccionChange($event)"
-                                [(ngModel)]="elementoLista.tipoDireccionId">
+                                [(ngModel)]="direccion.tipoDireccionId">
                                 <ng-template ng-option-tmp let-item="item">
                                     {{item.descripcion}}
                                 </ng-template>
@@ -108,22 +108,22 @@
                             <app-input-validation [input]="tipoDireccionModel"></app-input-validation>
                     </div>
 
-                    <div [ngClass]="(direccion.invalid && direccion.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
+                    <div [ngClass]="(direccionModel.invalid && direccionModel.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
                         <label class="col-form-label">{{l("Dirección")}}<span class="text-danger"> *</span> </label>
-                        <span *ngIf="direccion.invalid && direccion.touched" class="input-icon input-icon-right text-danger"></span>
+                        <span *ngIf="direccionModel.invalid && direccionModel.touched" class="input-icon input-icon-right text-danger"></span>
                         <textarea 
-                            id="direccion" 
+                            id="direccionModel" 
                             class="form-control no-shadow" 
-                            type="direccion"
-                            #direccion = "ngModel" 
-                            [(ngModel)]="elementoLista.descripcion" 
+                            type="direccionModel"
+                            #direccionModel = "ngModel" 
+                            [(ngModel)]="direccion.descripcion" 
                             name="Direccion" 
                             required
                             cols="6"
                             minlength="2" 
                             maxlength="100" 
                             placeholder="Ingrese la dirección"></textarea>
-                        <app-input-validation [input]="direccion"></app-input-validation>
+                        <app-input-validation [input]="direccionModel"></app-input-validation>
                     </div>
                 </div>
             </div>

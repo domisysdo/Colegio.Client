@@ -1,0 +1,93 @@
+﻿
+<div class="page-content fade-in-up" >
+    <div class="col-md-8 offset-md-2">
+        <div class="ibox ibox-body">
+
+            <div class="ibox-head">
+                <div class="ibox-title">{{l("Registrar nuevo materia")}}</div>
+            </div>
+
+            <div #content>
+                <form class="form-horizontal" #materiaForm="ngForm" method="post" novalidate (ngSubmit)="save(materiaForm)">
+                    <div class="ibox-body">   
+
+                        <div [ngClass]="(identificador.invalid && identificador.touched)?'col-sm-6 form-group has-error mb-4':'col-sm-6 form-group mb-4'">                        
+                            <label>{{l("Identificador")}}<span class="text-danger"> *</span></label>
+                                <span *ngIf = "identificador.invalid && identificador.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                <input 
+                                    id="identificador" 
+                                    class="form-control no-shadow" 
+                                    type="text" 
+                                    #identificador = "ngModel"
+                                    [(ngModel)]="materia.identificador" 
+                                    name="Identificador" 
+                                    required
+                                    minlength="2" 
+                                    maxlength="32" 
+                                    placeholder="Identificador"/>
+                                    <app-input-validation [input]="identificador"></app-input-validation>
+                        </div>
+  
+                        <div [ngClass]="(nombre.invalid && nombre.touched)?'col-sm-6 form-group has-error mb-4':'col-sm-6 form-group mb-4'">                        
+                            <label>{{l("Nombre")}}<span class="text-danger"> *</span></label>
+                                <span *ngIf = "nombre.invalid && nombre.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                <input 
+                                    id="nombre" 
+                                    class="form-control no-shadow" 
+                                    type="text" 
+                                    #nombre = "ngModel"
+                                    [(ngModel)]="materia.nombre" 
+                                    name="Nombre" 
+                                    required
+                                    minlength="2" 
+                                    maxlength="32" 
+                                    placeholder="Nombre"/>
+                                    <app-input-validation [input]="nombre"></app-input-validation>
+                        </div>
+
+                        <div [ngClass]="(precioTotal.invalid && precioTotal.touched)?'col-sm-6 form-group has-error mb-4':'col-sm-6 form-group mb-4'">                        
+                            <label>{{l("Precio Total")}}<span class="text-danger"> *</span></label>
+                                <span *ngIf = "precioTotal.invalid && precioTotal.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                <input 
+                                    id="precioTotal" 
+                                    class="form-control no-shadow" 
+                                    type="text" 
+                                    #precioTotal = "ngModel"
+                                    [(ngModel)]="materia.precioTotal" 
+                                    name="PrecioTotal" 
+                                    required
+                                    minlength="2" 
+                                    maxlength="32" 
+                                    placeholder="Precio Total"/>
+                                    <app-input-validation [input]="precioTotal"></app-input-validation>
+                        </div>
+
+                        <div [ngClass]="(precioInscripcion.invalid && precioInscripcion.touched)?'col-sm-6 form-group has-error mb-4':'col-sm-6 form-group mb-4'">                        
+                            <label>{{l("Precio Inscripcion")}}<span class="text-danger"> *</span></label>
+                                <span *ngIf = "precioInscripcion.invalid && precioInscripcion.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                <input 
+                                    id="precioInscripcion" 
+                                    class="form-control no-shadow" 
+                                    type="text" 
+                                    #precioInscripcion = "ngModel"
+                                    [(ngModel)]="materia.precioInscripcion" 
+                                    name="PrecioInscripcion" 
+                                    required
+                                    minlength="2" 
+                                    maxlength="32" 
+                                    placeholder="Precio Inscripcion"/>
+                                    <app-input-validation [input]="precioInscripcion"></app-input-validation>
+                        </div>
+
+                        <div class="ibox-footer row">
+                            <div class="col-sm-12 ml-sm-auto">
+                                <button type="submit" class="btn btn-primary mr-2">{{l("Registrar")}}</button>
+                                <button [disabled]="saving" [routerLink]="['../../materia']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

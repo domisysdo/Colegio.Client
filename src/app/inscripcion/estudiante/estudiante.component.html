@@ -86,7 +86,7 @@
                     <ngx-datatable-column  [width]="20" >
                         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                             <div class="text-center">
-                                <a [routerLink] = "['edit-estudiante', row.id]" class="text-light mr-3 font-16" href="javascript:;"><i class="ti-pencil"></i></a>
+                                <a [routerLink] = "['create-estudiante', row.id]" class="text-light mr-3 font-16" href="javascript:;"><i class="ti-pencil"></i></a>
                                 <a class="text-light font-16" href="javascript:;"><i (click)="delete(row)" class="ti-trash"></i></a>
                             </div>
                         </ng-template>

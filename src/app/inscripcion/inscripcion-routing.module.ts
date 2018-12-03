@@ -10,6 +10,13 @@ import { EditGrupoComponent } from './grupo/edit-grupo/edit-grupo.component';
 import { ParentescoComponent } from './parentesco/parentesco.component';
 import { CreateParentescoComponent } from './parentesco/create-parentesco/create-parentesco.component';
 import { EditParentescoComponent } from './parentesco/edit-parentesco/edit-parentesco.component';
+import { PeriodoComponent } from './periodo/periodo.component';
+import { CreatePeriodoComponent } from './periodo/create-periodo/create-periodo.component';
+import { EditPeriodoComponent } from './periodo/edit-periodo/edit-periodo.component';
+import { InscripcionComponent } from './inscripcion/inscripcion.component';
+import { MateriaComponent } from './materia/materia.component';
+import { CreateMateriaComponent } from './materia/create-materia/create-materia.component';
+import { EditMateriaComponent } from './materia/edit-materia/edit-materia.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
@@ -21,12 +28,8 @@ const routes: Routes = [
         component: EstudianteComponent, canActivate: [AppRouteGuard]
       },
       {
-        path: 'inscripcion/estudiante/create-estudiante',
+        path: 'inscripcion/estudiante/create-estudiante/:id',
         component: CreateEstudianteComponent
-      },
-      {
-        path: 'inscripcion/estudiante/edit-estudiante/:id',
-        component: EditEstudianteComponent
       },
       {
         path: 'inscripcion/grupo',
@@ -51,6 +54,34 @@ const routes: Routes = [
       {
         path: 'inscripcion/parentesco/edit-parentesco/:id',
         component: EditParentescoComponent
+      },
+      {
+        path: 'inscripcion/periodo',
+        component: PeriodoComponent, canActivate: [AppRouteGuard]
+      },
+      {
+        path: 'inscripcion/periodo/create-periodo',
+        component: CreatePeriodoComponent
+      },
+      {
+        path: 'inscripcion/periodo/edit-periodo/:id',
+        component: EditPeriodoComponent
+      },
+      {
+        path: 'inscripcion/inscripcion',
+        component: InscripcionComponent, canActivate: [AppRouteGuard]
+      },
+      {
+        path: 'inscripcion/materia',
+        component: MateriaComponent, canActivate: [AppRouteGuard]
+      },
+      {
+        path: 'inscripcion/materia/create-materia',
+        component: CreateMateriaComponent
+      },
+      {
+        path: 'inscripcion/materia/edit-materia/:id',
+        component: EditMateriaComponent
       },
     ]
   }

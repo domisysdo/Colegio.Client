@@ -9,7 +9,7 @@
             [headerHeight]="ngxDatatableHelper.headerHeight"
             [footerHeight]="0"
             [rowHeight]="ngxDatatableHelper.rowHeight"
-            [rows]="familiares" 
+            [rows]="listaVisualizacionFamiliares" 
             [selectionType]="ngxDatatableHelper.selectionType"
             [selectAllRowsOnPage]="ngxDatatableHelper.selectAllRowsOnPage"
             [reorderable]="ngxDatatableHelper.reorderable"
@@ -22,7 +22,7 @@
             </ngx-datatable-column>
             
             <ngx-datatable-column 
-                [width]="20"
+                [width]="50"
                 name="Nombre completo" 
                 prop="nombreCompleto">
             </ngx-datatable-column>
@@ -70,24 +70,44 @@
         <div class="modal-body">
             <div class="inbox">
                 <div class="inbox-body">
-                    <div [ngClass]="(identificador.invalid && identificador.touched)?' form-group mb-4 has-error ':' form-group mb-4'">                        
-                            <label class="col-form-label">{{l("Identificador")}}<span class="text-danger"> *</span></label>
-                            <span *ngIf = "identificador.invalid && identificador.touched" class="input-icon input-icon-right text-danger"></span>                                
+                    
+                    <div class="row">                       
+                        <div [ngClass]="(tipoIdentificacion.invalid && tipoIdentificacion.touched)?'col-sm-6 form-group mb-4 has-error ':'col-sm-6 form-group mb-4'">
+                                <label class="col-form-label">{{l("Tipo identificación")}}<span class="text-danger"> *</span> </label>                            
+                                <ng-select [items]="tiposIdentificacion"
+                                    [markFirst]="true"
+                                    name="tipoIdentificacionSelect"
+                                    bindLabel="descripcion"
+                                    bindValue="id"
+                                    required
+                                    #tipoIdentificacion = "ngModel"
+                                    [(ngModel)]="familiar.tipoIdentificacionId">
+                                    <ng-template ng-option-tmp let-item="item">
+                                        {{item.descripcion}}
+                                    </ng-template>
+                                </ng-select>
+                                <app-input-validation [input]="tipoIdentificacion"></app-input-validation>
+                        </div>
+                        <div [ngClass]="(identificacion.invalid && identificacion.touched)?'col-sm-6 form-group mb-4 has-error ':'col-sm-6 form-group mb-4'">                        
+                            <label class="col-form-label">{{l("Identificación")}}<span class="text-danger"> *</span></label>
+                            <span *ngIf = "identificacion.invalid && identificacion.touched" class="input-icon input-icon-right text-danger"></span>                                
                             <input 
-                                id="identificador" 
+                                id="identificacion" 
                                 class="form-control no-shadow" 
                                 type="text" 
-                                #identificador="ngModel"
-                                [(ngModel)]="elementoLista.identificador" 
+                                #identificacion="ngModel"
+                                [(ngModel)]="familiar.identificador" 
                                 name="Identificador" 
                                 required
                                 minlength="2" 
                                 maxlength="32" 
                                 placeholder="Identificador"/>
-                            <app-input-validation [input]="identificador"></app-input-validation>
+                            <app-input-validation [input]="identificacion"></app-input-validation>
                         </div>
+                    </div>
 
-                        <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
+
+                        <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ': 'form-group mb-4'">
                             <label class="col-form-label">{{l("Nombres")}}<span class="text-danger"> *</span> </label>
                             <span *ngIf="nombres.invalid && nombres.touched" class="input-icon input-icon-right text-danger"></span>
                             <input 
@@ -95,7 +115,7 @@
                                 class="form-control no-shadow" 
                                 type="text"
                                 #nombres = "ngModel" 
-                                [(ngModel)]="elementoLista.nombres" 
+                                [(ngModel)]="familiar.nombres" 
                                 name="Nombres" 
                                 required
                                 minlength="2" 
@@ -103,6 +123,7 @@
                                 placeholder="Nombres"/>
                             <app-input-validation [input]="nombres"></app-input-validation>
                         </div>
+                    
 
                         <div class="row"> 
                             <div [ngClass]="(primerApellido.invalid && primerApellido.touched)?'col-sm-6 form-group has-error mb-4':'col-sm-6 form-group mb-4'">                        
@@ -113,7 +134,7 @@
                                     class="form-control no-shadow" 
                                     type="text" 
                                     #primerApellido = "ngModel"
-                                    [(ngModel)]="elementoLista.primerApellido" 
+                                    [(ngModel)]="familiar.primerApellido" 
                                     name="PrimerApellido" 
                                     required
                                     minlength="2" 
@@ -130,7 +151,7 @@
                                     class="form-control no-shadow" 
                                     type="text" 
                                     #segundoApellido = "ngModel"
-                                    [(ngModel)]="elementoLista.segundoApellido" 
+                                    [(ngModel)]="familiar.segundoApellido" 
                                     name="SegundoApellido" 
                                     required
                                     minlength="2" 
@@ -141,28 +162,26 @@
                             </div>
                         </div>
 
-                        <app-input-date
-                            tittle="Fecha de nacimiento"
-                            [date]="elementoLista.fechaNacimiento"
-                            (change)="elementoLista.fechaNacimiento=$event">
-                        </app-input-date>                            
-
-                        <!-- <div class="inbox-body">
-                            <div class="form-group" id="date_1">
-                                <div [ngClass]="(!validDate)?'form-group has-error mb-4':'form-group mb-4'">
+                        <div [ngClass]="(dp.invalid && dp.touched)?'form-group mb-4 has-error ':'form-group mb-4'">                        
                                 <label class="col-form-label">Fecha de nacimiento</label>
-                                <div (click)="date.toggle()" class="input-group-icon input-group-icon-left">
-                                    <span style="cursor:pointer" class="input-icon input-icon-left"><i class="fa fa-calendar"></i></span>
-                                    
-                                    <input class="form-control no-shadow" placeholder="dd/mm/yyyy" name="datePicker" maxlength="10" [container]="container"
-                                    [(ngModel)]="elementoLista.fechaNacimiento" [autocomplete]="true" ngbDatepicker #date="ngbDatepicker"
-                                    >
+                                <div class="input-group-icon input-group-icon-left">
+                                    <span (click)="dp.show()" style="cursor:pointer" class="input-icon input-icon-left"><i class="fa fa-calendar"></i></span>
+                                    <input 
+                                        placeholder="Datepicker"  
+                                        placement="bottom left" 
+                                        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
+                                        [(bsValue)]="familiar.fechaNacimiento"
+                                        value="{{ familiar.fechaNacimiento | date:'dd/MM/yyyy'}}"
+                                        name="fecha" 
+                                        autocomplete="off"
+                                        type="text" 
+                                        placeholder="Ingrese una fecha"
+                                        class="form-control no-shadow" 
+                                        bsDatepicker 
+                                        #dp="bsDatepicker">
+                                        <app-input-validation [input]="dp"></app-input-validation>
                                 </div>
-                                </div>
-                            </div>
                         </div>
-                             -->
-
 
                         <div [ngClass]="(nacionalidad.invalid && nacionalidad.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
                             <label class="col-form-label">{{l("Nacionalidad")}}<span class="text-danger"> *</span> </label>                            
@@ -172,7 +191,7 @@
                                 bindValue="id"
                                 required
                                 #nacionalidad = "ngModel"
-                                [(ngModel)]="elementoLista.nacionalidadId">
+                                [(ngModel)]="familiar.nacionalidadId">
                                 <ng-template ng-option-tmp let-item="item">
                                     {{item.descripcion}} <br />
                                     <small class="text-muted">{{item.identificador}}</small>
@@ -190,7 +209,7 @@
                                 required
                                 #parentesco = "ngModel"
                                 (change)="onParentescoChange($event)"
-                                [(ngModel)]="elementoLista.parentescoId">
+                                [(ngModel)]="familiar.parentescoId">
                                 <ng-template ng-option-tmp let-item="item">
                                     {{item.descripcion}}
                                 </ng-template>
@@ -206,7 +225,7 @@
                                     bindValue="id"
                                     required
                                     #profesion = "ngModel"
-                                    [(ngModel)]="elementoLista.profesionId">
+                                    [(ngModel)]="familiar.profesionId">
                                     <ng-template ng-option-tmp let-item="item">
                                         {{item.descripcion}}
                                     </ng-template>
@@ -217,7 +236,7 @@
                         <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
                             <label class="col-form-label">{{l("Sexo")}}<span class="text-danger"> *</span> </label>                            
                             <ng-select 
-                                [(ngModel)]="elementoLista.sexo" 
+                                [(ngModel)]="familiar.sexo" 
                                 name= "sexoSelect" 
                                 #sexoModel = "ngModel" 
                                 required>
@@ -229,7 +248,7 @@
                         <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
                             <label class="col-form-label">{{l("Estado civil")}}<span class="text-danger"> *</span> </label>                            
                             <ng-select 
-                                [(ngModel)]="elementoLista.estadoCivil" 
+                                [(ngModel)]="familiar.estadoCivil" 
                                 name= "estadoCivilSelect" 
                                 #estadoCivilModel = "ngModel" 
                                 required>
@@ -253,7 +272,7 @@
                 </div>
             </div>
         </div>
-<pre>{{elementoLista | json}}</pre>
+
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary ripple light" [disabled]="!formAgregarFamiliar.valid">Agregar</button>
             <button type="button" class="btn btn-inverse btn-outline-inverse ripple light" (click)="d('Cross click')">Cancelar</button>

@@ -10,10 +10,11 @@
             <!-- Fin de Header del formulario -->
 
             <!-- Inicio de contenido del formulario -->
+
             <div #content>
                 <form class="form-horizontal" #estudianteForm="ngForm" method="post" novalidate (ngSubmit)="save(estudianteForm)">
                     <div class="ibox-body">   
-                        <ngb-tabset class="tabs-line">
+                        <ngb-tabset [destroyOnHide]=false class="tabs-line">
                             <ngb-tab title="Datos generales">
                                 <ng-template ngbTabContent>
                                     <div [ngClass]="(identificador.invalid && identificador.touched)?' form-group mb-4 has-error ':' form-group mb-4'">                        
@@ -87,11 +88,27 @@
                                         </div>
                                     </div>
 
-                                    <app-input-date
-                                        tittle="Fecha de nacimiento"
-                                        [date]="estudiante.fechaNacimiento"
-                                        (change)="estudiante.fechaNacimiento=$event">
-                                    </app-input-date>                            
+                                    <div [ngClass]="(dp.invalid && dp.touched)?'form-group mb-4 has-error ':'form-group mb-4'">                        
+                                            <label class="col-form-label">Fecha de nacimiento</label>
+                                            <div class="input-group-icon input-group-icon-left">
+                                                <span (click)="dp.show()" style="cursor:pointer" class="input-icon input-icon-left"><i class="fa fa-calendar"></i></span>
+                                                <input 
+                                                    placeholder="Datepicker"  
+                                                    placement="bottom left" 
+                                                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
+                                                    [(bsValue)]="estudiante.fechaNacimiento"
+                                                    value="{{ estudiante.fechaNacimiento | date:'dd/MM/yyyy'}}"
+                                                    name="fecha" 
+                                                    autocomplete="off"
+                                                    type="text" 
+                                                    placeholder="Ingrese una fecha"
+                                                    class="form-control no-shadow" 
+                                                    bsDatepicker 
+                                                    #dp="bsDatepicker">
+                                                    <app-input-validation [input]="dp"></app-input-validation>
+                                            </div>
+                                    </div>
+                                                                        
 
                                     <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
                                         <label class="col-form-label">{{l("Nacionalidad")}}<span class="text-danger"> *</span> </label>                            
@@ -148,29 +165,29 @@
                                     </div>
 
                                     <!-- Inicio componente telefonos -->
-                                    <app-telefono-estudiante [telefonos]="telefonosEstudiante"></app-telefono-estudiante>
+                                    <app-telefono-estudiante [telefonos]="estudiante.listaTelefonos"></app-telefono-estudiante>
                                     <!-- Fin componente telefonos -->
 
                                     <!-- Inicio componente emails -->
-                                    <app-email-estudiante [emails]="emailsEstudiante"></app-email-estudiante>
+                                    <app-email-estudiante [emails]="estudiante.listaEmail"></app-email-estudiante>
                                     <!-- Fin componente emails -->
 
                                     <!-- Inicio componente direcciones -->
-                                    <app-direccion-estudiante [direcciones]="direccionesEstudiante"></app-direccion-estudiante>
+                                    <app-direccion-estudiante [direcciones]="estudiante.listaDireccionEstudiante"></app-direccion-estudiante>
                                     <!-- Fin componente direcciones -->
-                                    <pre>{{estudiante | json}}</pre>
-
                                 </ng-template>
                             </ngb-tab>
 
                             <ngb-tab title="Familiares">
                                 <ng-template ngbTabContent>
-                                    <app-familiar-estudiante [familiares]="familiares"></app-familiar-estudiante>
+                                    <app-familiar-estudiante [familiares]="estudiante.listaFamiliarEstudiante"></app-familiar-estudiante>
                                 </ng-template>
                             </ngb-tab>
 
                             <ngb-tab title="Padecimientos">
-
+                                <ng-template ngbTabContent>
+                                    <app-padecimiento-estudiante [padecimientos]="estudiante.listaPadecimientos"></app-padecimiento-estudiante>
+                                </ng-template>
                             </ngb-tab>
                         </ngb-tabset>
                     </div>
