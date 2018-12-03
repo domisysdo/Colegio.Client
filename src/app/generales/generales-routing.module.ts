@@ -35,6 +35,9 @@ import { EditTipoIncidenciaComponent } from './tipo-incidencia/edit-tipo-inciden
 import { TipoPadecimientoComponent } from './tipo-padecimiento/tipo-padecimiento.component';
 import { CreateTipoPadecimientoComponent } from './tipo-padecimiento/create-tipo-padecimiento/create-tipo-padecimiento.component';
 import { EditTipoPadecimientoComponent } from './tipo-padecimiento/edit-tipo-padecimiento/edit-tipo-padecimientocomponent';
+import { AulaComponent } from './aula/aula.component';
+import { CreateAulaComponent } from './aula/create-aula/create-aula.component';
+import { EditAulaComponent } from './aula/edit-aula/edit-aula.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
@@ -172,6 +175,18 @@ const routes: Routes = [
         {
           path: 'generales/tipo-padecimiento/edit-tipo-padecimiento/:id',
           component: EditTipoPadecimientoComponent
+        },
+        {
+          path: 'generales/aula',
+          component: AulaComponent, canActivate: [AppRouteGuard]
+        },
+        {
+          path: 'generales/aula/create-aula',
+          component: CreateAulaComponent
+        },
+        {
+          path: 'generales/aula/edit-aula/:id',
+          component: EditAulaComponent
         }
       ]
     }

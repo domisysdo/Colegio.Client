@@ -40,6 +40,9 @@ import { TipoIncidenciaComponent } from './tipo-incidencia/tipo-incidencia.compo
 import { CreateTipoPadecimientoComponent } from './tipo-padecimiento/create-tipo-padecimiento/create-tipo-padecimiento.component';
 import { EditTipoPadecimientoComponent } from './tipo-padecimiento/edit-tipo-padecimiento/edit-tipo-padecimientocomponent';
 import { TipoPadecimientoComponent } from './tipo-padecimiento/tipo-padecimiento.component';
+import { CreateAulaComponent } from './aula/create-aula/create-aula.component';
+import { EditAulaComponent } from './aula/edit-aula/edit-aula.component';
+import { AulaComponent } from './aula/aula.component';
 
 @NgModule({
 
@@ -89,7 +92,10 @@ import { TipoPadecimientoComponent } from './tipo-padecimiento/tipo-padecimiento
         TipoIncidenciaComponent,
         CreateTipoPadecimientoComponent,
         EditTipoPadecimientoComponent,
-        TipoPadecimientoComponent
+        TipoPadecimientoComponent,
+        CreateAulaComponent,
+        EditAulaComponent,
+        AulaComponent
     ]
 })
 export class GeneralesModule {}
