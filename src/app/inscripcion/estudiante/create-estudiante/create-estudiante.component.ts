@@ -6,7 +6,7 @@ import {
 } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { SexoArray } from '@app/inscripcion/shared/inscripcion-arrays';
 import { NgxDatatableHelper } from '@shared/helpers/NgxDatatableHelper';
@@ -34,6 +34,7 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     model;
     active = false;
     saving = false;
+    editando = false;
 
     sexo = SexoArray.Sexo;
     estadoCivil = SexoArray.EstadoCivil;
@@ -50,6 +51,7 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
         private _router: Router,
         private _estudianteService: EstudianteServiceProxy,
         private _nacionalidadService: NacionalidadServiceProxy,
+        private _route: ActivatedRoute,
         private localeService: BsLocaleService
     ) {
         super(injector);
@@ -58,6 +60,19 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     ngOnInit(): void {
         this.obtenerNacionalidades();
         this.obtenerValoresDefecto();
+
+        const id = this._route.snapshot.params['id'];
+
+        if (id > 0) {
+            this.editando = true;
+            this._estudianteService.getIncluding(id)
+            .subscribe(
+            (result) => {
+                this.estudiante = result;
+                this.active = true;
+                console.log(this.estudiante.listaEmail);
+            });
+        }
     }
 
     save(form: NgForm): void {
@@ -68,6 +83,7 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
                 .pipe(finalize(() => { this.saving = false; }))
                 .subscribe(() => {
                     this.notify.info(this.l('Registrado exitosamente'), this.l('Completado'));
+                    this.editando = false;
                     this.close();
                 });
         } else {

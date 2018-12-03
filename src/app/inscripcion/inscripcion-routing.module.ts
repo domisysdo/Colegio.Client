@@ -28,12 +28,8 @@ const routes: Routes = [
         component: EstudianteComponent, canActivate: [AppRouteGuard]
       },
       {
-        path: 'inscripcion/estudiante/create-estudiante',
+        path: 'inscripcion/estudiante/create-estudiante/:id',
         component: CreateEstudianteComponent
-      },
-      {
-        path: 'inscripcion/estudiante/edit-estudiante/:id',
-        component: EditEstudianteComponent
       },
       {
         path: 'inscripcion/grupo',
@@ -87,7 +83,6 @@ const routes: Routes = [
         path: 'inscripcion/materia/edit-materia/:id',
         component: EditMateriaComponent
       },
-      
     ]
   }
 ];
