@@ -28,6 +28,10 @@ const routes: Routes = [
         component: EstudianteComponent, canActivate: [AppRouteGuard]
       },
       {
+        path: 'inscripcion/estudiante/create-estudiante',
+        component: CreateEstudianteComponent
+      },
+      {
         path: 'inscripcion/estudiante/create-estudiante/:id',
         component: CreateEstudianteComponent
       },

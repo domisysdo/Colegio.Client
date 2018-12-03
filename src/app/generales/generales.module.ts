@@ -107,8 +107,7 @@ import { AulaComponent } from './aula/aula.component';
         TipoPadecimientoComponent,
         CreateNacionalidadComponent,
         EditNacionalidadComponent,
-        NacionalidadComponent
-
+        NacionalidadComponent,
         CreateAulaComponent,
         EditAulaComponent,
         AulaComponent
