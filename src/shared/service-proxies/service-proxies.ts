@@ -14653,6 +14653,7 @@ export class EstudianteDto implements IEstudianteDto {
     listaPadecimientos: PadecimientoDto[] | undefined;
     listaEmail: EmailEstudianteDto[] | undefined;
     listaDireccionEstudiante: DireccionEstudianteDto[] | undefined;
+    listaFamiliarEstudiante: FamiliarEstudiante[] | undefined;
     id: number | undefined;
 
     constructor(data?: IEstudianteDto) {
@@ -14694,6 +14695,11 @@ export class EstudianteDto implements IEstudianteDto {
                 this.listaDireccionEstudiante = [];
                 for (let item of data["listaDireccionEstudiante"])
                     this.listaDireccionEstudiante.push(DireccionEstudianteDto.fromJS(item));
+            }
+            if (data["listaFamiliarEstudiante"] && data["listaFamiliarEstudiante"].constructor === Array) {
+                this.listaFamiliarEstudiante = [];
+                for (let item of data["listaFamiliarEstudiante"])
+                    this.listaFamiliarEstudiante.push(FamiliarEstudiante.fromJS(item));
             }
             this.id = data["id"];
         }
@@ -14737,6 +14743,11 @@ export class EstudianteDto implements IEstudianteDto {
             for (let item of this.listaDireccionEstudiante)
                 data["listaDireccionEstudiante"].push(item.toJSON());
         }
+        if (this.listaFamiliarEstudiante && this.listaFamiliarEstudiante.constructor === Array) {
+            data["listaFamiliarEstudiante"] = [];
+            for (let item of this.listaFamiliarEstudiante)
+                data["listaFamiliarEstudiante"].push(item.toJSON());
+        }
         data["id"] = this.id;
         return data; 
     }
@@ -14763,6 +14774,7 @@ export interface IEstudianteDto {
     listaPadecimientos: PadecimientoDto[] | undefined;
     listaEmail: EmailEstudianteDto[] | undefined;
     listaDireccionEstudiante: DireccionEstudianteDto[] | undefined;
+    listaFamiliarEstudiante: FamiliarEstudiante[] | undefined;
     id: number | undefined;
 }
 
@@ -15128,6 +15140,157 @@ export interface IDireccionEstudianteDto {
     id: number | undefined;
 }
 
+export class FamiliarEstudiante implements IFamiliarEstudiante {
+    nombres: string | undefined;
+    primerApellido: string | undefined;
+    segundoApellido: string | undefined;
+    numeroIdentificacion: string | undefined;
+    fechaNacimiento: Date | undefined;
+    parentescoId: number | undefined;
+    parentesco: Parentesco | undefined;
+    profesionId: number | undefined;
+    profesion: Profesion | undefined;
+    tipoIdentificacionId: number | undefined;
+    tipoIdentificacion: TipoIdentificacion | undefined;
+    listaTelefonos: TelefonoFamiliarEstudiante[] | undefined;
+    listaEmails: EmailFamiliarEstudiante[] | undefined;
+    listaDirecciones: DireccionFamiliarEstudiante[] | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: Date | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IFamiliarEstudiante) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.nombres = data["nombres"];
+            this.primerApellido = data["primerApellido"];
+            this.segundoApellido = data["segundoApellido"];
+            this.numeroIdentificacion = data["numeroIdentificacion"];
+            this.fechaNacimiento = data["fechaNacimiento"] ? new Date(data["fechaNacimiento"].toString()) : <any>undefined;
+            this.parentescoId = data["parentescoId"];
+            this.parentesco = data["parentesco"] ? Parentesco.fromJS(data["parentesco"]) : <any>undefined;
+            this.profesionId = data["profesionId"];
+            this.profesion = data["profesion"] ? Profesion.fromJS(data["profesion"]) : <any>undefined;
+            this.tipoIdentificacionId = data["tipoIdentificacionId"];
+            this.tipoIdentificacion = data["tipoIdentificacion"] ? TipoIdentificacion.fromJS(data["tipoIdentificacion"]) : <any>undefined;
+            if (data["listaTelefonos"] && data["listaTelefonos"].constructor === Array) {
+                this.listaTelefonos = [];
+                for (let item of data["listaTelefonos"])
+                    this.listaTelefonos.push(TelefonoFamiliarEstudiante.fromJS(item));
+            }
+            if (data["listaEmails"] && data["listaEmails"].constructor === Array) {
+                this.listaEmails = [];
+                for (let item of data["listaEmails"])
+                    this.listaEmails.push(EmailFamiliarEstudiante.fromJS(item));
+            }
+            if (data["listaDirecciones"] && data["listaDirecciones"].constructor === Array) {
+                this.listaDirecciones = [];
+                for (let item of data["listaDirecciones"])
+                    this.listaDirecciones.push(DireccionFamiliarEstudiante.fromJS(item));
+            }
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? new Date(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): FamiliarEstudiante {
+        data = typeof data === 'object' ? data : {};
+        let result = new FamiliarEstudiante();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["nombres"] = this.nombres;
+        data["primerApellido"] = this.primerApellido;
+        data["segundoApellido"] = this.segundoApellido;
+        data["numeroIdentificacion"] = this.numeroIdentificacion;
+        data["fechaNacimiento"] = this.fechaNacimiento ? this.fechaNacimiento.toISOString() : <any>undefined;
+        data["parentescoId"] = this.parentescoId;
+        data["parentesco"] = this.parentesco ? this.parentesco.toJSON() : <any>undefined;
+        data["profesionId"] = this.profesionId;
+        data["profesion"] = this.profesion ? this.profesion.toJSON() : <any>undefined;
+        data["tipoIdentificacionId"] = this.tipoIdentificacionId;
+        data["tipoIdentificacion"] = this.tipoIdentificacion ? this.tipoIdentificacion.toJSON() : <any>undefined;
+        if (this.listaTelefonos && this.listaTelefonos.constructor === Array) {
+            data["listaTelefonos"] = [];
+            for (let item of this.listaTelefonos)
+                data["listaTelefonos"].push(item.toJSON());
+        }
+        if (this.listaEmails && this.listaEmails.constructor === Array) {
+            data["listaEmails"] = [];
+            for (let item of this.listaEmails)
+                data["listaEmails"].push(item.toJSON());
+        }
+        if (this.listaDirecciones && this.listaDirecciones.constructor === Array) {
+            data["listaDirecciones"] = [];
+            for (let item of this.listaDirecciones)
+                data["listaDirecciones"].push(item.toJSON());
+        }
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): FamiliarEstudiante {
+        const json = this.toJSON();
+        let result = new FamiliarEstudiante();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFamiliarEstudiante {
+    nombres: string | undefined;
+    primerApellido: string | undefined;
+    segundoApellido: string | undefined;
+    numeroIdentificacion: string | undefined;
+    fechaNacimiento: Date | undefined;
+    parentescoId: number | undefined;
+    parentesco: Parentesco | undefined;
+    profesionId: number | undefined;
+    profesion: Profesion | undefined;
+    tipoIdentificacionId: number | undefined;
+    tipoIdentificacion: TipoIdentificacion | undefined;
+    listaTelefonos: TelefonoFamiliarEstudiante[] | undefined;
+    listaEmails: EmailFamiliarEstudiante[] | undefined;
+    listaDirecciones: DireccionFamiliarEstudiante[] | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: Date | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
 export class MateriaDto implements IMateriaDto {
     identificador: string | undefined;
     nombre: string | undefined;
@@ -15184,6 +15347,969 @@ export interface IMateriaDto {
     nombre: string | undefined;
     precioTotal: number | undefined;
     precioInscripcion: number | undefined;
+    id: number | undefined;
+}
+
+export class Parentesco implements IParentesco {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IParentesco) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): Parentesco {
+        data = typeof data === 'object' ? data : {};
+        let result = new Parentesco();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): Parentesco {
+        const json = this.toJSON();
+        let result = new Parentesco();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IParentesco {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class Profesion implements IProfesion {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IProfesion) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): Profesion {
+        data = typeof data === 'object' ? data : {};
+        let result = new Profesion();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): Profesion {
+        const json = this.toJSON();
+        let result = new Profesion();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProfesion {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class TipoIdentificacion implements ITipoIdentificacion {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: ITipoIdentificacion) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TipoIdentificacion {
+        data = typeof data === 'object' ? data : {};
+        let result = new TipoIdentificacion();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TipoIdentificacion {
+        const json = this.toJSON();
+        let result = new TipoIdentificacion();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITipoIdentificacion {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class TelefonoFamiliarEstudiante implements ITelefonoFamiliarEstudiante {
+    numero: string | undefined;
+    tipoTelefonoId: number | undefined;
+    tipoTelefono: TipoTelefono | undefined;
+    familiarEstudianteId: number | undefined;
+    familiarEstudiante: FamiliarEstudiante | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: ITelefonoFamiliarEstudiante) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.numero = data["numero"];
+            this.tipoTelefonoId = data["tipoTelefonoId"];
+            this.tipoTelefono = data["tipoTelefono"] ? TipoTelefono.fromJS(data["tipoTelefono"]) : <any>undefined;
+            this.familiarEstudianteId = data["familiarEstudianteId"];
+            this.familiarEstudiante = data["familiarEstudiante"] ? FamiliarEstudiante.fromJS(data["familiarEstudiante"]) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TelefonoFamiliarEstudiante {
+        data = typeof data === 'object' ? data : {};
+        let result = new TelefonoFamiliarEstudiante();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["numero"] = this.numero;
+        data["tipoTelefonoId"] = this.tipoTelefonoId;
+        data["tipoTelefono"] = this.tipoTelefono ? this.tipoTelefono.toJSON() : <any>undefined;
+        data["familiarEstudianteId"] = this.familiarEstudianteId;
+        data["familiarEstudiante"] = this.familiarEstudiante ? this.familiarEstudiante.toJSON() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TelefonoFamiliarEstudiante {
+        const json = this.toJSON();
+        let result = new TelefonoFamiliarEstudiante();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITelefonoFamiliarEstudiante {
+    numero: string | undefined;
+    tipoTelefonoId: number | undefined;
+    tipoTelefono: TipoTelefono | undefined;
+    familiarEstudianteId: number | undefined;
+    familiarEstudiante: FamiliarEstudiante | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class EmailFamiliarEstudiante implements IEmailFamiliarEstudiante {
+    email: string | undefined;
+    familiarEstudianteId: number | undefined;
+    familiarEstudiante: FamiliarEstudiante | undefined;
+    tipoEmailId: number | undefined;
+    tipoEmail: TipoEmail | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IEmailFamiliarEstudiante) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.email = data["email"];
+            this.familiarEstudianteId = data["familiarEstudianteId"];
+            this.familiarEstudiante = data["familiarEstudiante"] ? FamiliarEstudiante.fromJS(data["familiarEstudiante"]) : <any>undefined;
+            this.tipoEmailId = data["tipoEmailId"];
+            this.tipoEmail = data["tipoEmail"] ? TipoEmail.fromJS(data["tipoEmail"]) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): EmailFamiliarEstudiante {
+        data = typeof data === 'object' ? data : {};
+        let result = new EmailFamiliarEstudiante();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["email"] = this.email;
+        data["familiarEstudianteId"] = this.familiarEstudianteId;
+        data["familiarEstudiante"] = this.familiarEstudiante ? this.familiarEstudiante.toJSON() : <any>undefined;
+        data["tipoEmailId"] = this.tipoEmailId;
+        data["tipoEmail"] = this.tipoEmail ? this.tipoEmail.toJSON() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): EmailFamiliarEstudiante {
+        const json = this.toJSON();
+        let result = new EmailFamiliarEstudiante();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IEmailFamiliarEstudiante {
+    email: string | undefined;
+    familiarEstudianteId: number | undefined;
+    familiarEstudiante: FamiliarEstudiante | undefined;
+    tipoEmailId: number | undefined;
+    tipoEmail: TipoEmail | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class DireccionFamiliarEstudiante implements IDireccionFamiliarEstudiante {
+    descripcion: string | undefined;
+    familiarEstudianteId: number | undefined;
+    familiarEstudiante: FamiliarEstudiante | undefined;
+    tipoDireccionId: number | undefined;
+    tipoDireccion: TipoDireccion | undefined;
+    sectorId: number | undefined;
+    sector: Sector | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IDireccionFamiliarEstudiante) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            this.familiarEstudianteId = data["familiarEstudianteId"];
+            this.familiarEstudiante = data["familiarEstudiante"] ? FamiliarEstudiante.fromJS(data["familiarEstudiante"]) : <any>undefined;
+            this.tipoDireccionId = data["tipoDireccionId"];
+            this.tipoDireccion = data["tipoDireccion"] ? TipoDireccion.fromJS(data["tipoDireccion"]) : <any>undefined;
+            this.sectorId = data["sectorId"];
+            this.sector = data["sector"] ? Sector.fromJS(data["sector"]) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): DireccionFamiliarEstudiante {
+        data = typeof data === 'object' ? data : {};
+        let result = new DireccionFamiliarEstudiante();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        data["familiarEstudianteId"] = this.familiarEstudianteId;
+        data["familiarEstudiante"] = this.familiarEstudiante ? this.familiarEstudiante.toJSON() : <any>undefined;
+        data["tipoDireccionId"] = this.tipoDireccionId;
+        data["tipoDireccion"] = this.tipoDireccion ? this.tipoDireccion.toJSON() : <any>undefined;
+        data["sectorId"] = this.sectorId;
+        data["sector"] = this.sector ? this.sector.toJSON() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): DireccionFamiliarEstudiante {
+        const json = this.toJSON();
+        let result = new DireccionFamiliarEstudiante();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IDireccionFamiliarEstudiante {
+    descripcion: string | undefined;
+    familiarEstudianteId: number | undefined;
+    familiarEstudiante: FamiliarEstudiante | undefined;
+    tipoDireccionId: number | undefined;
+    tipoDireccion: TipoDireccion | undefined;
+    sectorId: number | undefined;
+    sector: Sector | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class TipoTelefono implements ITipoTelefono {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: ITipoTelefono) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TipoTelefono {
+        data = typeof data === 'object' ? data : {};
+        let result = new TipoTelefono();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TipoTelefono {
+        const json = this.toJSON();
+        let result = new TipoTelefono();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITipoTelefono {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class TipoEmail implements ITipoEmail {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: ITipoEmail) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TipoEmail {
+        data = typeof data === 'object' ? data : {};
+        let result = new TipoEmail();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TipoEmail {
+        const json = this.toJSON();
+        let result = new TipoEmail();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITipoEmail {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class TipoDireccion implements ITipoDireccion {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: ITipoDireccion) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TipoDireccion {
+        data = typeof data === 'object' ? data : {};
+        let result = new TipoDireccion();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TipoDireccion {
+        const json = this.toJSON();
+        let result = new TipoDireccion();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITipoDireccion {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class Sector implements ISector {
+    identificador: string | undefined;
+    nombre: string | undefined;
+    municipioId: number | undefined;
+    municipio: Municipio | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: ISector) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.identificador = data["identificador"];
+            this.nombre = data["nombre"];
+            this.municipioId = data["municipioId"];
+            this.municipio = data["municipio"] ? Municipio.fromJS(data["municipio"]) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): Sector {
+        data = typeof data === 'object' ? data : {};
+        let result = new Sector();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["identificador"] = this.identificador;
+        data["nombre"] = this.nombre;
+        data["municipioId"] = this.municipioId;
+        data["municipio"] = this.municipio ? this.municipio.toJSON() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): Sector {
+        const json = this.toJSON();
+        let result = new Sector();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISector {
+    identificador: string | undefined;
+    nombre: string | undefined;
+    municipioId: number | undefined;
+    municipio: Municipio | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class Municipio implements IMunicipio {
+    identificador: string | undefined;
+    nombre: string | undefined;
+    provinciaId: number | undefined;
+    provincia: Provincia | undefined;
+    listaSectores: Sector[] | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IMunicipio) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.identificador = data["identificador"];
+            this.nombre = data["nombre"];
+            this.provinciaId = data["provinciaId"];
+            this.provincia = data["provincia"] ? Provincia.fromJS(data["provincia"]) : <any>undefined;
+            if (data["listaSectores"] && data["listaSectores"].constructor === Array) {
+                this.listaSectores = [];
+                for (let item of data["listaSectores"])
+                    this.listaSectores.push(Sector.fromJS(item));
+            }
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): Municipio {
+        data = typeof data === 'object' ? data : {};
+        let result = new Municipio();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["identificador"] = this.identificador;
+        data["nombre"] = this.nombre;
+        data["provinciaId"] = this.provinciaId;
+        data["provincia"] = this.provincia ? this.provincia.toJSON() : <any>undefined;
+        if (this.listaSectores && this.listaSectores.constructor === Array) {
+            data["listaSectores"] = [];
+            for (let item of this.listaSectores)
+                data["listaSectores"].push(item.toJSON());
+        }
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): Municipio {
+        const json = this.toJSON();
+        let result = new Municipio();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMunicipio {
+    identificador: string | undefined;
+    nombre: string | undefined;
+    provinciaId: number | undefined;
+    provincia: Provincia | undefined;
+    listaSectores: Sector[] | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class Provincia implements IProvincia {
+    identificador: string | undefined;
+    nombre: string | undefined;
+    paisId: number | undefined;
+    pais: Pais | undefined;
+    listaMunicipios: Municipio[] | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IProvincia) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.identificador = data["identificador"];
+            this.nombre = data["nombre"];
+            this.paisId = data["paisId"];
+            this.pais = data["pais"] ? Pais.fromJS(data["pais"]) : <any>undefined;
+            if (data["listaMunicipios"] && data["listaMunicipios"].constructor === Array) {
+                this.listaMunicipios = [];
+                for (let item of data["listaMunicipios"])
+                    this.listaMunicipios.push(Municipio.fromJS(item));
+            }
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): Provincia {
+        data = typeof data === 'object' ? data : {};
+        let result = new Provincia();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["identificador"] = this.identificador;
+        data["nombre"] = this.nombre;
+        data["paisId"] = this.paisId;
+        data["pais"] = this.pais ? this.pais.toJSON() : <any>undefined;
+        if (this.listaMunicipios && this.listaMunicipios.constructor === Array) {
+            data["listaMunicipios"] = [];
+            for (let item of this.listaMunicipios)
+                data["listaMunicipios"].push(item.toJSON());
+        }
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): Provincia {
+        const json = this.toJSON();
+        let result = new Provincia();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProvincia {
+    identificador: string | undefined;
+    nombre: string | undefined;
+    paisId: number | undefined;
+    pais: Pais | undefined;
+    listaMunicipios: Municipio[] | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class Pais implements IPais {
+    identificador: string | undefined;
+    nombre: string | undefined;
+    listaProvincias: Provincia[] | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: Date | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IPais) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.identificador = data["identificador"];
+            this.nombre = data["nombre"];
+            if (data["listaProvincias"] && data["listaProvincias"].constructor === Array) {
+                this.listaProvincias = [];
+                for (let item of data["listaProvincias"])
+                    this.listaProvincias.push(Provincia.fromJS(item));
+            }
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? new Date(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): Pais {
+        data = typeof data === 'object' ? data : {};
+        let result = new Pais();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["identificador"] = this.identificador;
+        data["nombre"] = this.nombre;
+        if (this.listaProvincias && this.listaProvincias.constructor === Array) {
+            data["listaProvincias"] = [];
+            for (let item of this.listaProvincias)
+                data["listaProvincias"].push(item.toJSON());
+        }
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): Pais {
+        const json = this.toJSON();
+        let result = new Pais();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPais {
+    identificador: string | undefined;
+    nombre: string | undefined;
+    listaProvincias: Provincia[] | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: Date | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
     id: number | undefined;
 }
 

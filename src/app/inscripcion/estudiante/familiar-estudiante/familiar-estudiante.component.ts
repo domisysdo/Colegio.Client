@@ -1,4 +1,4 @@
-import { OnInit, Component, Input, Injector } from '@angular/core';
+import { OnInit, Component, Input, Injector, AfterViewChecked, AfterContentChecked } from '@angular/core';
 import {
     FamiliarEstudianteDto, TelefonoFamiliarEstudianteDto,
     EmailFamiliarEstudianteDto, DireccionFamiliarEstudianteDto,
@@ -20,7 +20,7 @@ import { defineLocale, esDoLocale } from 'ngx-bootstrap';
     selector: 'app-familiar-estudiante',
     templateUrl: './familiar-estudiante.component.html'
 })
-export class FamiliarEstudianteComponent extends AppComponentBase implements OnInit {
+export class FamiliarEstudianteComponent extends AppComponentBase implements OnInit, AfterContentChecked {
 
     familiar: FamiliarEstudianteDto;
     parentescoSelect: any;
@@ -61,6 +61,11 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
         this.obtenerNacionalidades();
         this.obtenerTipoIdentificacion();
         this.obtenerValoresDefecto();
+    }
+
+
+    ngAfterContentChecked(): void {
+        this.listaVisualizacionFamiliares = [...this.familiares];
     }
 
     obtenerParentescos() {
@@ -106,7 +111,6 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
 
         this.indexElementoSeleccionado = this.familiares.indexOf(familiar);
         this.familiar = JSON.parse(JSON.stringify(familiar));
-        console.log(this.familiar);
         this.modal = this.modalHelper.getLargeModal(content);
     }
 
@@ -114,7 +118,8 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
 
         if (!this.familiarExisteDetalle()) {
 
-            this.agregarRelaciones();
+            // this.agregarRelaciones();
+            // console.log(this.familiares);
 
             this.familiar.nombreCompleto = this.familiar.nombres + ' ' +
             this.familiar.primerApellido + ' ' + this.familiar.segundoApellido;
@@ -133,6 +138,7 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
     }
 
     familiarExisteDetalle(): boolean {
+        console.log(this.familiares);
         for (const item of this.familiares) {
             if (this.familiares.indexOf(item) !== this.indexElementoSeleccionado &&
                 item.identificador === this.familiar.identificador
@@ -144,11 +150,11 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
         return false;
     }
 
-    agregarRelaciones() {
-        this.familiar.listaDirecciones = this.direccionesFamiliar;
-        this.familiar.listaEmails = this.emailsFamiliar;
-        this.familiar.listaTelefonos = this.telefonosFamiliar;
-    }
+    // agregarRelaciones() {
+    //     this.familiar.listaDirecciones = this.direccionesFamiliar;
+    //     this.familiar.listaEmails = this.emailsFamiliar;
+    //     this.familiar.listaTelefonos = this.telefonosFamiliar;
+    // }
 
     onParentescoChange(event: any) {
         this.parentescoSelect = event;

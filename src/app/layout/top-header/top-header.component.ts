@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { MessageHelper } from '@app/shared/MessageHelper';
 import { AppAuthService } from '@shared/auth/app-auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-top-header',
@@ -15,7 +16,8 @@ export class TopHeaderComponent implements OnInit {
   user;
   constructor(
     private _sessionService: AppSessionService,
-    private _authService: AppAuthService
+    private _authService: AppAuthService,
+    private _router: Router,
 
   ) {}
 
@@ -24,7 +26,10 @@ export class TopHeaderComponent implements OnInit {
       this.user = this._sessionService.user;
       this.fullUserName = this._sessionService.user.name + ' ' + this._sessionService.user.surname;
     } else {
-      MessageHelper.show('No existe usuario logueado', 'No logueado');
+      MessageHelper.show('No existe usuario logueado, se redigirirá al inicio de sesión', 'No logueado',
+      () => {
+        this._router.navigate(['account/login']);
+      });
     }
   }
 

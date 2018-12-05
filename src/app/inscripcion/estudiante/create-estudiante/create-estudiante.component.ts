@@ -1,4 +1,4 @@
-import { Component, ViewChild, Injector, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, Injector, ElementRef, OnInit, OnChanges, AfterViewChecked } from '@angular/core';
 
 import {
     EstudianteDto, EstudianteServiceProxy, NacionalidadServiceProxy, NacionalidadDto, TelefonoEstudianteDto,
@@ -19,6 +19,7 @@ import { defineLocale, esDoLocale, BsLocaleService } from 'ngx-bootstrap';
     templateUrl: './create-estudiante.component.html'
 })
 export class CreateEstudianteComponent extends AppComponentBase implements OnInit {
+
 
     @ViewChild('content') content: ElementRef;
 
@@ -67,13 +68,15 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
             this.editando = true;
             this._estudianteService.getIncluding(id)
             .subscribe(
-            (result) => {
-                this.estudiante = result;
-                this.active = true;
-                console.log(this.estudiante.listaEmail);
-            });
-        }
+                (result) => {
+                    this.estudiante = result;
+                    this.active = true;
+                    console.log(this.estudiante.listaEmail);
+                }
+            );
+        };
     }
+
 
     save(form: NgForm): void {
         if (form.valid) {

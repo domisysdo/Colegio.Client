@@ -1,4 +1,4 @@
-import { OnInit, Component, Input, Injector } from '@angular/core';
+import { OnInit, Component, Input, Injector, AfterViewChecked, AfterViewInit, AfterContentChecked } from '@angular/core';
 import {
     EmailEstudianteDto,
     TipoEmailServiceProxy,
@@ -15,7 +15,7 @@ import { EMAIL_PATTERN } from '@shared/helpers/constantes-globales';
     selector: 'app-email-estudiante',
     templateUrl: './email-estudiante.component.html'
 })
-export class EmailEstudianteComponent extends AppComponentBase implements OnInit {
+export class EmailEstudianteComponent extends AppComponentBase implements OnInit, AfterContentChecked {
 
     email: EmailEstudianteDto;
     emailSelect: any;
@@ -27,7 +27,7 @@ export class EmailEstudianteComponent extends AppComponentBase implements OnInit
     emailPattern = EMAIL_PATTERN;
     indexElementoSeleccionado = -1;
 
-    @Input() emails: EmailEstudianteDto[] = [];
+    @Input() emails: EmailEstudianteDto[];
 
     constructor(
         injector: Injector,
@@ -36,11 +36,13 @@ export class EmailEstudianteComponent extends AppComponentBase implements OnInit
     ) {
         super(injector)
     }
-
     ngOnInit(): void {
         this.obtenerTiposEmail();
     }
 
+    ngAfterContentChecked(): void {
+        this.listaVisualizacionEmail = [...this.emails];
+    }
 
     obtenerTiposEmail() {
         this._tipoEmailService.getAllForSelect()
@@ -58,19 +60,28 @@ export class EmailEstudianteComponent extends AppComponentBase implements OnInit
     editarEmail(email: EmailEstudianteDto, content) {
         this.indexElementoSeleccionado = this.emails.indexOf(email);
         this.email = JSON.parse(JSON.stringify(email));
+        console.log(this.email);
         this.modal = this.modalHelper.getMediumModal(content);
     }
 
     registrarEmails() {
-        if (!this.emailExisteDetalle()) {
-            this.email.tipoEmailNombre = this.emailSelect.descripcion;
 
-            if (this.indexElementoSeleccionado >= 0) {
-                this.emails[this.indexElementoSeleccionado] = this.email;
-            } else {
-                this.emails.push(this.email);
+        const emailAgregar = new EmailEstudianteDto({
+            estudianteId: this.email.estudianteId,
+            email: this.email.email, tipoEmailId: this.email.tipoEmailId,
+            tipoEmailNombre: this.email.tipoEmailNombre, id: 0
+        })
+
+        if (!this.emailExisteDetalle()) {
+            if (this.emailSelect) {
+                this.email.tipoEmailNombre = this.emailSelect.descripcion;
             }
 
+            if (this.indexElementoSeleccionado >= 0) {
+                this.emails[this.indexElementoSeleccionado] = emailAgregar;
+            } else {
+                this.emails.push(emailAgregar);
+            }
             this.listaVisualizacionEmail = [...this.emails];
             this.modal.close();
         }
