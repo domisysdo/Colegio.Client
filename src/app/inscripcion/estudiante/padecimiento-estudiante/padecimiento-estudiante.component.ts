@@ -1,4 +1,4 @@
-import { OnInit, Component, Input, Injector } from '@angular/core';
+import { OnInit, Component, Input, Injector, AfterContentChecked } from '@angular/core';
 import { PadecimientoDto, TipoPadecimientoServiceProxy, TipoPadecimientoDto } from '@shared/service-proxies/service-proxies';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalHelper } from '@shared/helpers/ModalHelper';
@@ -12,11 +12,11 @@ import { EMAIL_PATTERN } from '@shared/helpers/constantes-globales';
     templateUrl: './padecimiento-estudiante.component.html'
 })
 
-export class PadecimientoEstudianteComponent extends AppComponentBase implements OnInit {
+export class PadecimientoEstudianteComponent extends AppComponentBase implements OnInit, AfterContentChecked {
     padecimiento: PadecimientoDto;
     padecimientoSelect: any;
     tiposPadecimiento: TipoPadecimientoDto[];
-    listaVisualizacionpadecimientos: PadecimientoDto[] = [];
+    listaVisualizacionPadecimientos: PadecimientoDto[] = [];
     modal: NgbModalRef;
 
     ngxDatatableHelper = NgxDatatableHelper;
@@ -37,6 +37,9 @@ export class PadecimientoEstudianteComponent extends AppComponentBase implements
         this.obtenerTiposPadecimiento();
     }
 
+    ngAfterContentChecked(): void {
+        this.listaVisualizacionPadecimientos = [...this.padecimientos];
+    }
 
     obtenerTiposPadecimiento() {
         this._tipoPadecimientoService.getAllForSelect()
@@ -59,15 +62,26 @@ export class PadecimientoEstudianteComponent extends AppComponentBase implements
 
     registrarPadecimientos() {
         if (!this.padecimientoExisteDetalle()) {
-            this.padecimiento.tipoPadecimientoDescripcion = this.padecimientoSelect.descripcion;
-
-            if (this.indexElementoSeleccionado >= 0) {
-                this.padecimientos[this.indexElementoSeleccionado] = this.padecimiento;
-            } else {
-                this.padecimientos.push(this.padecimiento);
+            if (this.padecimientoSelect) {
+                this.padecimiento.tipoPadecimientoDescripcion = this.padecimientoSelect.descripcion;
             }
 
-            this.listaVisualizacionpadecimientos = [...this.padecimientos];
+            const padecimientoAgregar = new PadecimientoDto({
+                estudianteId: this.padecimiento.estudianteId,
+                descripcion: this.padecimiento.descripcion,
+                nota: this.padecimiento.nota,
+                tipoPadecimientoDescripcion: this.padecimiento.tipoPadecimientoDescripcion,
+                tipoPadecimientoId: this.padecimiento.tipoPadecimientoId,
+                id: 0
+            })
+
+            if (this.indexElementoSeleccionado >= 0) {
+                this.padecimientos[this.indexElementoSeleccionado] = padecimientoAgregar;
+            } else {
+                this.padecimientos.push(padecimientoAgregar);
+            }
+
+            this.listaVisualizacionPadecimientos = [...this.padecimientos];
             this.modal.close();
         }
     }
@@ -94,7 +108,7 @@ export class PadecimientoEstudianteComponent extends AppComponentBase implements
             '¿Desea borrarlo?',
             () => {
                 lista.splice(lista.indexOf(row), 1);
-                this.listaVisualizacionpadecimientos.splice(this.listaVisualizacionpadecimientos.indexOf(row), 1);
+                this.listaVisualizacionPadecimientos.splice(this.listaVisualizacionPadecimientos.indexOf(row), 1);
             }
         );
     }

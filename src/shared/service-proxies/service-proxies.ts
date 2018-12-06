@@ -1837,47 +1837,39 @@ export class EmailEstudianteServiceProxy {
     }
 
     /**
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @param filter (optional) 
+     * @param emailEstudiantes (optional) 
      * @return Success
      */
-    getAllFiltered(sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined, filter: string | null | undefined): Observable<PagedResultDtoOfEmailEstudianteDto> {
-        let url_ = this.baseUrl + "/api/services/app/EmailEstudiante/GetAllFiltered?";
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        if (filter !== undefined)
-            url_ += "filter=" + encodeURIComponent("" + filter) + "&"; 
+    create(emailEstudiantes: EmailEstudiante[] | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/EmailEstudiante/Create";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(emailEstudiantes);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "application/json"
+                "Content-Type": "application/json", 
             })
         };
 
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllFiltered(response_);
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAllFiltered(<any>response_);
+                    return this.processCreate(<any>response_);
                 } catch (e) {
-                    return <Observable<PagedResultDtoOfEmailEstudianteDto>><any>_observableThrow(e);
+                    return <Observable<void>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<PagedResultDtoOfEmailEstudianteDto>><any>_observableThrow(response_);
+                return <Observable<void>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAllFiltered(response: HttpResponseBase): Observable<PagedResultDtoOfEmailEstudianteDto> {
+    protected processCreate(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1886,17 +1878,14 @@ export class EmailEstudianteServiceProxy {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfEmailEstudianteDto.fromJS(resultData200) : new PagedResultDtoOfEmailEstudianteDto();
-            return _observableOf(result200);
+            return _observableOf<void>(<any>null);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<PagedResultDtoOfEmailEstudianteDto>(<any>null);
+        return _observableOf<void>(<any>null);
     }
 
     /**
@@ -1952,282 +1941,6 @@ export class EmailEstudianteServiceProxy {
             }));
         }
         return _observableOf<EmailEstudianteDto[]>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    get(id: number | null | undefined): Observable<EmailEstudianteDto> {
-        let url_ = this.baseUrl + "/api/services/app/EmailEstudiante/Get?";
-        if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGet(<any>response_);
-                } catch (e) {
-                    return <Observable<EmailEstudianteDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<EmailEstudianteDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGet(response: HttpResponseBase): Observable<EmailEstudianteDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? EmailEstudianteDto.fromJS(resultData200) : new EmailEstudianteDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<EmailEstudianteDto>(<any>null);
-    }
-
-    /**
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfEmailEstudianteDto> {
-        let url_ = this.baseUrl + "/api/services/app/EmailEstudiante/GetAll?";
-        if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(<any>response_);
-                } catch (e) {
-                    return <Observable<PagedResultDtoOfEmailEstudianteDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PagedResultDtoOfEmailEstudianteDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfEmailEstudianteDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PagedResultDtoOfEmailEstudianteDto.fromJS(resultData200) : new PagedResultDtoOfEmailEstudianteDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PagedResultDtoOfEmailEstudianteDto>(<any>null);
-    }
-
-    /**
-     * @param input (optional) 
-     * @return Success
-     */
-    create(input: EmailEstudianteDto | null | undefined): Observable<EmailEstudianteDto> {
-        let url_ = this.baseUrl + "/api/services/app/EmailEstudiante/Create";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(input);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreate(<any>response_);
-                } catch (e) {
-                    return <Observable<EmailEstudianteDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<EmailEstudianteDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processCreate(response: HttpResponseBase): Observable<EmailEstudianteDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? EmailEstudianteDto.fromJS(resultData200) : new EmailEstudianteDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<EmailEstudianteDto>(<any>null);
-    }
-
-    /**
-     * @param input (optional) 
-     * @return Success
-     */
-    update(input: EmailEstudianteDto | null | undefined): Observable<EmailEstudianteDto> {
-        let url_ = this.baseUrl + "/api/services/app/EmailEstudiante/Update";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(input);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processUpdate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processUpdate(<any>response_);
-                } catch (e) {
-                    return <Observable<EmailEstudianteDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<EmailEstudianteDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processUpdate(response: HttpResponseBase): Observable<EmailEstudianteDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? EmailEstudianteDto.fromJS(resultData200) : new EmailEstudianteDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<EmailEstudianteDto>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/EmailEstudiante/Delete?";
-        if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
     }
 }
 
@@ -2874,6 +2587,281 @@ export class EstudianteServiceProxy {
             }));
         }
         return _observableOf<EstudianteDto>(<any>null);
+    }
+
+    /**
+     * @param emailEstudiantes (optional) 
+     * @param estudianteId (optional) 
+     * @return Success
+     */
+    modificaEmails(emailEstudiantes: EmailEstudiante[] | null | undefined, estudianteId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Estudiante/ModificaEmails?";
+        if (estudianteId !== undefined)
+            url_ += "estudianteId=" + encodeURIComponent("" + estudianteId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(emailEstudiantes);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processModificaEmails(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processModificaEmails(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processModificaEmails(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param telefonoEstudiante (optional) 
+     * @param estudianteId (optional) 
+     * @return Success
+     */
+    modificarTelefonos(telefonoEstudiante: TelefonoEstudiante[] | null | undefined, estudianteId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Estudiante/ModificarTelefonos?";
+        if (estudianteId !== undefined)
+            url_ += "estudianteId=" + encodeURIComponent("" + estudianteId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(telefonoEstudiante);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processModificarTelefonos(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processModificarTelefonos(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processModificarTelefonos(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param direccionEstudiante (optional) 
+     * @param estudianteId (optional) 
+     * @return Success
+     */
+    modificarDirecciones(direccionEstudiante: DireccionEstudiante[] | null | undefined, estudianteId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Estudiante/ModificarDirecciones?";
+        if (estudianteId !== undefined)
+            url_ += "estudianteId=" + encodeURIComponent("" + estudianteId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(direccionEstudiante);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processModificarDirecciones(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processModificarDirecciones(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processModificarDirecciones(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param familiarEstudiante (optional) 
+     * @param estudianteId (optional) 
+     * @return Success
+     */
+    modificarFamiliares(familiarEstudiante: FamiliarEstudiante[] | null | undefined, estudianteId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Estudiante/ModificarFamiliares?";
+        if (estudianteId !== undefined)
+            url_ += "estudianteId=" + encodeURIComponent("" + estudianteId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(familiarEstudiante);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processModificarFamiliares(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processModificarFamiliares(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processModificarFamiliares(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param padecimiento (optional) 
+     * @param estudianteId (optional) 
+     * @return Success
+     */
+    modificarPadecimientos(padecimiento: Padecimiento[] | null | undefined, estudianteId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Estudiante/ModificarPadecimientos?";
+        if (estudianteId !== undefined)
+            url_ += "estudianteId=" + encodeURIComponent("" + estudianteId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(padecimiento);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processModificarPadecimientos(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processModificarPadecimientos(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processModificarPadecimientos(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
     }
 
     /**
@@ -14653,7 +14641,7 @@ export class EstudianteDto implements IEstudianteDto {
     listaPadecimientos: PadecimientoDto[] | undefined;
     listaEmail: EmailEstudianteDto[] | undefined;
     listaDireccionEstudiante: DireccionEstudianteDto[] | undefined;
-    listaFamiliarEstudiante: FamiliarEstudiante[] | undefined;
+    listaFamiliarEstudiante: FamiliarEstudianteDto[] | undefined;
     id: number | undefined;
 
     constructor(data?: IEstudianteDto) {
@@ -14699,7 +14687,7 @@ export class EstudianteDto implements IEstudianteDto {
             if (data["listaFamiliarEstudiante"] && data["listaFamiliarEstudiante"].constructor === Array) {
                 this.listaFamiliarEstudiante = [];
                 for (let item of data["listaFamiliarEstudiante"])
-                    this.listaFamiliarEstudiante.push(FamiliarEstudiante.fromJS(item));
+                    this.listaFamiliarEstudiante.push(FamiliarEstudianteDto.fromJS(item));
             }
             this.id = data["id"];
         }
@@ -14774,7 +14762,7 @@ export interface IEstudianteDto {
     listaPadecimientos: PadecimientoDto[] | undefined;
     listaEmail: EmailEstudianteDto[] | undefined;
     listaDireccionEstudiante: DireccionEstudianteDto[] | undefined;
-    listaFamiliarEstudiante: FamiliarEstudiante[] | undefined;
+    listaFamiliarEstudiante: FamiliarEstudianteDto[] | undefined;
     id: number | undefined;
 }
 
@@ -15140,31 +15128,25 @@ export interface IDireccionEstudianteDto {
     id: number | undefined;
 }
 
-export class FamiliarEstudiante implements IFamiliarEstudiante {
+export class FamiliarEstudianteDto implements IFamiliarEstudianteDto {
+    identificador: string | undefined;
     nombres: string | undefined;
     primerApellido: string | undefined;
     segundoApellido: string | undefined;
-    numeroIdentificacion: string | undefined;
     fechaNacimiento: Date | undefined;
+    sexo: FamiliarEstudianteDtoSexo | undefined;
+    estadoCivil: FamiliarEstudianteDtoEstadoCivil | undefined;
+    nacionalidadId: number | undefined;
     parentescoId: number | undefined;
-    parentesco: Parentesco | undefined;
     profesionId: number | undefined;
-    profesion: Profesion | undefined;
+    numeroIdentificacion: string | undefined;
     tipoIdentificacionId: number | undefined;
-    tipoIdentificacion: TipoIdentificacion | undefined;
-    listaTelefonos: TelefonoFamiliarEstudiante[] | undefined;
-    listaEmails: EmailFamiliarEstudiante[] | undefined;
-    listaDirecciones: DireccionFamiliarEstudiante[] | undefined;
-    isDeleted: boolean | undefined;
-    deleterUserId: number | undefined;
-    deletionTime: Date | undefined;
-    lastModificationTime: Date | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: Date | undefined;
-    creatorUserId: number | undefined;
+    parentescoNombre: string | undefined;
+    nombreCompleto: string | undefined;
+    estudianteId: number | undefined;
     id: number | undefined;
 
-    constructor(data?: IFamiliarEstudiante) {
+    constructor(data?: IFamiliarEstudianteDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -15175,119 +15157,77 @@ export class FamiliarEstudiante implements IFamiliarEstudiante {
 
     init(data?: any) {
         if (data) {
+            this.identificador = data["identificador"];
             this.nombres = data["nombres"];
             this.primerApellido = data["primerApellido"];
             this.segundoApellido = data["segundoApellido"];
-            this.numeroIdentificacion = data["numeroIdentificacion"];
             this.fechaNacimiento = data["fechaNacimiento"] ? new Date(data["fechaNacimiento"].toString()) : <any>undefined;
+            this.sexo = data["sexo"];
+            this.estadoCivil = data["estadoCivil"];
+            this.nacionalidadId = data["nacionalidadId"];
             this.parentescoId = data["parentescoId"];
-            this.parentesco = data["parentesco"] ? Parentesco.fromJS(data["parentesco"]) : <any>undefined;
             this.profesionId = data["profesionId"];
-            this.profesion = data["profesion"] ? Profesion.fromJS(data["profesion"]) : <any>undefined;
+            this.numeroIdentificacion = data["numeroIdentificacion"];
             this.tipoIdentificacionId = data["tipoIdentificacionId"];
-            this.tipoIdentificacion = data["tipoIdentificacion"] ? TipoIdentificacion.fromJS(data["tipoIdentificacion"]) : <any>undefined;
-            if (data["listaTelefonos"] && data["listaTelefonos"].constructor === Array) {
-                this.listaTelefonos = [];
-                for (let item of data["listaTelefonos"])
-                    this.listaTelefonos.push(TelefonoFamiliarEstudiante.fromJS(item));
-            }
-            if (data["listaEmails"] && data["listaEmails"].constructor === Array) {
-                this.listaEmails = [];
-                for (let item of data["listaEmails"])
-                    this.listaEmails.push(EmailFamiliarEstudiante.fromJS(item));
-            }
-            if (data["listaDirecciones"] && data["listaDirecciones"].constructor === Array) {
-                this.listaDirecciones = [];
-                for (let item of data["listaDirecciones"])
-                    this.listaDirecciones.push(DireccionFamiliarEstudiante.fromJS(item));
-            }
-            this.isDeleted = data["isDeleted"];
-            this.deleterUserId = data["deleterUserId"];
-            this.deletionTime = data["deletionTime"] ? new Date(data["deletionTime"].toString()) : <any>undefined;
-            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = data["lastModifierUserId"];
-            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = data["creatorUserId"];
+            this.parentescoNombre = data["parentescoNombre"];
+            this.nombreCompleto = data["nombreCompleto"];
+            this.estudianteId = data["estudianteId"];
             this.id = data["id"];
         }
     }
 
-    static fromJS(data: any): FamiliarEstudiante {
+    static fromJS(data: any): FamiliarEstudianteDto {
         data = typeof data === 'object' ? data : {};
-        let result = new FamiliarEstudiante();
+        let result = new FamiliarEstudianteDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["identificador"] = this.identificador;
         data["nombres"] = this.nombres;
         data["primerApellido"] = this.primerApellido;
         data["segundoApellido"] = this.segundoApellido;
-        data["numeroIdentificacion"] = this.numeroIdentificacion;
         data["fechaNacimiento"] = this.fechaNacimiento ? this.fechaNacimiento.toISOString() : <any>undefined;
+        data["sexo"] = this.sexo;
+        data["estadoCivil"] = this.estadoCivil;
+        data["nacionalidadId"] = this.nacionalidadId;
         data["parentescoId"] = this.parentescoId;
-        data["parentesco"] = this.parentesco ? this.parentesco.toJSON() : <any>undefined;
         data["profesionId"] = this.profesionId;
-        data["profesion"] = this.profesion ? this.profesion.toJSON() : <any>undefined;
+        data["numeroIdentificacion"] = this.numeroIdentificacion;
         data["tipoIdentificacionId"] = this.tipoIdentificacionId;
-        data["tipoIdentificacion"] = this.tipoIdentificacion ? this.tipoIdentificacion.toJSON() : <any>undefined;
-        if (this.listaTelefonos && this.listaTelefonos.constructor === Array) {
-            data["listaTelefonos"] = [];
-            for (let item of this.listaTelefonos)
-                data["listaTelefonos"].push(item.toJSON());
-        }
-        if (this.listaEmails && this.listaEmails.constructor === Array) {
-            data["listaEmails"] = [];
-            for (let item of this.listaEmails)
-                data["listaEmails"].push(item.toJSON());
-        }
-        if (this.listaDirecciones && this.listaDirecciones.constructor === Array) {
-            data["listaDirecciones"] = [];
-            for (let item of this.listaDirecciones)
-                data["listaDirecciones"].push(item.toJSON());
-        }
-        data["isDeleted"] = this.isDeleted;
-        data["deleterUserId"] = this.deleterUserId;
-        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
+        data["parentescoNombre"] = this.parentescoNombre;
+        data["nombreCompleto"] = this.nombreCompleto;
+        data["estudianteId"] = this.estudianteId;
         data["id"] = this.id;
         return data; 
     }
 
-    clone(): FamiliarEstudiante {
+    clone(): FamiliarEstudianteDto {
         const json = this.toJSON();
-        let result = new FamiliarEstudiante();
+        let result = new FamiliarEstudianteDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IFamiliarEstudiante {
+export interface IFamiliarEstudianteDto {
+    identificador: string | undefined;
     nombres: string | undefined;
     primerApellido: string | undefined;
     segundoApellido: string | undefined;
-    numeroIdentificacion: string | undefined;
     fechaNacimiento: Date | undefined;
+    sexo: FamiliarEstudianteDtoSexo | undefined;
+    estadoCivil: FamiliarEstudianteDtoEstadoCivil | undefined;
+    nacionalidadId: number | undefined;
     parentescoId: number | undefined;
-    parentesco: Parentesco | undefined;
     profesionId: number | undefined;
-    profesion: Profesion | undefined;
+    numeroIdentificacion: string | undefined;
     tipoIdentificacionId: number | undefined;
-    tipoIdentificacion: TipoIdentificacion | undefined;
-    listaTelefonos: TelefonoFamiliarEstudiante[] | undefined;
-    listaEmails: EmailFamiliarEstudiante[] | undefined;
-    listaDirecciones: DireccionFamiliarEstudiante[] | undefined;
-    isDeleted: boolean | undefined;
-    deleterUserId: number | undefined;
-    deletionTime: Date | undefined;
-    lastModificationTime: Date | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: Date | undefined;
-    creatorUserId: number | undefined;
+    parentescoNombre: string | undefined;
+    nombreCompleto: string | undefined;
+    estudianteId: number | undefined;
     id: number | undefined;
 }
 
@@ -15347,6 +15287,1207 @@ export interface IMateriaDto {
     nombre: string | undefined;
     precioTotal: number | undefined;
     precioInscripcion: number | undefined;
+    id: number | undefined;
+}
+
+export class PagedResultDtoOfDireccionEstudianteDto implements IPagedResultDtoOfDireccionEstudianteDto {
+    totalCount: number | undefined;
+    items: DireccionEstudianteDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfDireccionEstudianteDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.totalCount = data["totalCount"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(DireccionEstudianteDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfDireccionEstudianteDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfDireccionEstudianteDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): PagedResultDtoOfDireccionEstudianteDto {
+        const json = this.toJSON();
+        let result = new PagedResultDtoOfDireccionEstudianteDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPagedResultDtoOfDireccionEstudianteDto {
+    totalCount: number | undefined;
+    items: DireccionEstudianteDto[] | undefined;
+}
+
+export class PagedResultDtoOfDireccionFamiliarEstudianteDto implements IPagedResultDtoOfDireccionFamiliarEstudianteDto {
+    totalCount: number | undefined;
+    items: DireccionFamiliarEstudianteDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfDireccionFamiliarEstudianteDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.totalCount = data["totalCount"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(DireccionFamiliarEstudianteDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfDireccionFamiliarEstudianteDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfDireccionFamiliarEstudianteDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): PagedResultDtoOfDireccionFamiliarEstudianteDto {
+        const json = this.toJSON();
+        let result = new PagedResultDtoOfDireccionFamiliarEstudianteDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPagedResultDtoOfDireccionFamiliarEstudianteDto {
+    totalCount: number | undefined;
+    items: DireccionFamiliarEstudianteDto[] | undefined;
+}
+
+export class DireccionFamiliarEstudianteDto implements IDireccionFamiliarEstudianteDto {
+    descripcion: string | undefined;
+    familiarEstudianteId: number | undefined;
+    tipoDireccionId: number | undefined;
+    sectorId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IDireccionFamiliarEstudianteDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            this.familiarEstudianteId = data["familiarEstudianteId"];
+            this.tipoDireccionId = data["tipoDireccionId"];
+            this.sectorId = data["sectorId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): DireccionFamiliarEstudianteDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DireccionFamiliarEstudianteDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        data["familiarEstudianteId"] = this.familiarEstudianteId;
+        data["tipoDireccionId"] = this.tipoDireccionId;
+        data["sectorId"] = this.sectorId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): DireccionFamiliarEstudianteDto {
+        const json = this.toJSON();
+        let result = new DireccionFamiliarEstudianteDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IDireccionFamiliarEstudianteDto {
+    descripcion: string | undefined;
+    familiarEstudianteId: number | undefined;
+    tipoDireccionId: number | undefined;
+    sectorId: number | undefined;
+    id: number | undefined;
+}
+
+export class EmailEstudiante implements IEmailEstudiante {
+    email: string | undefined;
+    estudianteId: number | undefined;
+    estudiante: Estudiante | undefined;
+    tipoEmailId: number | undefined;
+    tipoEmail: TipoEmail | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IEmailEstudiante) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.email = data["email"];
+            this.estudianteId = data["estudianteId"];
+            this.estudiante = data["estudiante"] ? Estudiante.fromJS(data["estudiante"]) : <any>undefined;
+            this.tipoEmailId = data["tipoEmailId"];
+            this.tipoEmail = data["tipoEmail"] ? TipoEmail.fromJS(data["tipoEmail"]) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): EmailEstudiante {
+        data = typeof data === 'object' ? data : {};
+        let result = new EmailEstudiante();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["email"] = this.email;
+        data["estudianteId"] = this.estudianteId;
+        data["estudiante"] = this.estudiante ? this.estudiante.toJSON() : <any>undefined;
+        data["tipoEmailId"] = this.tipoEmailId;
+        data["tipoEmail"] = this.tipoEmail ? this.tipoEmail.toJSON() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): EmailEstudiante {
+        const json = this.toJSON();
+        let result = new EmailEstudiante();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IEmailEstudiante {
+    email: string | undefined;
+    estudianteId: number | undefined;
+    estudiante: Estudiante | undefined;
+    tipoEmailId: number | undefined;
+    tipoEmail: TipoEmail | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class Estudiante implements IEstudiante {
+    identificador: string | undefined;
+    nombres: string | undefined;
+    primerApellido: string | undefined;
+    segundoApellido: string | undefined;
+    fechaNacimiento: Date | undefined;
+    sexo: EstudianteSexo | undefined;
+    estadoCivil: EstudianteEstadoCivil | undefined;
+    estado: EstudianteEstado | undefined;
+    nacionalidadId: number | undefined;
+    nacionalidad: Nacionalidad | undefined;
+    listaTelefonos: TelefonoEstudiante[] | undefined;
+    listaPadecimientos: Padecimiento[] | undefined;
+    listaEmail: EmailEstudiante[] | undefined;
+    listaDireccionEstudiante: DireccionEstudiante[] | undefined;
+    listaFamiliarEstudiante: FamiliarEstudiante[] | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: Date | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IEstudiante) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.identificador = data["identificador"];
+            this.nombres = data["nombres"];
+            this.primerApellido = data["primerApellido"];
+            this.segundoApellido = data["segundoApellido"];
+            this.fechaNacimiento = data["fechaNacimiento"] ? new Date(data["fechaNacimiento"].toString()) : <any>undefined;
+            this.sexo = data["sexo"];
+            this.estadoCivil = data["estadoCivil"];
+            this.estado = data["estado"];
+            this.nacionalidadId = data["nacionalidadId"];
+            this.nacionalidad = data["nacionalidad"] ? Nacionalidad.fromJS(data["nacionalidad"]) : <any>undefined;
+            if (data["listaTelefonos"] && data["listaTelefonos"].constructor === Array) {
+                this.listaTelefonos = [];
+                for (let item of data["listaTelefonos"])
+                    this.listaTelefonos.push(TelefonoEstudiante.fromJS(item));
+            }
+            if (data["listaPadecimientos"] && data["listaPadecimientos"].constructor === Array) {
+                this.listaPadecimientos = [];
+                for (let item of data["listaPadecimientos"])
+                    this.listaPadecimientos.push(Padecimiento.fromJS(item));
+            }
+            if (data["listaEmail"] && data["listaEmail"].constructor === Array) {
+                this.listaEmail = [];
+                for (let item of data["listaEmail"])
+                    this.listaEmail.push(EmailEstudiante.fromJS(item));
+            }
+            if (data["listaDireccionEstudiante"] && data["listaDireccionEstudiante"].constructor === Array) {
+                this.listaDireccionEstudiante = [];
+                for (let item of data["listaDireccionEstudiante"])
+                    this.listaDireccionEstudiante.push(DireccionEstudiante.fromJS(item));
+            }
+            if (data["listaFamiliarEstudiante"] && data["listaFamiliarEstudiante"].constructor === Array) {
+                this.listaFamiliarEstudiante = [];
+                for (let item of data["listaFamiliarEstudiante"])
+                    this.listaFamiliarEstudiante.push(FamiliarEstudiante.fromJS(item));
+            }
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? new Date(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): Estudiante {
+        data = typeof data === 'object' ? data : {};
+        let result = new Estudiante();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["identificador"] = this.identificador;
+        data["nombres"] = this.nombres;
+        data["primerApellido"] = this.primerApellido;
+        data["segundoApellido"] = this.segundoApellido;
+        data["fechaNacimiento"] = this.fechaNacimiento ? this.fechaNacimiento.toISOString() : <any>undefined;
+        data["sexo"] = this.sexo;
+        data["estadoCivil"] = this.estadoCivil;
+        data["estado"] = this.estado;
+        data["nacionalidadId"] = this.nacionalidadId;
+        data["nacionalidad"] = this.nacionalidad ? this.nacionalidad.toJSON() : <any>undefined;
+        if (this.listaTelefonos && this.listaTelefonos.constructor === Array) {
+            data["listaTelefonos"] = [];
+            for (let item of this.listaTelefonos)
+                data["listaTelefonos"].push(item.toJSON());
+        }
+        if (this.listaPadecimientos && this.listaPadecimientos.constructor === Array) {
+            data["listaPadecimientos"] = [];
+            for (let item of this.listaPadecimientos)
+                data["listaPadecimientos"].push(item.toJSON());
+        }
+        if (this.listaEmail && this.listaEmail.constructor === Array) {
+            data["listaEmail"] = [];
+            for (let item of this.listaEmail)
+                data["listaEmail"].push(item.toJSON());
+        }
+        if (this.listaDireccionEstudiante && this.listaDireccionEstudiante.constructor === Array) {
+            data["listaDireccionEstudiante"] = [];
+            for (let item of this.listaDireccionEstudiante)
+                data["listaDireccionEstudiante"].push(item.toJSON());
+        }
+        if (this.listaFamiliarEstudiante && this.listaFamiliarEstudiante.constructor === Array) {
+            data["listaFamiliarEstudiante"] = [];
+            for (let item of this.listaFamiliarEstudiante)
+                data["listaFamiliarEstudiante"].push(item.toJSON());
+        }
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): Estudiante {
+        const json = this.toJSON();
+        let result = new Estudiante();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IEstudiante {
+    identificador: string | undefined;
+    nombres: string | undefined;
+    primerApellido: string | undefined;
+    segundoApellido: string | undefined;
+    fechaNacimiento: Date | undefined;
+    sexo: EstudianteSexo | undefined;
+    estadoCivil: EstudianteEstadoCivil | undefined;
+    estado: EstudianteEstado | undefined;
+    nacionalidadId: number | undefined;
+    nacionalidad: Nacionalidad | undefined;
+    listaTelefonos: TelefonoEstudiante[] | undefined;
+    listaPadecimientos: Padecimiento[] | undefined;
+    listaEmail: EmailEstudiante[] | undefined;
+    listaDireccionEstudiante: DireccionEstudiante[] | undefined;
+    listaFamiliarEstudiante: FamiliarEstudiante[] | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: Date | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class TipoEmail implements ITipoEmail {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: ITipoEmail) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TipoEmail {
+        data = typeof data === 'object' ? data : {};
+        let result = new TipoEmail();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TipoEmail {
+        const json = this.toJSON();
+        let result = new TipoEmail();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITipoEmail {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class Nacionalidad implements INacionalidad {
+    identificador: string | undefined;
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: INacionalidad) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.identificador = data["identificador"];
+            this.descripcion = data["descripcion"];
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): Nacionalidad {
+        data = typeof data === 'object' ? data : {};
+        let result = new Nacionalidad();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["identificador"] = this.identificador;
+        data["descripcion"] = this.descripcion;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): Nacionalidad {
+        const json = this.toJSON();
+        let result = new Nacionalidad();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface INacionalidad {
+    identificador: string | undefined;
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class TelefonoEstudiante implements ITelefonoEstudiante {
+    numero: string | undefined;
+    estudianteId: number | undefined;
+    estudiante: Estudiante | undefined;
+    tipoTelefonoId: number | undefined;
+    tipoTelefono: TipoTelefono | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: ITelefonoEstudiante) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.numero = data["numero"];
+            this.estudianteId = data["estudianteId"];
+            this.estudiante = data["estudiante"] ? Estudiante.fromJS(data["estudiante"]) : <any>undefined;
+            this.tipoTelefonoId = data["tipoTelefonoId"];
+            this.tipoTelefono = data["tipoTelefono"] ? TipoTelefono.fromJS(data["tipoTelefono"]) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TelefonoEstudiante {
+        data = typeof data === 'object' ? data : {};
+        let result = new TelefonoEstudiante();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["numero"] = this.numero;
+        data["estudianteId"] = this.estudianteId;
+        data["estudiante"] = this.estudiante ? this.estudiante.toJSON() : <any>undefined;
+        data["tipoTelefonoId"] = this.tipoTelefonoId;
+        data["tipoTelefono"] = this.tipoTelefono ? this.tipoTelefono.toJSON() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TelefonoEstudiante {
+        const json = this.toJSON();
+        let result = new TelefonoEstudiante();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITelefonoEstudiante {
+    numero: string | undefined;
+    estudianteId: number | undefined;
+    estudiante: Estudiante | undefined;
+    tipoTelefonoId: number | undefined;
+    tipoTelefono: TipoTelefono | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class Padecimiento implements IPadecimiento {
+    descripcion: string | undefined;
+    nota: string | undefined;
+    tipoPadecimientoId: number | undefined;
+    tipoPadecimiento: TipoPadecimiento | undefined;
+    estudianteId: number | undefined;
+    estudiante: Estudiante | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IPadecimiento) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            this.nota = data["nota"];
+            this.tipoPadecimientoId = data["tipoPadecimientoId"];
+            this.tipoPadecimiento = data["tipoPadecimiento"] ? TipoPadecimiento.fromJS(data["tipoPadecimiento"]) : <any>undefined;
+            this.estudianteId = data["estudianteId"];
+            this.estudiante = data["estudiante"] ? Estudiante.fromJS(data["estudiante"]) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): Padecimiento {
+        data = typeof data === 'object' ? data : {};
+        let result = new Padecimiento();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        data["nota"] = this.nota;
+        data["tipoPadecimientoId"] = this.tipoPadecimientoId;
+        data["tipoPadecimiento"] = this.tipoPadecimiento ? this.tipoPadecimiento.toJSON() : <any>undefined;
+        data["estudianteId"] = this.estudianteId;
+        data["estudiante"] = this.estudiante ? this.estudiante.toJSON() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): Padecimiento {
+        const json = this.toJSON();
+        let result = new Padecimiento();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPadecimiento {
+    descripcion: string | undefined;
+    nota: string | undefined;
+    tipoPadecimientoId: number | undefined;
+    tipoPadecimiento: TipoPadecimiento | undefined;
+    estudianteId: number | undefined;
+    estudiante: Estudiante | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class DireccionEstudiante implements IDireccionEstudiante {
+    descripcion: string | undefined;
+    estudianteId: number | undefined;
+    estudiante: Estudiante | undefined;
+    tipoDireccionId: number | undefined;
+    tipoDireccion: TipoDireccion | undefined;
+    sectorId: number | undefined;
+    sector: Sector | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IDireccionEstudiante) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            this.estudianteId = data["estudianteId"];
+            this.estudiante = data["estudiante"] ? Estudiante.fromJS(data["estudiante"]) : <any>undefined;
+            this.tipoDireccionId = data["tipoDireccionId"];
+            this.tipoDireccion = data["tipoDireccion"] ? TipoDireccion.fromJS(data["tipoDireccion"]) : <any>undefined;
+            this.sectorId = data["sectorId"];
+            this.sector = data["sector"] ? Sector.fromJS(data["sector"]) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): DireccionEstudiante {
+        data = typeof data === 'object' ? data : {};
+        let result = new DireccionEstudiante();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        data["estudianteId"] = this.estudianteId;
+        data["estudiante"] = this.estudiante ? this.estudiante.toJSON() : <any>undefined;
+        data["tipoDireccionId"] = this.tipoDireccionId;
+        data["tipoDireccion"] = this.tipoDireccion ? this.tipoDireccion.toJSON() : <any>undefined;
+        data["sectorId"] = this.sectorId;
+        data["sector"] = this.sector ? this.sector.toJSON() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): DireccionEstudiante {
+        const json = this.toJSON();
+        let result = new DireccionEstudiante();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IDireccionEstudiante {
+    descripcion: string | undefined;
+    estudianteId: number | undefined;
+    estudiante: Estudiante | undefined;
+    tipoDireccionId: number | undefined;
+    tipoDireccion: TipoDireccion | undefined;
+    sectorId: number | undefined;
+    sector: Sector | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class FamiliarEstudiante implements IFamiliarEstudiante {
+    nombres: string | undefined;
+    primerApellido: string | undefined;
+    segundoApellido: string | undefined;
+    numeroIdentificacion: string | undefined;
+    fechaNacimiento: Date | undefined;
+    parentescoId: number | undefined;
+    parentesco: Parentesco | undefined;
+    profesionId: number | undefined;
+    sexo: FamiliarEstudianteSexo | undefined;
+    estadoCivil: FamiliarEstudianteEstadoCivil | undefined;
+    profesion: Profesion | undefined;
+    nacionalidadId: number | undefined;
+    nacionalidad: Nacionalidad | undefined;
+    tipoIdentificacionId: number | undefined;
+    estudianteId: number | undefined;
+    estudiante: Estudiante | undefined;
+    tipoIdentificacion: TipoIdentificacion | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: Date | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IFamiliarEstudiante) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.nombres = data["nombres"];
+            this.primerApellido = data["primerApellido"];
+            this.segundoApellido = data["segundoApellido"];
+            this.numeroIdentificacion = data["numeroIdentificacion"];
+            this.fechaNacimiento = data["fechaNacimiento"] ? new Date(data["fechaNacimiento"].toString()) : <any>undefined;
+            this.parentescoId = data["parentescoId"];
+            this.parentesco = data["parentesco"] ? Parentesco.fromJS(data["parentesco"]) : <any>undefined;
+            this.profesionId = data["profesionId"];
+            this.sexo = data["sexo"];
+            this.estadoCivil = data["estadoCivil"];
+            this.profesion = data["profesion"] ? Profesion.fromJS(data["profesion"]) : <any>undefined;
+            this.nacionalidadId = data["nacionalidadId"];
+            this.nacionalidad = data["nacionalidad"] ? Nacionalidad.fromJS(data["nacionalidad"]) : <any>undefined;
+            this.tipoIdentificacionId = data["tipoIdentificacionId"];
+            this.estudianteId = data["estudianteId"];
+            this.estudiante = data["estudiante"] ? Estudiante.fromJS(data["estudiante"]) : <any>undefined;
+            this.tipoIdentificacion = data["tipoIdentificacion"] ? TipoIdentificacion.fromJS(data["tipoIdentificacion"]) : <any>undefined;
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? new Date(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): FamiliarEstudiante {
+        data = typeof data === 'object' ? data : {};
+        let result = new FamiliarEstudiante();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["nombres"] = this.nombres;
+        data["primerApellido"] = this.primerApellido;
+        data["segundoApellido"] = this.segundoApellido;
+        data["numeroIdentificacion"] = this.numeroIdentificacion;
+        data["fechaNacimiento"] = this.fechaNacimiento ? this.fechaNacimiento.toISOString() : <any>undefined;
+        data["parentescoId"] = this.parentescoId;
+        data["parentesco"] = this.parentesco ? this.parentesco.toJSON() : <any>undefined;
+        data["profesionId"] = this.profesionId;
+        data["sexo"] = this.sexo;
+        data["estadoCivil"] = this.estadoCivil;
+        data["profesion"] = this.profesion ? this.profesion.toJSON() : <any>undefined;
+        data["nacionalidadId"] = this.nacionalidadId;
+        data["nacionalidad"] = this.nacionalidad ? this.nacionalidad.toJSON() : <any>undefined;
+        data["tipoIdentificacionId"] = this.tipoIdentificacionId;
+        data["estudianteId"] = this.estudianteId;
+        data["estudiante"] = this.estudiante ? this.estudiante.toJSON() : <any>undefined;
+        data["tipoIdentificacion"] = this.tipoIdentificacion ? this.tipoIdentificacion.toJSON() : <any>undefined;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): FamiliarEstudiante {
+        const json = this.toJSON();
+        let result = new FamiliarEstudiante();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFamiliarEstudiante {
+    nombres: string | undefined;
+    primerApellido: string | undefined;
+    segundoApellido: string | undefined;
+    numeroIdentificacion: string | undefined;
+    fechaNacimiento: Date | undefined;
+    parentescoId: number | undefined;
+    parentesco: Parentesco | undefined;
+    profesionId: number | undefined;
+    sexo: FamiliarEstudianteSexo | undefined;
+    estadoCivil: FamiliarEstudianteEstadoCivil | undefined;
+    profesion: Profesion | undefined;
+    nacionalidadId: number | undefined;
+    nacionalidad: Nacionalidad | undefined;
+    tipoIdentificacionId: number | undefined;
+    estudianteId: number | undefined;
+    estudiante: Estudiante | undefined;
+    tipoIdentificacion: TipoIdentificacion | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: Date | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class TipoTelefono implements ITipoTelefono {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: ITipoTelefono) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TipoTelefono {
+        data = typeof data === 'object' ? data : {};
+        let result = new TipoTelefono();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TipoTelefono {
+        const json = this.toJSON();
+        let result = new TipoTelefono();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITipoTelefono {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class TipoPadecimiento implements ITipoPadecimiento {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: ITipoPadecimiento) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TipoPadecimiento {
+        data = typeof data === 'object' ? data : {};
+        let result = new TipoPadecimiento();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TipoPadecimiento {
+        const json = this.toJSON();
+        let result = new TipoPadecimiento();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITipoPadecimiento {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class TipoDireccion implements ITipoDireccion {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: ITipoDireccion) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TipoDireccion {
+        data = typeof data === 'object' ? data : {};
+        let result = new TipoDireccion();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TipoDireccion {
+        const json = this.toJSON();
+        let result = new TipoDireccion();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITipoDireccion {
+    descripcion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class Sector implements ISector {
+    identificador: string | undefined;
+    nombre: string | undefined;
+    municipioId: number | undefined;
+    municipio: Municipio | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: ISector) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.identificador = data["identificador"];
+            this.nombre = data["nombre"];
+            this.municipioId = data["municipioId"];
+            this.municipio = data["municipio"] ? Municipio.fromJS(data["municipio"]) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): Sector {
+        data = typeof data === 'object' ? data : {};
+        let result = new Sector();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["identificador"] = this.identificador;
+        data["nombre"] = this.nombre;
+        data["municipioId"] = this.municipioId;
+        data["municipio"] = this.municipio ? this.municipio.toJSON() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): Sector {
+        const json = this.toJSON();
+        let result = new Sector();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISector {
+    identificador: string | undefined;
+    nombre: string | undefined;
+    municipioId: number | undefined;
+    municipio: Municipio | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
     id: number | undefined;
 }
 
@@ -15532,515 +16673,6 @@ export class TipoIdentificacion implements ITipoIdentificacion {
 
 export interface ITipoIdentificacion {
     descripcion: string | undefined;
-    lastModificationTime: Date | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: Date | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-}
-
-export class TelefonoFamiliarEstudiante implements ITelefonoFamiliarEstudiante {
-    numero: string | undefined;
-    tipoTelefonoId: number | undefined;
-    tipoTelefono: TipoTelefono | undefined;
-    familiarEstudianteId: number | undefined;
-    familiarEstudiante: FamiliarEstudiante | undefined;
-    lastModificationTime: Date | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: Date | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: ITelefonoFamiliarEstudiante) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.numero = data["numero"];
-            this.tipoTelefonoId = data["tipoTelefonoId"];
-            this.tipoTelefono = data["tipoTelefono"] ? TipoTelefono.fromJS(data["tipoTelefono"]) : <any>undefined;
-            this.familiarEstudianteId = data["familiarEstudianteId"];
-            this.familiarEstudiante = data["familiarEstudiante"] ? FamiliarEstudiante.fromJS(data["familiarEstudiante"]) : <any>undefined;
-            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = data["lastModifierUserId"];
-            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = data["creatorUserId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): TelefonoFamiliarEstudiante {
-        data = typeof data === 'object' ? data : {};
-        let result = new TelefonoFamiliarEstudiante();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["numero"] = this.numero;
-        data["tipoTelefonoId"] = this.tipoTelefonoId;
-        data["tipoTelefono"] = this.tipoTelefono ? this.tipoTelefono.toJSON() : <any>undefined;
-        data["familiarEstudianteId"] = this.familiarEstudianteId;
-        data["familiarEstudiante"] = this.familiarEstudiante ? this.familiarEstudiante.toJSON() : <any>undefined;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): TelefonoFamiliarEstudiante {
-        const json = this.toJSON();
-        let result = new TelefonoFamiliarEstudiante();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ITelefonoFamiliarEstudiante {
-    numero: string | undefined;
-    tipoTelefonoId: number | undefined;
-    tipoTelefono: TipoTelefono | undefined;
-    familiarEstudianteId: number | undefined;
-    familiarEstudiante: FamiliarEstudiante | undefined;
-    lastModificationTime: Date | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: Date | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-}
-
-export class EmailFamiliarEstudiante implements IEmailFamiliarEstudiante {
-    email: string | undefined;
-    familiarEstudianteId: number | undefined;
-    familiarEstudiante: FamiliarEstudiante | undefined;
-    tipoEmailId: number | undefined;
-    tipoEmail: TipoEmail | undefined;
-    lastModificationTime: Date | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: Date | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: IEmailFamiliarEstudiante) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.email = data["email"];
-            this.familiarEstudianteId = data["familiarEstudianteId"];
-            this.familiarEstudiante = data["familiarEstudiante"] ? FamiliarEstudiante.fromJS(data["familiarEstudiante"]) : <any>undefined;
-            this.tipoEmailId = data["tipoEmailId"];
-            this.tipoEmail = data["tipoEmail"] ? TipoEmail.fromJS(data["tipoEmail"]) : <any>undefined;
-            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = data["lastModifierUserId"];
-            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = data["creatorUserId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): EmailFamiliarEstudiante {
-        data = typeof data === 'object' ? data : {};
-        let result = new EmailFamiliarEstudiante();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["email"] = this.email;
-        data["familiarEstudianteId"] = this.familiarEstudianteId;
-        data["familiarEstudiante"] = this.familiarEstudiante ? this.familiarEstudiante.toJSON() : <any>undefined;
-        data["tipoEmailId"] = this.tipoEmailId;
-        data["tipoEmail"] = this.tipoEmail ? this.tipoEmail.toJSON() : <any>undefined;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): EmailFamiliarEstudiante {
-        const json = this.toJSON();
-        let result = new EmailFamiliarEstudiante();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IEmailFamiliarEstudiante {
-    email: string | undefined;
-    familiarEstudianteId: number | undefined;
-    familiarEstudiante: FamiliarEstudiante | undefined;
-    tipoEmailId: number | undefined;
-    tipoEmail: TipoEmail | undefined;
-    lastModificationTime: Date | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: Date | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-}
-
-export class DireccionFamiliarEstudiante implements IDireccionFamiliarEstudiante {
-    descripcion: string | undefined;
-    familiarEstudianteId: number | undefined;
-    familiarEstudiante: FamiliarEstudiante | undefined;
-    tipoDireccionId: number | undefined;
-    tipoDireccion: TipoDireccion | undefined;
-    sectorId: number | undefined;
-    sector: Sector | undefined;
-    lastModificationTime: Date | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: Date | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: IDireccionFamiliarEstudiante) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.descripcion = data["descripcion"];
-            this.familiarEstudianteId = data["familiarEstudianteId"];
-            this.familiarEstudiante = data["familiarEstudiante"] ? FamiliarEstudiante.fromJS(data["familiarEstudiante"]) : <any>undefined;
-            this.tipoDireccionId = data["tipoDireccionId"];
-            this.tipoDireccion = data["tipoDireccion"] ? TipoDireccion.fromJS(data["tipoDireccion"]) : <any>undefined;
-            this.sectorId = data["sectorId"];
-            this.sector = data["sector"] ? Sector.fromJS(data["sector"]) : <any>undefined;
-            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = data["lastModifierUserId"];
-            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = data["creatorUserId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): DireccionFamiliarEstudiante {
-        data = typeof data === 'object' ? data : {};
-        let result = new DireccionFamiliarEstudiante();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["descripcion"] = this.descripcion;
-        data["familiarEstudianteId"] = this.familiarEstudianteId;
-        data["familiarEstudiante"] = this.familiarEstudiante ? this.familiarEstudiante.toJSON() : <any>undefined;
-        data["tipoDireccionId"] = this.tipoDireccionId;
-        data["tipoDireccion"] = this.tipoDireccion ? this.tipoDireccion.toJSON() : <any>undefined;
-        data["sectorId"] = this.sectorId;
-        data["sector"] = this.sector ? this.sector.toJSON() : <any>undefined;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): DireccionFamiliarEstudiante {
-        const json = this.toJSON();
-        let result = new DireccionFamiliarEstudiante();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IDireccionFamiliarEstudiante {
-    descripcion: string | undefined;
-    familiarEstudianteId: number | undefined;
-    familiarEstudiante: FamiliarEstudiante | undefined;
-    tipoDireccionId: number | undefined;
-    tipoDireccion: TipoDireccion | undefined;
-    sectorId: number | undefined;
-    sector: Sector | undefined;
-    lastModificationTime: Date | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: Date | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-}
-
-export class TipoTelefono implements ITipoTelefono {
-    descripcion: string | undefined;
-    lastModificationTime: Date | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: Date | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: ITipoTelefono) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.descripcion = data["descripcion"];
-            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = data["lastModifierUserId"];
-            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = data["creatorUserId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): TipoTelefono {
-        data = typeof data === 'object' ? data : {};
-        let result = new TipoTelefono();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["descripcion"] = this.descripcion;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): TipoTelefono {
-        const json = this.toJSON();
-        let result = new TipoTelefono();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ITipoTelefono {
-    descripcion: string | undefined;
-    lastModificationTime: Date | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: Date | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-}
-
-export class TipoEmail implements ITipoEmail {
-    descripcion: string | undefined;
-    lastModificationTime: Date | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: Date | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: ITipoEmail) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.descripcion = data["descripcion"];
-            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = data["lastModifierUserId"];
-            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = data["creatorUserId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): TipoEmail {
-        data = typeof data === 'object' ? data : {};
-        let result = new TipoEmail();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["descripcion"] = this.descripcion;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): TipoEmail {
-        const json = this.toJSON();
-        let result = new TipoEmail();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ITipoEmail {
-    descripcion: string | undefined;
-    lastModificationTime: Date | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: Date | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-}
-
-export class TipoDireccion implements ITipoDireccion {
-    descripcion: string | undefined;
-    lastModificationTime: Date | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: Date | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: ITipoDireccion) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.descripcion = data["descripcion"];
-            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = data["lastModifierUserId"];
-            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = data["creatorUserId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): TipoDireccion {
-        data = typeof data === 'object' ? data : {};
-        let result = new TipoDireccion();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["descripcion"] = this.descripcion;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): TipoDireccion {
-        const json = this.toJSON();
-        let result = new TipoDireccion();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ITipoDireccion {
-    descripcion: string | undefined;
-    lastModificationTime: Date | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: Date | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-}
-
-export class Sector implements ISector {
-    identificador: string | undefined;
-    nombre: string | undefined;
-    municipioId: number | undefined;
-    municipio: Municipio | undefined;
-    lastModificationTime: Date | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: Date | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: ISector) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.identificador = data["identificador"];
-            this.nombre = data["nombre"];
-            this.municipioId = data["municipioId"];
-            this.municipio = data["municipio"] ? Municipio.fromJS(data["municipio"]) : <any>undefined;
-            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = data["lastModifierUserId"];
-            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = data["creatorUserId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): Sector {
-        data = typeof data === 'object' ? data : {};
-        let result = new Sector();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["identificador"] = this.identificador;
-        data["nombre"] = this.nombre;
-        data["municipioId"] = this.municipioId;
-        data["municipio"] = this.municipio ? this.municipio.toJSON() : <any>undefined;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): Sector {
-        const json = this.toJSON();
-        let result = new Sector();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ISector {
-    identificador: string | undefined;
-    nombre: string | undefined;
-    municipioId: number | undefined;
-    municipio: Municipio | undefined;
     lastModificationTime: Date | undefined;
     lastModifierUserId: number | undefined;
     creationTime: Date | undefined;
@@ -16313,230 +16945,6 @@ export interface IPais {
     id: number | undefined;
 }
 
-export class PagedResultDtoOfDireccionEstudianteDto implements IPagedResultDtoOfDireccionEstudianteDto {
-    totalCount: number | undefined;
-    items: DireccionEstudianteDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfDireccionEstudianteDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [];
-                for (let item of data["items"])
-                    this.items.push(DireccionEstudianteDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfDireccionEstudianteDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfDireccionEstudianteDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-
-    clone(): PagedResultDtoOfDireccionEstudianteDto {
-        const json = this.toJSON();
-        let result = new PagedResultDtoOfDireccionEstudianteDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedResultDtoOfDireccionEstudianteDto {
-    totalCount: number | undefined;
-    items: DireccionEstudianteDto[] | undefined;
-}
-
-export class PagedResultDtoOfDireccionFamiliarEstudianteDto implements IPagedResultDtoOfDireccionFamiliarEstudianteDto {
-    totalCount: number | undefined;
-    items: DireccionFamiliarEstudianteDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfDireccionFamiliarEstudianteDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [];
-                for (let item of data["items"])
-                    this.items.push(DireccionFamiliarEstudianteDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfDireccionFamiliarEstudianteDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfDireccionFamiliarEstudianteDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-
-    clone(): PagedResultDtoOfDireccionFamiliarEstudianteDto {
-        const json = this.toJSON();
-        let result = new PagedResultDtoOfDireccionFamiliarEstudianteDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedResultDtoOfDireccionFamiliarEstudianteDto {
-    totalCount: number | undefined;
-    items: DireccionFamiliarEstudianteDto[] | undefined;
-}
-
-export class DireccionFamiliarEstudianteDto implements IDireccionFamiliarEstudianteDto {
-    descripcion: string | undefined;
-    familiarEstudianteId: number | undefined;
-    tipoDireccionId: number | undefined;
-    sectorId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: IDireccionFamiliarEstudianteDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.descripcion = data["descripcion"];
-            this.familiarEstudianteId = data["familiarEstudianteId"];
-            this.tipoDireccionId = data["tipoDireccionId"];
-            this.sectorId = data["sectorId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): DireccionFamiliarEstudianteDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new DireccionFamiliarEstudianteDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["descripcion"] = this.descripcion;
-        data["familiarEstudianteId"] = this.familiarEstudianteId;
-        data["tipoDireccionId"] = this.tipoDireccionId;
-        data["sectorId"] = this.sectorId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): DireccionFamiliarEstudianteDto {
-        const json = this.toJSON();
-        let result = new DireccionFamiliarEstudianteDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IDireccionFamiliarEstudianteDto {
-    descripcion: string | undefined;
-    familiarEstudianteId: number | undefined;
-    tipoDireccionId: number | undefined;
-    sectorId: number | undefined;
-    id: number | undefined;
-}
-
-export class PagedResultDtoOfEmailEstudianteDto implements IPagedResultDtoOfEmailEstudianteDto {
-    totalCount: number | undefined;
-    items: EmailEstudianteDto[] | undefined;
-
-    constructor(data?: IPagedResultDtoOfEmailEstudianteDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.totalCount = data["totalCount"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [];
-                for (let item of data["items"])
-                    this.items.push(EmailEstudianteDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfEmailEstudianteDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfEmailEstudianteDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalCount"] = this.totalCount;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-
-    clone(): PagedResultDtoOfEmailEstudianteDto {
-        const json = this.toJSON();
-        let result = new PagedResultDtoOfEmailEstudianteDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedResultDtoOfEmailEstudianteDto {
-    totalCount: number | undefined;
-    items: EmailEstudianteDto[] | undefined;
-}
-
 export class PagedResultDtoOfEmailFamiliarEstudianteDto implements IPagedResultDtoOfEmailFamiliarEstudianteDto {
     totalCount: number | undefined;
     items: EmailFamiliarEstudianteDto[] | undefined;
@@ -16755,196 +17163,6 @@ export class PagedResultDtoOfFamiliarEstudianteDto implements IPagedResultDtoOfF
 export interface IPagedResultDtoOfFamiliarEstudianteDto {
     totalCount: number | undefined;
     items: FamiliarEstudianteDto[] | undefined;
-}
-
-export class FamiliarEstudianteDto implements IFamiliarEstudianteDto {
-    identificador: string | undefined;
-    nombres: string | undefined;
-    primerApellido: string | undefined;
-    segundoApellido: string | undefined;
-    fechaNacimiento: Date | undefined;
-    sexo: FamiliarEstudianteDtoSexo | undefined;
-    estadoCivil: FamiliarEstudianteDtoEstadoCivil | undefined;
-    estado: FamiliarEstudianteDtoEstado | undefined;
-    nacionalidadId: number | undefined;
-    parentescoId: number | undefined;
-    profesionId: number | undefined;
-    tipoIdentificacionId: number | undefined;
-    parentescoNombre: string | undefined;
-    nombreCompleto: string | undefined;
-    listaTelefonos: TelefonoFamiliarEstudianteDto[] | undefined;
-    listaEmails: EmailFamiliarEstudianteDto[] | undefined;
-    listaDirecciones: DireccionFamiliarEstudianteDto[] | undefined;
-    id: number | undefined;
-
-    constructor(data?: IFamiliarEstudianteDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.identificador = data["identificador"];
-            this.nombres = data["nombres"];
-            this.primerApellido = data["primerApellido"];
-            this.segundoApellido = data["segundoApellido"];
-            this.fechaNacimiento = data["fechaNacimiento"] ? new Date(data["fechaNacimiento"].toString()) : <any>undefined;
-            this.sexo = data["sexo"];
-            this.estadoCivil = data["estadoCivil"];
-            this.estado = data["estado"];
-            this.nacionalidadId = data["nacionalidadId"];
-            this.parentescoId = data["parentescoId"];
-            this.profesionId = data["profesionId"];
-            this.tipoIdentificacionId = data["tipoIdentificacionId"];
-            this.parentescoNombre = data["parentescoNombre"];
-            this.nombreCompleto = data["nombreCompleto"];
-            if (data["listaTelefonos"] && data["listaTelefonos"].constructor === Array) {
-                this.listaTelefonos = [];
-                for (let item of data["listaTelefonos"])
-                    this.listaTelefonos.push(TelefonoFamiliarEstudianteDto.fromJS(item));
-            }
-            if (data["listaEmails"] && data["listaEmails"].constructor === Array) {
-                this.listaEmails = [];
-                for (let item of data["listaEmails"])
-                    this.listaEmails.push(EmailFamiliarEstudianteDto.fromJS(item));
-            }
-            if (data["listaDirecciones"] && data["listaDirecciones"].constructor === Array) {
-                this.listaDirecciones = [];
-                for (let item of data["listaDirecciones"])
-                    this.listaDirecciones.push(DireccionFamiliarEstudianteDto.fromJS(item));
-            }
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): FamiliarEstudianteDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new FamiliarEstudianteDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["identificador"] = this.identificador;
-        data["nombres"] = this.nombres;
-        data["primerApellido"] = this.primerApellido;
-        data["segundoApellido"] = this.segundoApellido;
-        data["fechaNacimiento"] = this.fechaNacimiento ? this.fechaNacimiento.toISOString() : <any>undefined;
-        data["sexo"] = this.sexo;
-        data["estadoCivil"] = this.estadoCivil;
-        data["estado"] = this.estado;
-        data["nacionalidadId"] = this.nacionalidadId;
-        data["parentescoId"] = this.parentescoId;
-        data["profesionId"] = this.profesionId;
-        data["tipoIdentificacionId"] = this.tipoIdentificacionId;
-        data["parentescoNombre"] = this.parentescoNombre;
-        data["nombreCompleto"] = this.nombreCompleto;
-        if (this.listaTelefonos && this.listaTelefonos.constructor === Array) {
-            data["listaTelefonos"] = [];
-            for (let item of this.listaTelefonos)
-                data["listaTelefonos"].push(item.toJSON());
-        }
-        if (this.listaEmails && this.listaEmails.constructor === Array) {
-            data["listaEmails"] = [];
-            for (let item of this.listaEmails)
-                data["listaEmails"].push(item.toJSON());
-        }
-        if (this.listaDirecciones && this.listaDirecciones.constructor === Array) {
-            data["listaDirecciones"] = [];
-            for (let item of this.listaDirecciones)
-                data["listaDirecciones"].push(item.toJSON());
-        }
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): FamiliarEstudianteDto {
-        const json = this.toJSON();
-        let result = new FamiliarEstudianteDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IFamiliarEstudianteDto {
-    identificador: string | undefined;
-    nombres: string | undefined;
-    primerApellido: string | undefined;
-    segundoApellido: string | undefined;
-    fechaNacimiento: Date | undefined;
-    sexo: FamiliarEstudianteDtoSexo | undefined;
-    estadoCivil: FamiliarEstudianteDtoEstadoCivil | undefined;
-    estado: FamiliarEstudianteDtoEstado | undefined;
-    nacionalidadId: number | undefined;
-    parentescoId: number | undefined;
-    profesionId: number | undefined;
-    tipoIdentificacionId: number | undefined;
-    parentescoNombre: string | undefined;
-    nombreCompleto: string | undefined;
-    listaTelefonos: TelefonoFamiliarEstudianteDto[] | undefined;
-    listaEmails: EmailFamiliarEstudianteDto[] | undefined;
-    listaDirecciones: DireccionFamiliarEstudianteDto[] | undefined;
-    id: number | undefined;
-}
-
-export class TelefonoFamiliarEstudianteDto implements ITelefonoFamiliarEstudianteDto {
-    numero: string | undefined;
-    tipoTelefonoId: number | undefined;
-    familiarEstudianteId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: ITelefonoFamiliarEstudianteDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.numero = data["numero"];
-            this.tipoTelefonoId = data["tipoTelefonoId"];
-            this.familiarEstudianteId = data["familiarEstudianteId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): TelefonoFamiliarEstudianteDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TelefonoFamiliarEstudianteDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["numero"] = this.numero;
-        data["tipoTelefonoId"] = this.tipoTelefonoId;
-        data["familiarEstudianteId"] = this.familiarEstudianteId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): TelefonoFamiliarEstudianteDto {
-        const json = this.toJSON();
-        let result = new TelefonoFamiliarEstudianteDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ITelefonoFamiliarEstudianteDto {
-    numero: string | undefined;
-    tipoTelefonoId: number | undefined;
-    familiarEstudianteId: number | undefined;
-    id: number | undefined;
 }
 
 export class PagedResultDtoOfGrupoDto implements IPagedResultDtoOfGrupoDto {
@@ -19192,6 +19410,61 @@ export interface IPagedResultDtoOfTelefonoFamiliarEstudianteDto {
     items: TelefonoFamiliarEstudianteDto[] | undefined;
 }
 
+export class TelefonoFamiliarEstudianteDto implements ITelefonoFamiliarEstudianteDto {
+    numero: string | undefined;
+    tipoTelefonoId: number | undefined;
+    familiarEstudianteId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: ITelefonoFamiliarEstudianteDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.numero = data["numero"];
+            this.tipoTelefonoId = data["tipoTelefonoId"];
+            this.familiarEstudianteId = data["familiarEstudianteId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TelefonoFamiliarEstudianteDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TelefonoFamiliarEstudianteDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["numero"] = this.numero;
+        data["tipoTelefonoId"] = this.tipoTelefonoId;
+        data["familiarEstudianteId"] = this.familiarEstudianteId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TelefonoFamiliarEstudianteDto {
+        const json = this.toJSON();
+        let result = new TelefonoFamiliarEstudianteDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITelefonoFamiliarEstudianteDto {
+    numero: string | undefined;
+    tipoTelefonoId: number | undefined;
+    familiarEstudianteId: number | undefined;
+    id: number | undefined;
+}
+
 export class CreateTenantDto implements ICreateTenantDto {
     tenancyName: string;
     name: string;
@@ -20590,9 +20863,35 @@ export enum FamiliarEstudianteDtoEstadoCivil {
     _4 = 4, 
 }
 
-export enum FamiliarEstudianteDtoEstado {
+export enum EstudianteSexo {
     _0 = 0, 
     _1 = 1, 
+}
+
+export enum EstudianteEstadoCivil {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+    _4 = 4, 
+}
+
+export enum EstudianteEstado {
+    _0 = 0, 
+    _1 = 1, 
+}
+
+export enum FamiliarEstudianteSexo {
+    _0 = 0, 
+    _1 = 1, 
+}
+
+export enum FamiliarEstudianteEstadoCivil {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+    _4 = 4, 
 }
 
 export enum ProfesorDtoSexo {

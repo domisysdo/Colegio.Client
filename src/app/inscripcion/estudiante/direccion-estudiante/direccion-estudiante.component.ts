@@ -1,4 +1,4 @@
-import { OnInit, Component, Input, Injector } from '@angular/core';
+import { OnInit, Component, Input, Injector, AfterContentChecked } from '@angular/core';
 import {
     DireccionEstudianteDto,
     TipoDireccionServiceProxy,
@@ -17,7 +17,7 @@ import { AppComponentBase } from '@shared/app-component-base';
     selector: 'app-direccion-estudiante',
     templateUrl: './direccion-estudiante.component.html'
 })
-export class DireccionEstudianteComponent extends AppComponentBase implements OnInit {
+export class DireccionEstudianteComponent extends AppComponentBase implements OnInit, AfterContentChecked {
 
     direccion: any;
     direccionSelect: any;
@@ -48,6 +48,9 @@ export class DireccionEstudianteComponent extends AppComponentBase implements On
         this.obtenerSectores();
     }
 
+    ngAfterContentChecked(): void {
+        this.listaVisualizacionDireccion = [...this.direcciones];
+    }
 
     obtenerTiposDireccion() {
         this._tipoDireccionService.getAllForSelect()
@@ -78,7 +81,10 @@ export class DireccionEstudianteComponent extends AppComponentBase implements On
     registrarDireccions() {
         if (!this.direccionExisteDetalle()) {
 
-            this.direccion.tipoDireccionNombre = this.direccionSelect.descripcion;
+            if (this.direccionSelect) {
+                this.direccion.tipoDireccionNombre = this.direccionSelect.descripcion;
+            }
+
             this.direccion.sectorNombre = this.sectorSelect.nombre;
 
             if (this.indexElementoSeleccionado >= 0) {

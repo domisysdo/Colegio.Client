@@ -66,6 +66,10 @@ export class EmailEstudianteComponent extends AppComponentBase implements OnInit
 
     registrarEmails() {
 
+        if (this.emailSelect) {
+            this.email.tipoEmailNombre = this.emailSelect.descripcion;
+        }
+
         const emailAgregar = new EmailEstudianteDto({
             estudianteId: this.email.estudianteId,
             email: this.email.email, tipoEmailId: this.email.tipoEmailId,
@@ -73,10 +77,6 @@ export class EmailEstudianteComponent extends AppComponentBase implements OnInit
         })
 
         if (!this.emailExisteDetalle()) {
-            if (this.emailSelect) {
-                this.email.tipoEmailNombre = this.emailSelect.descripcion;
-            }
-
             if (this.indexElementoSeleccionado >= 0) {
                 this.emails[this.indexElementoSeleccionado] = emailAgregar;
             } else {

@@ -71,7 +71,6 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
                 (result) => {
                     this.estudiante = result;
                     this.active = true;
-                    console.log(this.estudiante.listaEmail);
                 }
             );
         };

@@ -1,4 +1,4 @@
-import { OnInit, Component, Input, Injector } from '@angular/core';
+import { OnInit, Component, Input, Injector, AfterContentChecked } from '@angular/core';
 import {
     TelefonoEstudianteDto,
     TipoTelefonoServiceProxy,
@@ -15,12 +15,12 @@ import { AppComponentBase } from '@shared/app-component-base';
     selector: 'app-telefono-estudiante',
     templateUrl: './telefono-estudiante.component.html'
 })
-export class TelefonoEstudianteComponent extends AppComponentBase implements OnInit {
+export class TelefonoEstudianteComponent extends AppComponentBase implements OnInit, AfterContentChecked {
 
     telefono: TelefonoEstudianteDto;
     telefonoSelect: any;
     tiposTelefono: TipoTelefonoDto[];
-    listaTelefonosVisualizacion: TelefonoEstudianteDto[] = [];
+    listaVisualizacionTelefonos: TelefonoEstudianteDto[] = [];
     modal: NgbModalRef;
 
     maskTelefono = MascarasConstantes;
@@ -41,6 +41,9 @@ export class TelefonoEstudianteComponent extends AppComponentBase implements OnI
         this.obtenerTiposTelefono();
     }
 
+    ngAfterContentChecked(): void {
+        this.listaVisualizacionTelefonos = [...this.telefonos];
+    }
 
     obtenerTiposTelefono() {
         this._tipoTelefonoService.getAllForSelect()
@@ -63,7 +66,10 @@ export class TelefonoEstudianteComponent extends AppComponentBase implements OnI
 
     registrarTelefonos() {
         if (!this.telefonoExisteDetalle()) {
-            this.telefono.tipoTelefonoNombre = this.telefonoSelect.descripcion;
+
+            if (this.telefonoSelect) {
+                this.telefono.tipoTelefonoNombre = this.telefonoSelect.descripcion;
+            }
 
             if (this.indexElementoSeleccionado >= 0) {
                 this.telefonos[this.indexElementoSeleccionado] = this.telefono;
@@ -71,7 +77,7 @@ export class TelefonoEstudianteComponent extends AppComponentBase implements OnI
                 this.telefonos.push(this.telefono);
             }
 
-            this.listaTelefonosVisualizacion = [...this.telefonos];
+            this.listaVisualizacionTelefonos = [...this.telefonos];
             this.modal.close();
         }
     }
@@ -98,7 +104,7 @@ export class TelefonoEstudianteComponent extends AppComponentBase implements OnI
             '¿Desea borrarlo?',
             () => {
                 lista.splice(lista.indexOf(row), 1);
-                this.listaTelefonosVisualizacion.splice(this.listaTelefonosVisualizacion.indexOf(row), 1);
+                this.listaVisualizacionTelefonos.splice(this.listaVisualizacionTelefonos.indexOf(row), 1);
             }
         );
     }

@@ -118,18 +118,37 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
 
         if (!this.familiarExisteDetalle()) {
 
-            // this.agregarRelaciones();
-            // console.log(this.familiares);
+            if (this.parentescoSelect) {
+                this.familiar.parentescoNombre = this.parentescoSelect.descripcion;
+            }
 
             this.familiar.nombreCompleto = this.familiar.nombres + ' ' +
             this.familiar.primerApellido + ' ' + this.familiar.segundoApellido;
 
-            this.familiar.parentescoNombre = this.parentescoSelect.descripcion;
+            const familiarAgregar = new FamiliarEstudianteDto({
+                estudianteId: this.familiar.estudianteId,
+                estadoCivil: this.familiar.estadoCivil,
+                fechaNacimiento: this.familiar.fechaNacimiento,
+                identificador: this.familiar.identificador,
+                nacionalidadId: this.familiar.nacionalidadId,
+                nombreCompleto: this.familiar.nombreCompleto,
+                nombres: this.familiar.nombres,
+                parentescoId: this.familiar.parentescoId,
+                parentescoNombre: this.familiar.parentescoNombre,
+                primerApellido: this.familiar.primerApellido,
+                profesionId: this.familiar.profesionId,
+                segundoApellido: this.familiar.segundoApellido,
+                sexo: this.familiar.sexo,
+                tipoIdentificacionId: this.familiar.tipoIdentificacionId,
+                numeroIdentificacion: this.familiar.numeroIdentificacion,
+                id: 0
+            })
+
 
             if (this.indexElementoSeleccionado >= 0) {
-                this.familiares[this.indexElementoSeleccionado] = this.familiar;
+                this.familiares[this.indexElementoSeleccionado] = familiarAgregar;
             } else {
-                this.familiares.push(this.familiar);
+                this.familiares.push(familiarAgregar);
             }
 
             this.listaVisualizacionFamiliares = [...this.familiares];
@@ -149,12 +168,6 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
         }
         return false;
     }
-
-    // agregarRelaciones() {
-    //     this.familiar.listaDirecciones = this.direccionesFamiliar;
-    //     this.familiar.listaEmails = this.emailsFamiliar;
-    //     this.familiar.listaTelefonos = this.telefonosFamiliar;
-    // }
 
     onParentescoChange(event: any) {
         this.parentescoSelect = event;
