@@ -109,7 +109,7 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
                                 listaDireccionEstudiante: [],
                                 listaFamiliarEstudiante: [] });
     }
-    
+
     obtenerSiguienteIdentificador() {
         this._estudianteService.getSiguienteIdentificador()
             .subscribe((result: string) => {

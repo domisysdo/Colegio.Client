@@ -27,41 +27,41 @@
                                     placeholder="Nombre"/>
                                     <app-input-validation [input]="descripcion"></app-input-validation>
                         </div>
-
-                        <ngx-datatable
-                            class="bootstrap"
-                            [columnMode]="ngxDatatableHelper.columnMode"
-                            [headerHeight]="ngxDatatableHelper.headerHeight"
-                            [footerHeight]="0"
-                            [rowHeight]="ngxDatatableHelper.rowHeight"
-                            [rows]="listaDetalleMetodoEvaluacion" 
-                            [selectionType]="ngxDatatableHelper.selectionType"
-                            [selectAllRowsOnPage]="ngxDatatableHelper.selectAllRowsOnPage"
-                            [reorderable]="ngxDatatableHelper.reorderable"
-                            [messages]="ngxDatatableHelper.ngxDatatableMesagges">
-                            
-                            <ngx-datatable-column 
-                                [width]="150"
-                                name="Descripción" 
-                                prop="descripcion">
-                            </ngx-datatable-column>
-                                        
-                            <ngx-datatable-column 
-                                [width]="20"
-                                name="Puntuación" 
-                                prop="puntuacion">
-                            </ngx-datatable-column>
-                
-                            <ngx-datatable-column  [width]="20" >
-                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                                    <div class="text-center">
-                                        <a class="text-light mr-3 font-16" href="javascript:;"><i (click)="editarMetodoEvaluacion(row, emailForm)" class="ti-pencil"></i></a>
-                                        <a class="text-light font-16" href="javascript:;"><i (click)="eliminarElementoLista(emails, row)" class="ti-trash"></i></a>
-                                    </div>
-                                </ng-template>
-                            </ngx-datatable-column>
-                        </ngx-datatable>
-                        
+                        <div class= "col-sm-12 form-group mb-4">
+                            <ngx-datatable
+                                class="bootstrap"
+                                [columnMode]="ngxDatatableHelper.columnMode"
+                                [headerHeight]="ngxDatatableHelper.headerHeight"
+                                [footerHeight]="0"
+                                [rowHeight]="ngxDatatableHelper.rowHeight"
+                                [rows]="metodoEvaluacion.listaMetodoEvaluacion" 
+                                [selectionType]="ngxDatatableHelper.selectionType"
+                                [selectAllRowsOnPage]="ngxDatatableHelper.selectAllRowsOnPage"
+                                [reorderable]="ngxDatatableHelper.reorderable"
+                                [messages]="ngxDatatableHelper.ngxDatatableMesagges">
+                                
+                                <ngx-datatable-column 
+                                    [width]="150"
+                                    name="Descripción" 
+                                    prop="descripcion">
+                                </ngx-datatable-column>
+                                            
+                                <ngx-datatable-column 
+                                    [width]="20"
+                                    name="Puntuación" 
+                                    prop="puntuacion">
+                                </ngx-datatable-column>
+                    
+                                <ngx-datatable-column  [width]="20" >
+                                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                        <div class="text-center">
+                                            <a class="text-light mr-3 font-16" href="javascript:;"><i (click)="editarMetodoEvaluacion(row, emailForm)" class="ti-pencil"></i></a>
+                                            <a class="text-light font-16" href="javascript:;"><i (click)="eliminarElementoLista(emails, row)" class="ti-trash"></i></a>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                        </div>
                         <div class="flexbox mb-4"><div class="flexbox"></div></div>
                         <div class="flexbox mb-4">
                             <div class="flexbox">
@@ -114,7 +114,7 @@
                             required
                             minlength="2" 
                             maxlength="32" 
-                            placeholder="Parcial"/>
+                            placeholder="Descripción"/>
                         <app-input-validation [input]="descripcionModel"></app-input-validation>
                     </div>
 
@@ -131,7 +131,7 @@
                             required
                             minlength="2" 
                             maxlength="32" 
-                            placeholder="Parcial"/>
+                            placeholder="Puntuación"/>
                         <app-input-validation [input]="puntuacionModel"></app-input-validation>
                     </div>
                 </div>
