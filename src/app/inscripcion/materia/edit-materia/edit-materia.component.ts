@@ -1,5 +1,5 @@
 import { Component, ViewChild, Injector, Output, EventEmitter, ElementRef, OnInit } from '@angular/core';
-import { MateriaDto, MateriaServiceProxy } from '@shared/service-proxies/service-proxies';
+import { MateriaDto, MateriaServiceProxy, MetodoEvaluacionDto, MetodoEvaluacionServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -16,13 +16,15 @@ export class EditMateriaComponent extends AppComponentBase implements OnInit {
     saving = false;
     materia: MateriaDto = new MateriaDto();
     materias: MateriaDto[] = [];
+    metodosEvaluacion: MetodoEvaluacionDto[] = []
 
 
     constructor(
         injector: Injector,
         private _route: ActivatedRoute,
         private _router: Router,
-        private _materiaService: MateriaServiceProxy
+        private _materiaService: MateriaServiceProxy,
+        private _metodoEvaluacionService: MetodoEvaluacionServiceProxy
     ) {
         super(injector);
     }
@@ -30,6 +32,7 @@ export class EditMateriaComponent extends AppComponentBase implements OnInit {
     ngOnInit(): void {
         const id = this._route.snapshot.params['id'];
         this.getMaterias();
+        this.obtenerMetodosEvaluacion();
 
         this._materiaService.get(id)
             .subscribe(
@@ -56,6 +59,13 @@ export class EditMateriaComponent extends AppComponentBase implements OnInit {
         this._materiaService.getAllForSelect()
         .subscribe((result: MateriaDto[]) => {
             this.materias = result;
+        });
+    }
+    
+    obtenerMetodosEvaluacion() {
+        this._metodoEvaluacionService.getAllForSelect()
+        .subscribe((result: MetodoEvaluacionDto[]) => {
+            this.metodosEvaluacion = result;
         });
     }
 

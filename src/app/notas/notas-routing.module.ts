@@ -17,6 +17,10 @@ const routes: Routes = [
         path: 'notas/metodo-evaluacion/create-metodo-evaluacion',
         component: CreateMetodoEvaluacionComponent
       },
+      {
+        path: 'notas/metodo-evaluacion/create-metodo-evaluacion/:id',
+        component: CreateMetodoEvaluacionComponent
+      },
     ]
   }
 ];

@@ -2,7 +2,7 @@ import { Component, ViewChild, Injector, ElementRef, OnInit } from '@angular/cor
 import { MetodoEvaluacionDto, MetodoEvaluacionServiceProxy, DetalleMetodoEvaluacionDto } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { MessageHelper } from '@app/shared/MessageHelper';
 import { ModalHelper } from '@shared/helpers/ModalHelper';
@@ -10,8 +10,8 @@ import { NgxDatatableHelper } from '@shared/helpers/NgxDatatableHelper';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-create-metodo-evaluacion',
-  templateUrl: './create-metodo-evaluacion.component.html'
+    selector: 'app-create-metodo-evaluacion',
+    templateUrl: './create-metodo-evaluacion.component.html'
 })
 export class CreateMetodoEvaluacionComponent extends AppComponentBase implements OnInit {
 
@@ -20,6 +20,8 @@ export class CreateMetodoEvaluacionComponent extends AppComponentBase implements
 
     active = false;
     saving = false;
+    editando = false;
+
     ngxDatatableHelper = NgxDatatableHelper;
     indexElementoSeleccionado = -1;
     metodoEvaluacion: MetodoEvaluacionDto = new MetodoEvaluacionDto();
@@ -31,18 +33,37 @@ export class CreateMetodoEvaluacionComponent extends AppComponentBase implements
         injector: Injector,
         private _router: Router,
         private modalHelper: ModalHelper,
+        private _route: ActivatedRoute,
         private _metodoEvaluacionService: MetodoEvaluacionServiceProxy,
     ) {
         super(injector);
     }
 
     ngOnInit(): void {
-        this.metodoEvaluacion.init({ listaMetodoEvaluacion: [] })
+
+        this.obtenerValoresDefecto();
+
+        const id = this._route.snapshot.params['id'];
+
+        if (id > 0) {
+            this.editando = true;
+            this._metodoEvaluacionService.getIncluding(id)
+                .subscribe(
+                    (result) => {
+                        this.metodoEvaluacion = result;
+                        this.active = true;
+                    }
+                );
+        }
     }
 
     save(form: NgForm): void {
 
         if (form.valid) {
+
+            if (!this.validar()) {
+                return;
+            }
 
             this.saving = true;
             this._metodoEvaluacionService.create(this.metodoEvaluacion)
@@ -52,7 +73,7 @@ export class CreateMetodoEvaluacionComponent extends AppComponentBase implements
                     this.close();
                 });
         } else {
-            this.notify.warn(this.l('Complete los valores requeridos'), this.l('Corregir'), { preventDuplicates: true } );
+            this.notify.warn(this.l('Complete los valores requeridos'), this.l('Corregir'), { preventDuplicates: true });
         }
     }
 
@@ -70,7 +91,7 @@ export class CreateMetodoEvaluacionComponent extends AppComponentBase implements
 
     registrarMetodoEvaluacion() {
 
-        if (!this.validar()) {
+        if (!this.validaInsercion()) {
             return;
         }
 
@@ -114,7 +135,7 @@ export class CreateMetodoEvaluacionComponent extends AppComponentBase implements
             }
         );
     }
-    validar(): boolean {
+    validaInsercion(): boolean {
 
         let puntuacion = 0;
 
@@ -131,13 +152,33 @@ export class CreateMetodoEvaluacionComponent extends AppComponentBase implements
             MessageHelper.show('La puntuación no puede ser mayor de 100 puntos');
             return false;
         } else if ((+puntuacion + +this.detalleMetodoEvaluacion.puntuacion -
-                    (this.indexElementoSeleccionado > 0 ? +this.detalleMetodoEvaluacion.puntuacion : 0)) > 100) {
+            (this.indexElementoSeleccionado > 0 ? +this.detalleMetodoEvaluacion.puntuacion : 0)) > 100) {
             MessageHelper.show('El método de evaluación no puede sobrepasar los 100 puntos', 'Verifique');
             return false;
         } else {
             return true;
         }
     }
+
+    validar(): boolean {
+        let puntuacion = 0;
+
+        this.metodoEvaluacion.listaMetodoEvaluacion.forEach(function (obj) {
+            puntuacion += +obj.puntuacion;
+        });
+
+        if (puntuacion < 100) {
+            MessageHelper.show('El método de evaluación debe sumar 100 puntos', 'Verifique');
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    obtenerValoresDefecto() {
+        this.metodoEvaluacion.init({ listaMetodoEvaluacion: [] })
+    }
+
     close(): void {
         this.active = false;
         this._router.navigate(['app/notas/metodo-evaluacion'])

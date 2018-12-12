@@ -1,13 +1,13 @@
 import { Component, ViewChild, Injector, ElementRef, OnInit } from '@angular/core';
-import { MateriaDto, MateriaServiceProxy } from '@shared/service-proxies/service-proxies';
+import { MateriaDto, MateriaServiceProxy, MetodoEvaluacionDto, MetodoEvaluacionServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-create-materia',
-  templateUrl: './create-materia.component.html'
+    selector: 'app-create-materia',
+    templateUrl: './create-materia.component.html'
 })
 export class CreateMateriaComponent extends AppComponentBase implements OnInit {
 
@@ -19,16 +19,20 @@ export class CreateMateriaComponent extends AppComponentBase implements OnInit {
     materia: MateriaDto = new MateriaDto();
     materias: MateriaDto[] = [];
     paisId = 0;
+    metodosEvaluacion: MetodoEvaluacionDto[] = []
+
     constructor(
         injector: Injector,
         private _router: Router,
-        private _materiaService: MateriaServiceProxy
+        private _materiaService: MateriaServiceProxy,
+        private _metodoEvaluacionService: MetodoEvaluacionServiceProxy
     ) {
         super(injector);
     }
 
     ngOnInit(): void {
-        this.getMaterias();
+        this.obtenerMaterias();
+        this.obtenerMetodosEvaluacion();
     }
 
     save(form: NgForm): void {
@@ -43,13 +47,20 @@ export class CreateMateriaComponent extends AppComponentBase implements OnInit {
                     this.close();
                 });
         } else {
-            this.notify.warn(this.l('Complete los valores requeridos'), this.l('Corregir'), { preventDuplicates: true } );
+            this.notify.warn(this.l('Complete los valores requeridos'), this.l('Corregir'), { preventDuplicates: true });
         }
     }
-    getMaterias() {
+    obtenerMaterias() {
         this._materiaService.getAllForSelect()
-        .subscribe((result: MateriaDto[]) => {
-            this.materias = result;
+            .subscribe((result: MateriaDto[]) => {
+                this.materias = result;
+            });
+    }
+
+    obtenerMetodosEvaluacion() {
+        this._metodoEvaluacionService.getAllForSelect()
+        .subscribe((result: MetodoEvaluacionDto[]) => {
+            this.metodosEvaluacion = result;
         });
     }
 
