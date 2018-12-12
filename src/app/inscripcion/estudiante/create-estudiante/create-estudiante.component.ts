@@ -31,8 +31,7 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
     emailsEstudiante: EmailEstudianteDto[] = [];
     direccionesEstudiante: DireccionEstudianteDto[] = [];
     familiares: FamiliarEstudianteDto[] = [];
-    // padecimientos: PadecimientoDto[];
-    model;
+
     active = false;
     saving = false;
     editando = false;
@@ -73,7 +72,9 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
                     this.active = true;
                 }
             );
-        };
+        }  else {
+            this.obtenerSiguienteIdentificador();
+        }
     }
 
 
@@ -107,6 +108,13 @@ export class CreateEstudianteComponent extends AppComponentBase implements OnIni
                                listaEmail: [], listaTelefonos: [],
                                 listaDireccionEstudiante: [],
                                 listaFamiliarEstudiante: [] });
+    }
+    
+    obtenerSiguienteIdentificador() {
+        this._estudianteService.getSiguienteIdentificador()
+            .subscribe((result: string) => {
+                this.estudiante.identificador = result;
+            });
     }
 
     close(): void {

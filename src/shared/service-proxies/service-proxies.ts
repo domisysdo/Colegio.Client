@@ -2865,6 +2865,57 @@ export class EstudianteServiceProxy {
     }
 
     /**
+     * @return Success
+     */
+    getSiguienteIdentificador(): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/Estudiante/GetSiguienteIdentificador";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSiguienteIdentificador(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSiguienteIdentificador(<any>response_);
+                } catch (e) {
+                    return <Observable<string>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetSiguienteIdentificador(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(<any>null);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -5182,6 +5233,412 @@ export class MateriaServiceProxy {
      */
     delete(id: number | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/Materia/Delete?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
+export class MetodoEvaluacionServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @param filter (optional) 
+     * @return Success
+     */
+    getAllFiltered(sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined, filter: string | null | undefined): Observable<PagedResultDtoOfMetodoEvaluacionDto> {
+        let url_ = this.baseUrl + "/api/services/app/MetodoEvaluacion/GetAllFiltered?";
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        if (filter !== undefined)
+            url_ += "filter=" + encodeURIComponent("" + filter) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllFiltered(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllFiltered(<any>response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfMetodoEvaluacionDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfMetodoEvaluacionDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllFiltered(response: HttpResponseBase): Observable<PagedResultDtoOfMetodoEvaluacionDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PagedResultDtoOfMetodoEvaluacionDto.fromJS(resultData200) : new PagedResultDtoOfMetodoEvaluacionDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfMetodoEvaluacionDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllForSelect(): Observable<MetodoEvaluacionDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/MetodoEvaluacion/GetAllForSelect";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllForSelect(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllForSelect(<any>response_);
+                } catch (e) {
+                    return <Observable<MetodoEvaluacionDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<MetodoEvaluacionDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllForSelect(response: HttpResponseBase): Observable<MetodoEvaluacionDto[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(MetodoEvaluacionDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<MetodoEvaluacionDto[]>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    get(id: number | null | undefined): Observable<MetodoEvaluacionDto> {
+        let url_ = this.baseUrl + "/api/services/app/MetodoEvaluacion/Get?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<MetodoEvaluacionDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<MetodoEvaluacionDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<MetodoEvaluacionDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? MetodoEvaluacionDto.fromJS(resultData200) : new MetodoEvaluacionDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<MetodoEvaluacionDto>(<any>null);
+    }
+
+    /**
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(sorting: string | null | undefined, skipCount: number | null | undefined, maxResultCount: number | null | undefined): Observable<PagedResultDtoOfMetodoEvaluacionDto> {
+        let url_ = this.baseUrl + "/api/services/app/MetodoEvaluacion/GetAll?";
+        if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfMetodoEvaluacionDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfMetodoEvaluacionDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfMetodoEvaluacionDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PagedResultDtoOfMetodoEvaluacionDto.fromJS(resultData200) : new PagedResultDtoOfMetodoEvaluacionDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfMetodoEvaluacionDto>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    create(input: MetodoEvaluacionDto | null | undefined): Observable<MetodoEvaluacionDto> {
+        let url_ = this.baseUrl + "/api/services/app/MetodoEvaluacion/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<MetodoEvaluacionDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<MetodoEvaluacionDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<MetodoEvaluacionDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? MetodoEvaluacionDto.fromJS(resultData200) : new MetodoEvaluacionDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<MetodoEvaluacionDto>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    update(input: MetodoEvaluacionDto | null | undefined): Observable<MetodoEvaluacionDto> {
+        let url_ = this.baseUrl + "/api/services/app/MetodoEvaluacion/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<MetodoEvaluacionDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<MetodoEvaluacionDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<MetodoEvaluacionDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? MetodoEvaluacionDto.fromJS(resultData200) : new MetodoEvaluacionDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<MetodoEvaluacionDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/MetodoEvaluacion/Delete?";
         if (id !== undefined)
             url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
@@ -14637,6 +15094,7 @@ export class EstudianteDto implements IEstudianteDto {
     estadoCivil: EstudianteDtoEstadoCivil | undefined;
     estado: EstudianteDtoEstado | undefined;
     nacionalidadId: number | undefined;
+    secuenciaIdentificador: number | undefined;
     listaTelefonos: TelefonoEstudianteDto[] | undefined;
     listaPadecimientos: PadecimientoDto[] | undefined;
     listaEmail: EmailEstudianteDto[] | undefined;
@@ -14664,6 +15122,7 @@ export class EstudianteDto implements IEstudianteDto {
             this.estadoCivil = data["estadoCivil"];
             this.estado = data["estado"];
             this.nacionalidadId = data["nacionalidadId"];
+            this.secuenciaIdentificador = data["secuenciaIdentificador"];
             if (data["listaTelefonos"] && data["listaTelefonos"].constructor === Array) {
                 this.listaTelefonos = [];
                 for (let item of data["listaTelefonos"])
@@ -14711,6 +15170,7 @@ export class EstudianteDto implements IEstudianteDto {
         data["estadoCivil"] = this.estadoCivil;
         data["estado"] = this.estado;
         data["nacionalidadId"] = this.nacionalidadId;
+        data["secuenciaIdentificador"] = this.secuenciaIdentificador;
         if (this.listaTelefonos && this.listaTelefonos.constructor === Array) {
             data["listaTelefonos"] = [];
             for (let item of this.listaTelefonos)
@@ -14758,6 +15218,7 @@ export interface IEstudianteDto {
     estadoCivil: EstudianteDtoEstadoCivil | undefined;
     estado: EstudianteDtoEstado | undefined;
     nacionalidadId: number | undefined;
+    secuenciaIdentificador: number | undefined;
     listaTelefonos: TelefonoEstudianteDto[] | undefined;
     listaPadecimientos: PadecimientoDto[] | undefined;
     listaEmail: EmailEstudianteDto[] | undefined;
@@ -15548,6 +16009,7 @@ export class Estudiante implements IEstudiante {
     estadoCivil: EstudianteEstadoCivil | undefined;
     estado: EstudianteEstado | undefined;
     nacionalidadId: number | undefined;
+    secuenciaIdentificador: number | undefined;
     nacionalidad: Nacionalidad | undefined;
     listaTelefonos: TelefonoEstudiante[] | undefined;
     listaPadecimientos: Padecimiento[] | undefined;
@@ -15583,6 +16045,7 @@ export class Estudiante implements IEstudiante {
             this.estadoCivil = data["estadoCivil"];
             this.estado = data["estado"];
             this.nacionalidadId = data["nacionalidadId"];
+            this.secuenciaIdentificador = data["secuenciaIdentificador"];
             this.nacionalidad = data["nacionalidad"] ? Nacionalidad.fromJS(data["nacionalidad"]) : <any>undefined;
             if (data["listaTelefonos"] && data["listaTelefonos"].constructor === Array) {
                 this.listaTelefonos = [];
@@ -15638,6 +16101,7 @@ export class Estudiante implements IEstudiante {
         data["estadoCivil"] = this.estadoCivil;
         data["estado"] = this.estado;
         data["nacionalidadId"] = this.nacionalidadId;
+        data["secuenciaIdentificador"] = this.secuenciaIdentificador;
         data["nacionalidad"] = this.nacionalidad ? this.nacionalidad.toJSON() : <any>undefined;
         if (this.listaTelefonos && this.listaTelefonos.constructor === Array) {
             data["listaTelefonos"] = [];
@@ -15693,6 +16157,7 @@ export interface IEstudiante {
     estadoCivil: EstudianteEstadoCivil | undefined;
     estado: EstudianteEstado | undefined;
     nacionalidadId: number | undefined;
+    secuenciaIdentificador: number | undefined;
     nacionalidad: Nacionalidad | undefined;
     listaTelefonos: TelefonoEstudiante[] | undefined;
     listaPadecimientos: Padecimiento[] | undefined;
@@ -17462,6 +17927,175 @@ export class PagedResultDtoOfMateriaDto implements IPagedResultDtoOfMateriaDto {
 export interface IPagedResultDtoOfMateriaDto {
     totalCount: number | undefined;
     items: MateriaDto[] | undefined;
+}
+
+export class PagedResultDtoOfMetodoEvaluacionDto implements IPagedResultDtoOfMetodoEvaluacionDto {
+    totalCount: number | undefined;
+    items: MetodoEvaluacionDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfMetodoEvaluacionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.totalCount = data["totalCount"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(MetodoEvaluacionDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfMetodoEvaluacionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfMetodoEvaluacionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): PagedResultDtoOfMetodoEvaluacionDto {
+        const json = this.toJSON();
+        let result = new PagedResultDtoOfMetodoEvaluacionDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPagedResultDtoOfMetodoEvaluacionDto {
+    totalCount: number | undefined;
+    items: MetodoEvaluacionDto[] | undefined;
+}
+
+export class MetodoEvaluacionDto implements IMetodoEvaluacionDto {
+    descripcion: string | undefined;
+    listaMetodoEvaluacion: DetalleMetodoEvaluacionDto[] | undefined;
+    id: number | undefined;
+
+    constructor(data?: IMetodoEvaluacionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            if (data["listaMetodoEvaluacion"] && data["listaMetodoEvaluacion"].constructor === Array) {
+                this.listaMetodoEvaluacion = [];
+                for (let item of data["listaMetodoEvaluacion"])
+                    this.listaMetodoEvaluacion.push(DetalleMetodoEvaluacionDto.fromJS(item));
+            }
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): MetodoEvaluacionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MetodoEvaluacionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        if (this.listaMetodoEvaluacion && this.listaMetodoEvaluacion.constructor === Array) {
+            data["listaMetodoEvaluacion"] = [];
+            for (let item of this.listaMetodoEvaluacion)
+                data["listaMetodoEvaluacion"].push(item.toJSON());
+        }
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): MetodoEvaluacionDto {
+        const json = this.toJSON();
+        let result = new MetodoEvaluacionDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMetodoEvaluacionDto {
+    descripcion: string | undefined;
+    listaMetodoEvaluacion: DetalleMetodoEvaluacionDto[] | undefined;
+    id: number | undefined;
+}
+
+export class DetalleMetodoEvaluacionDto implements IDetalleMetodoEvaluacionDto {
+    metodoEvaluacionId: number | undefined;
+    descripcion: string | undefined;
+    puntuacion: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IDetalleMetodoEvaluacionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.metodoEvaluacionId = data["metodoEvaluacionId"];
+            this.descripcion = data["descripcion"];
+            this.puntuacion = data["puntuacion"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): DetalleMetodoEvaluacionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DetalleMetodoEvaluacionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["metodoEvaluacionId"] = this.metodoEvaluacionId;
+        data["descripcion"] = this.descripcion;
+        data["puntuacion"] = this.puntuacion;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): DetalleMetodoEvaluacionDto {
+        const json = this.toJSON();
+        let result = new DetalleMetodoEvaluacionDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IDetalleMetodoEvaluacionDto {
+    metodoEvaluacionId: number | undefined;
+    descripcion: string | undefined;
+    puntuacion: number | undefined;
+    id: number | undefined;
 }
 
 export class PagedResultDtoOfMunicipioDto implements IPagedResultDtoOfMunicipioDto {
