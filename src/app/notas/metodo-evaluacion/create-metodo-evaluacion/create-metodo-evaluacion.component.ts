@@ -47,7 +47,7 @@ export class CreateMetodoEvaluacionComponent extends AppComponentBase implements
 
         if (id > 0) {
             this.editando = true;
-            this._metodoEvaluacionService.getIncluding(id)
+            this._metodoEvaluacionService.getIncluding()
                 .subscribe(
                     (result) => {
                         this.metodoEvaluacion = result;
@@ -77,13 +77,13 @@ export class CreateMetodoEvaluacionComponent extends AppComponentBase implements
         }
     }
 
-    agregarMetodoEvaluacion(content) {
+    agregarMetodoEvaluacion(content: any) {
         this.indexElementoSeleccionado = -1;
         this.detalleMetodoEvaluacion = new DetalleMetodoEvaluacionDto();
         this.modal = this.modalHelper.getMediumModal(content);
     }
 
-    editarMetodoEvaluacion(detalleMetodoEvaluacion: DetalleMetodoEvaluacionDto, content) {
+    editarMetodoEvaluacion(detalleMetodoEvaluacion: DetalleMetodoEvaluacionDto, content: any) {
         this.indexElementoSeleccionado = this.metodoEvaluacion.listaMetodoEvaluacion.indexOf(detalleMetodoEvaluacion);
         this.detalleMetodoEvaluacion = JSON.parse(JSON.stringify(detalleMetodoEvaluacion));
         this.modal = this.modalHelper.getMediumModal(content);

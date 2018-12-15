@@ -103,7 +103,6 @@ import { AulaComponent } from './aula/aula.component';
         IncidenciaEstudianteComponent,
         CreateIncidenciaEstudianteComponent,
         EditIncidenciaEstudianteComponent,
-        ConsultaEstudianteComponent,
         TipoPadecimientoComponent,
         CreateNacionalidadComponent,
         EditNacionalidadComponent,

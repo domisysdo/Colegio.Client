@@ -4,7 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { ProfesorComponent } from './profesor/profesor.component';
 import { CreateProfesorComponent } from './profesor/create-profesor/create-profesor.component';
-import { EditProfesorComponent } from './profesor/edit-profesor/edit-profesor.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
@@ -20,8 +19,8 @@ const routes: Routes = [
           component: CreateProfesorComponent
         },
         {
-          path: 'nomina/profesor/edit-profesor/:id',
-          component: EditProfesorComponent
+          path: 'nomina/profesor/create-profesor/:id',
+          component: CreateProfesorComponent
         }
       ]
     }

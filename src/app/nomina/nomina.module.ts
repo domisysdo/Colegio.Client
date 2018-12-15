@@ -9,7 +9,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ProfesorComponent } from './profesor/profesor.component';
 import { CreateProfesorComponent } from './profesor/create-profesor/create-profesor.component';
-import { EditProfesorComponent } from './profesor/edit-profesor/edit-profesor.component';
 
 @NgModule({
 
@@ -27,8 +26,7 @@ import { EditProfesorComponent } from './profesor/edit-profesor/edit-profesor.co
 
     declarations: [
         ProfesorComponent,
-        CreateProfesorComponent,
-        EditProfesorComponent,
+        CreateProfesorComponent
     ]
 })
 export class NominaModule {}

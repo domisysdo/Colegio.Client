@@ -15,6 +15,8 @@ import { FormsModule } from '@angular/forms';
 import { ModalHelper } from './helpers/ModalHelper';
 import { TextMaskModule } from 'angular2-text-mask';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ConsultaEstudianteComponent } from '@app/inscripcion/estudiante/consulta-estudiante/consulta-estudiante.component';
 
 @NgModule({
     imports: [
@@ -25,12 +27,14 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
         NgbModule.forRoot(),
         TextMaskModule,
         BsDatepickerModule.forRoot(),
+        NgxDatatableModule
     ],
     declarations: [
         MaterialInput,
         InputValidationComponent,
         TableItemsDeleteComponent,
-        InputDateComponent
+        InputDateComponent,
+        ConsultaEstudianteComponent
     ],
     exports: [
         NgbModule,
@@ -39,7 +43,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
         TableItemsDeleteComponent,
         TextMaskModule,
         InputDateComponent,
-        BsDatepickerModule
+        BsDatepickerModule,
+        ConsultaEstudianteComponent
     ],
     providers: [
         ModalHelper

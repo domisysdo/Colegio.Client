@@ -11,6 +11,9 @@ import { ScriptLoaderService } from '@app/_services/script-loader.service';
 import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 import { CreateMetodoEvaluacionComponent } from './metodo-evaluacion/create-metodo-evaluacion/create-metodo-evaluacion.component';
 import { MetodoEvaluacionComponent } from './metodo-evaluacion/metodo-evaluacion.component';
+import { CalificacionComponent } from './calificacion/calificacion.component';
+import { CreateCalificacionComponent } from './calificacion/create-calificacion/create-calificacion.component';
+import { ConsultaEstudianteComponent } from '@app/inscripcion/estudiante/consulta-estudiante/consulta-estudiante.component';
 
 @NgModule({
 
@@ -29,7 +32,9 @@ import { MetodoEvaluacionComponent } from './metodo-evaluacion/metodo-evaluacion
 
     declarations: [
         CreateMetodoEvaluacionComponent,
-        MetodoEvaluacionComponent
+        MetodoEvaluacionComponent,
+        CalificacionComponent,
+        CreateCalificacionComponent,
     ],
     providers: [
         ScriptLoaderService
