@@ -1,7 +1,7 @@
 import { Component, ViewChild, Injector, ElementRef, OnInit } from '@angular/core';
 import { IncidenciaEstudianteDto, IncidenciaEstudianteServiceProxy,
          EstudianteDto, MateriaDto, TipoIncidenciaDto,
-         TipoIncidenciaServiceProxy, MateriaServiceProxy } from '@shared/service-proxies/service-proxies';
+         TipoIncidenciaServiceProxy, MateriaServiceProxy, EstadoIncidenciaDto } from '@shared/service-proxies/service-proxies';
 
 import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
@@ -22,6 +22,7 @@ export class CreateIncidenciaEstudianteComponent extends AppComponentBase implem
     saving = false;
     estudiante: EstudianteDto[] = [];
     materias: MateriaDto[] = [];
+    estadosIncidencia: EstadoIncidenciaDto[] = [];
     tiposIncidencia: TipoIncidenciaDto[] = [];
     incidenciaEstudiante: IncidenciaEstudianteDto = new IncidenciaEstudianteDto();
 
@@ -74,6 +75,22 @@ export class CreateIncidenciaEstudianteComponent extends AppComponentBase implem
         } else {
             this.notify.warn(this.l('Complete los valores requeridos'), this.l('Corregir'), { preventDuplicates: true } );
         }
+    }
+    onTipoIncidenciaChange(event: any) {
+        this.obtenerEstadosIncidencia(event.id);
+    }
+
+    onEstadoIncidenciaChange(event: any) {
+        if (event) {
+            this.incidenciaEstudiante.descripcion = event.descripcion;
+        }
+    }
+
+    obtenerEstadosIncidencia(tipoIncidenciaId: number) {
+        this._tipoIncidenciaService.getEstadosIncidencia(tipoIncidenciaId)
+        .subscribe((result: EstadoIncidenciaDto[]) => {
+            this.estadosIncidencia = result;
+        });
     }
 
     close(): void {

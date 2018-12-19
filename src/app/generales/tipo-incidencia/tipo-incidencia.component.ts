@@ -1,6 +1,7 @@
 import { Component, Injector, ViewChild } from '@angular/core';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { TipoIncidenciaDto, TipoIncidenciaServiceProxy, PagedResultDtoOfTipoIncidenciaDto } from '@shared/service-proxies/service-proxies';
+import { TipoIncidenciaDto, TipoIncidenciaServiceProxy,
+         PagedResultDtoOfTipoIncidenciaDto, EstadoIncidenciaDto } from '@shared/service-proxies/service-proxies';
 import { PagedListingComponentBase, PagedRequestDto } from 'shared/paged-listing-component-base';
 import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -22,6 +23,7 @@ export class TipoIncidenciaComponent extends PagedListingComponentBase<TipoIncid
     totalCount: number;
     selected = [];
     selectedCount = 0;
+
 
     constructor(
         injector: Injector,

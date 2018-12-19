@@ -39,6 +39,7 @@
                                     bindValue="id"
                                     required
                                     #tipoIncidencia="ngModel"
+                                    (change)="onTipoIncidenciaChange($event)"
                                     [(ngModel)]="incidenciaEstudiante.tipoIncidenciaId">
                                     <ng-template ng-option-tmp let-item="item">
                                         {{item.descripcion}}
@@ -47,6 +48,22 @@
                                 <app-input-validation [input]="tipoIncidencia"></app-input-validation>
                         </div>
     
+                        <div [hidden]="estadosIncidencia.length===0" [ngClass]="(estadoIncidenciaModel.invalid && estadoIncidenciaModel.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">
+                            <label [hidden]="estadosIncidencia.length===0">{{l("Estado de incidencia")}}</label>                            
+                            <ng-select [items]="estadosIncidencia"
+                                name="estadoIncidenciaSelect"
+                                bindLabel="descripcion"
+                                bindValue="id"                                
+                                #estadoIncidenciaModel="ngModel"
+                                (change)="onEstadoIncidenciaChange($event)"
+                                [(ngModel)]="incidenciaEstudiante.estadoIncidenciaId">
+                                <ng-template ng-option-tmp let-item="item">
+                                    {{item.descripcion}}
+                                </ng-template>
+                            </ng-select>
+                            <app-input-validation [input]="estadoIncidenciaModel"></app-input-validation>
+                        </div>
+
                         <div [ngClass]="(materia.invalid && materia.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">
                                 <label>{{l("Materia")}}<span class="text-danger"> *</span> </label>                            
                                 <ng-select [items]="materias"
@@ -62,6 +79,7 @@
                                 </ng-select>
                                 <app-input-validation [input]="materia"></app-input-validation>
                         </div>
+
 
                         <div [ngClass]="(dp.invalid && dp.touched)?'col-sm-6 form-group mb-4 has-error ':'col-sm-6 form-group mb-4'">                        
                                 <label class="col-form-label">Fecha de inicio</label>

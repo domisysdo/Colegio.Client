@@ -13259,6 +13259,62 @@ export class TipoIncidenciaServiceProxy {
     }
 
     /**
+     * @param input (optional) 
+     * @return Success
+     */
+    create(input: TipoIncidenciaDto | null | undefined): Observable<TipoIncidenciaDto> {
+        let url_ = this.baseUrl + "/api/services/app/TipoIncidencia/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<TipoIncidenciaDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TipoIncidenciaDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<TipoIncidenciaDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? TipoIncidenciaDto.fromJS(resultData200) : new TipoIncidenciaDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TipoIncidenciaDto>(<any>null);
+    }
+
+    /**
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
@@ -13322,6 +13378,64 @@ export class TipoIncidenciaServiceProxy {
     }
 
     /**
+     * @param tipoIncidenciaId (optional) 
+     * @return Success
+     */
+    getEstadosIncidencia(tipoIncidenciaId: number | null | undefined): Observable<EstadoIncidenciaDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/TipoIncidencia/GetEstadosIncidencia?";
+        if (tipoIncidenciaId !== undefined)
+            url_ += "tipoIncidenciaId=" + encodeURIComponent("" + tipoIncidenciaId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEstadosIncidencia(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEstadosIncidencia(<any>response_);
+                } catch (e) {
+                    return <Observable<EstadoIncidenciaDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<EstadoIncidenciaDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetEstadosIncidencia(response: HttpResponseBase): Observable<EstadoIncidenciaDto[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(EstadoIncidenciaDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<EstadoIncidenciaDto[]>(<any>null);
+    }
+
+    /**
      * @return Success
      */
     getAllForSelect(): Observable<TipoIncidenciaDto[]> {
@@ -13374,6 +13488,115 @@ export class TipoIncidenciaServiceProxy {
             }));
         }
         return _observableOf<TipoIncidenciaDto[]>(<any>null);
+    }
+
+    /**
+     * @param estadoIncidencia (optional) 
+     * @param tipoIncidenciaId (optional) 
+     * @return Success
+     */
+    modificarEstadoIncidencia(estadoIncidencia: EstadoIncidencia[] | null | undefined, tipoIncidenciaId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/TipoIncidencia/ModificarEstadoIncidencia?";
+        if (tipoIncidenciaId !== undefined)
+            url_ += "tipoIncidenciaId=" + encodeURIComponent("" + tipoIncidenciaId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(estadoIncidencia);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processModificarEstadoIncidencia(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processModificarEstadoIncidencia(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processModificarEstadoIncidencia(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param tipoIncidenciaId (optional) 
+     * @return Success
+     */
+    getIncluding(tipoIncidenciaId: number | null | undefined): Observable<TipoIncidenciaDto> {
+        let url_ = this.baseUrl + "/api/services/app/TipoIncidencia/GetIncluding?";
+        if (tipoIncidenciaId !== undefined)
+            url_ += "tipoIncidenciaId=" + encodeURIComponent("" + tipoIncidenciaId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetIncluding(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetIncluding(<any>response_);
+                } catch (e) {
+                    return <Observable<TipoIncidenciaDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TipoIncidenciaDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetIncluding(response: HttpResponseBase): Observable<TipoIncidenciaDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? TipoIncidenciaDto.fromJS(resultData200) : new TipoIncidenciaDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TipoIncidenciaDto>(<any>null);
     }
 
     /**
@@ -13488,62 +13711,6 @@ export class TipoIncidenciaServiceProxy {
             }));
         }
         return _observableOf<PagedResultDtoOfTipoIncidenciaDto>(<any>null);
-    }
-
-    /**
-     * @param input (optional) 
-     * @return Success
-     */
-    create(input: TipoIncidenciaDto | null | undefined): Observable<TipoIncidenciaDto> {
-        let url_ = this.baseUrl + "/api/services/app/TipoIncidencia/Create";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(input);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreate(<any>response_);
-                } catch (e) {
-                    return <Observable<TipoIncidenciaDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<TipoIncidenciaDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processCreate(response: HttpResponseBase): Observable<TipoIncidenciaDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? TipoIncidenciaDto.fromJS(resultData200) : new TipoIncidenciaDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<TipoIncidenciaDto>(<any>null);
     }
 
     /**
@@ -18452,6 +18619,7 @@ export class IncidenciaEstudianteDto implements IIncidenciaEstudianteDto {
     materiaNombre: string | undefined;
     tipoIncidenciaNombre: string | undefined;
     estudianteNombreCompleto: string | undefined;
+    estadoIncidenciaId: number | undefined;
     id: number | undefined;
 
     constructor(data?: IIncidenciaEstudianteDto) {
@@ -18474,6 +18642,7 @@ export class IncidenciaEstudianteDto implements IIncidenciaEstudianteDto {
             this.materiaNombre = data["materiaNombre"];
             this.tipoIncidenciaNombre = data["tipoIncidenciaNombre"];
             this.estudianteNombreCompleto = data["estudianteNombreCompleto"];
+            this.estadoIncidenciaId = data["estadoIncidenciaId"];
             this.id = data["id"];
         }
     }
@@ -18496,6 +18665,7 @@ export class IncidenciaEstudianteDto implements IIncidenciaEstudianteDto {
         data["materiaNombre"] = this.materiaNombre;
         data["tipoIncidenciaNombre"] = this.tipoIncidenciaNombre;
         data["estudianteNombreCompleto"] = this.estudianteNombreCompleto;
+        data["estadoIncidenciaId"] = this.estadoIncidenciaId;
         data["id"] = this.id;
         return data; 
     }
@@ -18518,6 +18688,7 @@ export interface IIncidenciaEstudianteDto {
     materiaNombre: string | undefined;
     tipoIncidenciaNombre: string | undefined;
     estudianteNombreCompleto: string | undefined;
+    estadoIncidenciaId: number | undefined;
     id: number | undefined;
 }
 
@@ -21825,6 +21996,112 @@ export interface ITipoIdentificacionDto {
     id: number | undefined;
 }
 
+export class TipoIncidenciaDto implements ITipoIncidenciaDto {
+    descripcion: string | undefined;
+    listaEstadoIncidencia: EstadoIncidenciaDto[] | undefined;
+    id: number | undefined;
+
+    constructor(data?: ITipoIncidenciaDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            if (data["listaEstadoIncidencia"] && data["listaEstadoIncidencia"].constructor === Array) {
+                this.listaEstadoIncidencia = [];
+                for (let item of data["listaEstadoIncidencia"])
+                    this.listaEstadoIncidencia.push(EstadoIncidenciaDto.fromJS(item));
+            }
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TipoIncidenciaDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TipoIncidenciaDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        if (this.listaEstadoIncidencia && this.listaEstadoIncidencia.constructor === Array) {
+            data["listaEstadoIncidencia"] = [];
+            for (let item of this.listaEstadoIncidencia)
+                data["listaEstadoIncidencia"].push(item.toJSON());
+        }
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TipoIncidenciaDto {
+        const json = this.toJSON();
+        let result = new TipoIncidenciaDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITipoIncidenciaDto {
+    descripcion: string | undefined;
+    listaEstadoIncidencia: EstadoIncidenciaDto[] | undefined;
+    id: number | undefined;
+}
+
+export class EstadoIncidenciaDto implements IEstadoIncidenciaDto {
+    descripcion: string | undefined;
+    id: number | undefined;
+
+    constructor(data?: IEstadoIncidenciaDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.descripcion = data["descripcion"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): EstadoIncidenciaDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EstadoIncidenciaDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["descripcion"] = this.descripcion;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): EstadoIncidenciaDto {
+        const json = this.toJSON();
+        let result = new EstadoIncidenciaDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IEstadoIncidenciaDto {
+    descripcion: string | undefined;
+    id: number | undefined;
+}
+
 export class PagedResultDtoOfTipoIncidenciaDto implements IPagedResultDtoOfTipoIncidenciaDto {
     totalCount: number | undefined;
     items: TipoIncidenciaDto[] | undefined;
@@ -21880,11 +22157,16 @@ export interface IPagedResultDtoOfTipoIncidenciaDto {
     items: TipoIncidenciaDto[] | undefined;
 }
 
-export class TipoIncidenciaDto implements ITipoIncidenciaDto {
+export class EstadoIncidencia implements IEstadoIncidencia {
     descripcion: string | undefined;
+    tipoIncidenciaId: number | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
     id: number | undefined;
 
-    constructor(data?: ITipoIncidenciaDto) {
+    constructor(data?: IEstadoIncidencia) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -21896,13 +22178,18 @@ export class TipoIncidenciaDto implements ITipoIncidenciaDto {
     init(data?: any) {
         if (data) {
             this.descripcion = data["descripcion"];
+            this.tipoIncidenciaId = data["tipoIncidenciaId"];
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
             this.id = data["id"];
         }
     }
 
-    static fromJS(data: any): TipoIncidenciaDto {
+    static fromJS(data: any): EstadoIncidencia {
         data = typeof data === 'object' ? data : {};
-        let result = new TipoIncidenciaDto();
+        let result = new EstadoIncidencia();
         result.init(data);
         return result;
     }
@@ -21910,20 +22197,30 @@ export class TipoIncidenciaDto implements ITipoIncidenciaDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["descripcion"] = this.descripcion;
+        data["tipoIncidenciaId"] = this.tipoIncidenciaId;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
         data["id"] = this.id;
         return data; 
     }
 
-    clone(): TipoIncidenciaDto {
+    clone(): EstadoIncidencia {
         const json = this.toJSON();
-        let result = new TipoIncidenciaDto();
+        let result = new EstadoIncidencia();
         result.init(json);
         return result;
     }
 }
 
-export interface ITipoIncidenciaDto {
+export interface IEstadoIncidencia {
     descripcion: string | undefined;
+    tipoIncidenciaId: number | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
     id: number | undefined;
 }
 
