@@ -98,13 +98,7 @@
                                     name="Identificador" 
                                     prop="grupoIdentificador">
                                 </ngx-datatable-column>
-<!--                                             
-                                <ngx-datatable-column 
-                                    [width]="140"
-                                    name="Materia" 
-                                    prop="materiaNombre">
-                                </ngx-datatable-column>
-                     -->
+
                                 <ngx-datatable-column  [width]="20" >
                                     <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                                         <div class="text-center">
@@ -113,15 +107,15 @@
                                     </ng-template>
                                 </ngx-datatable-column>
                             </ngx-datatable>
-                        </div>
-                        <div class="flexbox mb-4"><div class="flexbox"></div></div>
-                        <div class="flexbox mb-4">
-                            <div class="flexbox">
-                            </div>
-                            <div class="flexbox">                            
-                                <a class="btn btn-primary btn-block"  (click)="agregarMetodoEvaluacion(emailForm)" href="javascript:;">
-                                    <span class="btn-icon"><i class="la la-plus"></i>Agregar nuevo</span>
-                                </a>
+                            <div class="flexbox mb-4"><div class="flexbox"></div></div>
+                            <div class="flexbox mb-4">
+                                <div class="flexbox">
+                                </div>
+                                <div class="flexbox">                            
+                                    <a class="btn btn-primary btn-block"  (click)="agregarMetodoEvaluacion(emailForm)" href="javascript:;">
+                                        <span class="btn-icon"><i class="la la-plus"></i>Agregar nuevo</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 

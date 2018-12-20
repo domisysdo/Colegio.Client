@@ -16096,6 +16096,7 @@ export class GrupoDto implements IGrupoDto {
     identificador: string | undefined;
     materiaId: number | undefined;
     materia: MateriaDto | undefined;
+    listaHorarios: HorarioDto[] | undefined;
     id: number | undefined;
 
     constructor(data?: IGrupoDto) {
@@ -16112,6 +16113,11 @@ export class GrupoDto implements IGrupoDto {
             this.identificador = data["identificador"];
             this.materiaId = data["materiaId"];
             this.materia = data["materia"] ? MateriaDto.fromJS(data["materia"]) : <any>undefined;
+            if (data["listaHorarios"] && data["listaHorarios"].constructor === Array) {
+                this.listaHorarios = [];
+                for (let item of data["listaHorarios"])
+                    this.listaHorarios.push(HorarioDto.fromJS(item));
+            }
             this.id = data["id"];
         }
     }
@@ -16128,6 +16134,11 @@ export class GrupoDto implements IGrupoDto {
         data["identificador"] = this.identificador;
         data["materiaId"] = this.materiaId;
         data["materia"] = this.materia ? this.materia.toJSON() : <any>undefined;
+        if (this.listaHorarios && this.listaHorarios.constructor === Array) {
+            data["listaHorarios"] = [];
+            for (let item of this.listaHorarios)
+                data["listaHorarios"].push(item.toJSON());
+        }
         data["id"] = this.id;
         return data; 
     }
@@ -16144,6 +16155,7 @@ export interface IGrupoDto {
     identificador: string | undefined;
     materiaId: number | undefined;
     materia: MateriaDto | undefined;
+    listaHorarios: HorarioDto[] | undefined;
     id: number | undefined;
 }
 
@@ -16617,6 +16629,73 @@ export interface IMateriaDto {
     precioTotal: number | undefined;
     precioInscripcion: number | undefined;
     metodoEvaluacionId: number | undefined;
+    id: number | undefined;
+}
+
+export class HorarioDto implements IHorarioDto {
+    dia: HorarioDtoDia | undefined;
+    horaInicio: string | undefined;
+    horaFin: string | undefined;
+    aulaIdentificador: string | undefined;
+    grupoId: number | undefined;
+    aulaId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IHorarioDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.dia = data["dia"];
+            this.horaInicio = data["horaInicio"];
+            this.horaFin = data["horaFin"];
+            this.aulaIdentificador = data["aulaIdentificador"];
+            this.grupoId = data["grupoId"];
+            this.aulaId = data["aulaId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): HorarioDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new HorarioDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dia"] = this.dia;
+        data["horaInicio"] = this.horaInicio;
+        data["horaFin"] = this.horaFin;
+        data["aulaIdentificador"] = this.aulaIdentificador;
+        data["grupoId"] = this.grupoId;
+        data["aulaId"] = this.aulaId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): HorarioDto {
+        const json = this.toJSON();
+        let result = new HorarioDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IHorarioDto {
+    dia: HorarioDtoDia | undefined;
+    horaInicio: string | undefined;
+    horaFin: string | undefined;
+    aulaIdentificador: string | undefined;
+    grupoId: number | undefined;
+    aulaId: number | undefined;
     id: number | undefined;
 }
 
@@ -20045,6 +20124,7 @@ export class Grupo implements IGrupo {
     identificador: string | undefined;
     materiaId: number | undefined;
     materia: Materia | undefined;
+    listaHorarios: Horario[] | undefined;
     lastModificationTime: Date | undefined;
     lastModifierUserId: number | undefined;
     creationTime: Date | undefined;
@@ -20065,6 +20145,11 @@ export class Grupo implements IGrupo {
             this.identificador = data["identificador"];
             this.materiaId = data["materiaId"];
             this.materia = data["materia"] ? Materia.fromJS(data["materia"]) : <any>undefined;
+            if (data["listaHorarios"] && data["listaHorarios"].constructor === Array) {
+                this.listaHorarios = [];
+                for (let item of data["listaHorarios"])
+                    this.listaHorarios.push(Horario.fromJS(item));
+            }
             this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
             this.lastModifierUserId = data["lastModifierUserId"];
             this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
@@ -20085,6 +20170,11 @@ export class Grupo implements IGrupo {
         data["identificador"] = this.identificador;
         data["materiaId"] = this.materiaId;
         data["materia"] = this.materia ? this.materia.toJSON() : <any>undefined;
+        if (this.listaHorarios && this.listaHorarios.constructor === Array) {
+            data["listaHorarios"] = [];
+            for (let item of this.listaHorarios)
+                data["listaHorarios"].push(item.toJSON());
+        }
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         data["lastModifierUserId"] = this.lastModifierUserId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
@@ -20105,6 +20195,7 @@ export interface IGrupo {
     identificador: string | undefined;
     materiaId: number | undefined;
     materia: Materia | undefined;
+    listaHorarios: Horario[] | undefined;
     lastModificationTime: Date | undefined;
     lastModifierUserId: number | undefined;
     creationTime: Date | undefined;
@@ -20291,6 +20382,176 @@ export interface IMateria {
     precioInscripcion: number | undefined;
     metodoEvaluacionId: number | undefined;
     metodoEvaluacion: MetodoEvaluacion | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class Horario implements IHorario {
+    dia: HorarioDia | undefined;
+    horaInicio: string | undefined;
+    horaFin: string | undefined;
+    grupoId: number | undefined;
+    grupo: Grupo | undefined;
+    aulaId: number | undefined;
+    aula: Aula | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: Date | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IHorario) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.dia = data["dia"];
+            this.horaInicio = data["horaInicio"];
+            this.horaFin = data["horaFin"];
+            this.grupoId = data["grupoId"];
+            this.grupo = data["grupo"] ? Grupo.fromJS(data["grupo"]) : <any>undefined;
+            this.aulaId = data["aulaId"];
+            this.aula = data["aula"] ? Aula.fromJS(data["aula"]) : <any>undefined;
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? new Date(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): Horario {
+        data = typeof data === 'object' ? data : {};
+        let result = new Horario();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dia"] = this.dia;
+        data["horaInicio"] = this.horaInicio;
+        data["horaFin"] = this.horaFin;
+        data["grupoId"] = this.grupoId;
+        data["grupo"] = this.grupo ? this.grupo.toJSON() : <any>undefined;
+        data["aulaId"] = this.aulaId;
+        data["aula"] = this.aula ? this.aula.toJSON() : <any>undefined;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): Horario {
+        const json = this.toJSON();
+        let result = new Horario();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IHorario {
+    dia: HorarioDia | undefined;
+    horaInicio: string | undefined;
+    horaFin: string | undefined;
+    grupoId: number | undefined;
+    grupo: Grupo | undefined;
+    aulaId: number | undefined;
+    aula: Aula | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: Date | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class Aula implements IAula {
+    identificador: string | undefined;
+    descripcion: string | undefined;
+    ubicacion: string | undefined;
+    lastModificationTime: Date | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: Date | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IAula) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.identificador = data["identificador"];
+            this.descripcion = data["descripcion"];
+            this.ubicacion = data["ubicacion"];
+            this.lastModificationTime = data["lastModificationTime"] ? new Date(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): Aula {
+        data = typeof data === 'object' ? data : {};
+        let result = new Aula();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["identificador"] = this.identificador;
+        data["descripcion"] = this.descripcion;
+        data["ubicacion"] = this.ubicacion;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): Aula {
+        const json = this.toJSON();
+        let result = new Aula();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAula {
+    identificador: string | undefined;
+    descripcion: string | undefined;
+    ubicacion: string | undefined;
     lastModificationTime: Date | undefined;
     lastModifierUserId: number | undefined;
     creationTime: Date | undefined;
@@ -23045,6 +23306,16 @@ export enum FamiliarEstudianteDtoEstadoCivil {
     _4 = 4, 
 }
 
+export enum HorarioDtoDia {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+    _4 = 4, 
+    _5 = 5, 
+    _6 = 6, 
+}
+
 export enum EstudianteSexo {
     _0 = 0, 
     _1 = 1, 
@@ -23110,6 +23381,16 @@ export enum ProfesorEstadoCivil {
 export enum ProfesorEstado {
     _0 = 0, 
     _1 = 1, 
+}
+
+export enum HorarioDia {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+    _4 = 4, 
+    _5 = 5, 
+    _6 = 6, 
 }
 
 export class SwaggerException extends Error {

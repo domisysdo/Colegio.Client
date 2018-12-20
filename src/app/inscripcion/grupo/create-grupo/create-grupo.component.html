@@ -42,6 +42,58 @@
                             </ng-select>
                         </div>
 
+                        <div class= "col-sm-12 form-group mb-4">
+                            <ngx-datatable
+                                class="bootstrap"
+                                [columnMode]="ngxDatatableHelper.columnMode"
+                                [headerHeight]="ngxDatatableHelper.headerHeight"
+                                [footerHeight]="0"
+                                [rowHeight]="ngxDatatableHelper.rowHeight"
+                                [rows]="grupo.listaHorarios" 
+                                [selectionType]="ngxDatatableHelper.selectionType"
+                                [selectAllRowsOnPage]="ngxDatatableHelper.selectAllRowsOnPage"
+                                [reorderable]="ngxDatatableHelper.reorderable"
+                                [messages]="ngxDatatableHelper.ngxDatatableMesagges">
+                                
+                                <ngx-datatable-column 
+                                    [width]="10"
+                                    name="Aula" 
+                                    prop="aulaIdentificador">
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column 
+                                    name="Hora inicio" 
+                                    prop="horaInicio">
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column 
+                                    name="Hora fin" 
+                                    prop="horaFin">
+                                </ngx-datatable-column>
+
+                                <ngx-datatable-column  [width]="20" >
+                                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                        <div class="text-center">
+                                            <a class="text-light font-16" href="javascript:;"><i (click)="eliminarElementoLista(profesor.listaMaterias, row)" class="ti-trash"></i></a>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                        
+                            <div class="flexbox mb-4"><div class="flexbox"></div></div>
+                            <div class="flexbox mb-4">
+                                <div class="flexbox">
+                                </div>
+                                <div class="flexbox">                            
+                                    <a class="btn btn-primary btn-block"  (click)="agregarHorario(emailForm)" href="javascript:;">
+                                        <span class="btn-icon"><i class="la la-plus"></i>Agregar nuevo</span>
+                                    </a>
+                                </div>
+                            </div>
+                        
+                        </div>
+
+
 
                         <div class="ibox-footer row">
                             <div class="col-sm-12 ml-sm-auto">
@@ -55,3 +107,82 @@
         </div>
     </div>
 </div>
+
+<!-- Inicio modal de emails -->
+<ng-template #emailForm let-c="close" let-d="dismiss">
+
+    <div class="modal-header">
+        <h4 class="modal-title">CREAR NUEVO HORARIO</h4>
+        <button type = "button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true"> &times;</span>
+        </button>
+    </div>
+
+    <form #formAgregarEmail="ngForm" (ngSubmit)="registrarHorario()">
+        <div class="modal-body">
+            <div class="inbox">
+                <div class="inbox-body">
+                    <div [ngClass]="(aulaModel.invalid && aulaModel.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
+                        <label class="col-form-label">{{l("Aula")}}<span class="text-danger"> *</span> </label>                            
+                        <ng-select [items]="aulas"
+                            name="aulasSelect"
+                            bindLabel="identificador"
+                            bindValue="id"
+                            required
+                            (change)="onAulaChange($event)"
+                            #aulaModel = "ngModel"
+                            [(ngModel)]="horario.aulaId">
+                            <ng-template ng-option-tmp let-item="item">
+                                {{item.identificador}} 
+                            </ng-template>
+                        </ng-select>
+                        <app-input-validation [input]="aulaModel"></app-input-validation>
+                    </div>
+
+                    <div [ngClass]="(horaInicioModel.invalid && horaInicioModel.touched)?' form-group mb-4 has-error ':'form-group mb-4'">
+                        <label class="col-form-label">{{l("Hora inicio")}}<span class="text-danger"> *</span> </label>
+                        <span *ngIf="horaInicioModel.invalid && horaInicioModel.touched" class="input-icon input-icon-right text-danger"></span>
+                        <input 
+                            id="horaInicioModel" 
+                            class="form-control no-shadow" 
+                            type="horaInicioModel"
+                            #horaInicioModel = "ngModel" 
+                            [(ngModel)]="horario.horaInicio"
+                            [textMask]="{mask: masks.maskHora}" 
+                            name="HoraInicio" 
+                            required
+                            minlength="2" 
+                            maxlength="32" >
+                        <app-input-validation [input]="horaInicioModel"></app-input-validation>
+                    </div>
+
+                    <div [ngClass]="(horaFinModel.invalid && horaFinModel.touched)?' form-group mb-4 has-error':' form-group mb-4'">
+                        <label class="col-form-label">{{l("Hora fin")}}<span class="text-danger"> *</span> </label>
+                        <span *ngIf="horaFinModel.invalid && horaFinModel.touched" class="input-icon input-icon-right text-danger"></span>
+                        <input 
+                            id="horaFinModel" 
+                            class="form-control no-shadow" 
+                            type="horaFinModel"
+                            #horaFinModel = "ngModel" 
+                            [(ngModel)]="horario.horaFin"
+                            [textMask]="{mask: masks.maskHora}" 
+                            name="HoraFin" 
+                            required
+                            minlength="2" 
+                            maxlength="32" >
+                        <app-input-validation [input]="horaFinModel"></app-input-validation>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary ripple light" [disabled]="!formAgregarEmail.valid">Agregar</button>
+            <button type="button" class="btn btn-inverse btn-outline-inverse ripple light" (click)="d('Cross click')">Cancelar</button>
+        </div>
+
+    </form>
+</ng-template>
+<!-- Fin modal de emails -->
