@@ -1,0 +1,190 @@
+﻿<div class="page-content fade-in-up">
+    <div class="row">
+        <div class="col-xl-7">
+            <div class="ibox">
+                <div class="ibox-body">
+                    <h5 class="font-strong mb-5">Inscripción</h5>
+                    <form  #inscripcionForm="ngForm" method="post" novalidate>
+                        <div class="col-sm-12 form-group mb-4">
+                            <label>{{l("Estudiante")}}<span class="text-danger"> *</span> </label>                            
+                            <ng-select [items]="estudiantes"
+                                name="estudianteSelect"
+                                bindLabel="nombres"
+                                bindValue="id"
+                                required
+                                (change)="onEstudianteChanged($event)"
+                                [(ngModel)]="estudiante.id">
+                                <ng-template ng-option-tmp let-item="item">
+                                    {{item.nombres}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+
+                        <ngx-datatable
+                            class="bootstrap"
+                            [columnMode]="ngxDatatableHelper.columnMode"
+                            [headerHeight]="ngxDatatableHelper.headerHeight"
+                            [footerHeight]="0"
+                            [rowHeight]="ngxDatatableHelper.rowHeight"
+                            [selected]="selected"
+                            [rows]="cuotas" 
+                            [selectionType]="'checkbox'"
+                            [selectAllRowsOnPage]="ngxDatatableHelper.selectAllRowsOnPage"
+                            [reorderable]="ngxDatatableHelper.reorderable"
+                            [messages]="ngxDatatableHelper.ngxDatatableMesagges"
+                            (select)='onSelect($event)'>
+                            
+                            <ngx-datatable-column
+                                [width]="75"
+                                [sortable]="false"
+                                [canAutoResize]="false"
+                                [draggable]="false"
+                                [resizeable]="false"
+                                [headerCheckboxable]="true"
+                                [checkboxable]="false">
+
+                                <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                                    <label class="checkbox checkbox-primary">
+                                        <input 
+                                            type="checkbox"
+                                            [checked]="allRowsSelected"
+                                            (change)="selectFn(!allRowsSelected)"/>
+                                            <span class="input-span"></span>
+                                    </label>
+                                </ng-template>
+
+                                <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                                    <label class="checkbox checkbox-primary">
+                                        <input 
+                                            type="checkbox"
+                                            [checked]="isSelected"
+                                            (change)="onCheckboxChangeFn($event)"/>
+                                            <span class="input-span"></span>
+                                    </label>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            
+                            <ngx-datatable-column
+                                [width]="250"
+                                [sortable]="false"
+                                [canAutoResize]="false"
+                                [draggable]="false"
+                                [resizeable]="false"
+                                [headerClass]="'text-center'"
+                                name="Fecha Vencimiento"
+                                prop="fechaVencimiento">
+            
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                    {{row.fechaVencimiento | date:'longDate'}}
+                                </ng-template>
+
+                            </ngx-datatable-column>
+                                        
+                            <ngx-datatable-column
+                                [width]="200"
+                                [sortable]="false"
+                                [canAutoResize]="false"
+                                [draggable]="false"
+                                [resizeable]="false"
+                                [headerClass]="'text-center'"
+                                name="Monto Pendiente"
+                                prop="balance">
+            
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                    {{row.balance | number:'1.2'}}
+                                </ng-template>
+
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column
+                                [width]="200"
+                                [sortable]="false"
+                                [canAutoResize]="false"
+                                [draggable]="false"
+                                [resizeable]="false"
+                                [headerClass]="'text-center'"
+                                name="Mora Pendiente"
+                                prop="montoMoraPendiente">
+            
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                    {{row.montoMoraPendiente | number:'1.2'}}
+                                </ng-template>
+
+                            </ngx-datatable-column>
+                        </ngx-datatable>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-5">
+            <div class="ibox">
+                <div class="ibox-body">
+                    <h5 class="font-strong mb-4">Información de Inscripción</h5>
+                    <div class="row align-items-center mb-3">
+                        <div class="col-4 text-light">Monto a Pagar</div>
+                        <div class="col-8 h3 font-strong text-pink mb-0">{{ montoTotal | number:'1.2' }}</div>
+                    </div>
+                    <div class="row align-items-center mb-3">
+                        <div class="col-4 text-light">Fecha</div>
+                        <div class="col-8">{{today | date:'longDate'}}</div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-4 text-light">Pago</div>
+                        <div class="col-8">
+                            <span class="badge badge-success badge-pill">Efectivo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox">
+                <div class="ibox-body">
+                    <h5 class="font-strong mb-4">Información de Estudiante</h5>
+                    <div class="row align-items-center mb-3">
+                            <div class="col-4 text-light">Identificador</div>
+                            <div class="col-8">{{ estudiante.identificador }}</div>
+                        </div>
+                    <div class="row align-items-center mb-3">
+                        <div class="col-4 text-light">Nombre</div>
+                        <div class="col-8">{{ estudiante.nombres }}</div>
+                    </div>
+                    <div class="row align-items-center mb-3">
+                        <div class="col-4 text-light">Dirección</div>
+                        <div class="col-8">
+                            <ng-template ngFor let-item [ngForOf]="estudiante.listaDireccionEstudiante" let-i="item">
+                                {{ item.descripcion }}
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mb-3">
+                        <div class="col-4 text-light">Correo</div>
+                        <div class="col-8">
+                            <ng-template ngFor let-item [ngForOf]="estudiante.listaEmail" let-i="item">
+                                {{ item.email }}
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-4 text-light">Teléfono</div>
+                        <div class="col-8">
+                            <ng-template ngFor let-item [ngForOf]="estudiante.listaTelefonos" let-i="item">
+                                {{ item.numero }}
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flexbox mb-4"><div class="flexbox"></div></div>
+            <div class="flexbox mb-4">
+                <div class="flexbox">
+                </div>
+                <div class="flexbox">                            
+                    <a class="btn btn-primary btn-block"  (click)="save(inscripcionForm)" href="javascript:;">
+                        <span class="btn-icon"><i class="la la-plus"></i>Procesar</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
