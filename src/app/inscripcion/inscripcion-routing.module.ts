@@ -15,6 +15,7 @@ import { InscripcionComponent } from './inscripcion/inscripcion.component';
 import { MateriaComponent } from './materia/materia.component';
 import { CreateMateriaComponent } from './materia/create-materia/create-materia.component';
 import { EditMateriaComponent } from './materia/edit-materia/edit-materia.component';
+import { PagoComponent } from './pago/pago.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
@@ -85,6 +86,11 @@ const routes: Routes = [
         path: 'inscripcion/materia/edit-materia/:id',
         component: EditMateriaComponent
       },
+      {
+        path: 'inscripcion/pago',
+        component: PagoComponent, canActivate: [AppRouteGuard]
+      },
+      
     ]
   }
 ];
