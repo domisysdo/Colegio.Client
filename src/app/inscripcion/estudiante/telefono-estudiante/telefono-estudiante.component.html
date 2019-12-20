@@ -12,7 +12,7 @@
             [headerHeight]="ngxDatatableHelper.headerHeight"
             [footerHeight]="0"
             [rowHeight]="ngxDatatableHelper.rowHeight"
-            [rows]="telefonos" 
+            [rows]="listaVisualizacionTelefonos" 
             [selectionType]="ngxDatatableHelper.selectionType"
             [selectAllRowsOnPage]="ngxDatatableHelper.selectAllRowsOnPage"
             [reorderable]="ngxDatatableHelper.reorderable"
@@ -68,22 +68,22 @@
         <div class="modal-body">
             <div class="inbox">
                 <div class="inbox-body">
-                    <div [ngClass]="(telefono.invalid && telefono.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
+                    <div [ngClass]="(telefonoModel.invalid && telefonoModel.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
                         <label class="col-form-label">{{l("Teléfono")}}<span class="text-danger"> *</span> </label>
-                        <span *ngIf="telefono.invalid && telefono.touched" class="input-icon input-icon-right text-danger"></span>
+                        <span *ngIf="telefonoModel.invalid && telefonoModel.touched" class="input-icon input-icon-right text-danger"></span>
                         <input 
-                            id="telefono" 
+                            id="telefonoModel" 
                             class="form-control no-shadow" 
-                            type="telefono"
+                            type="telefonoModel"
                             [textMask]="{mask: maskTelefono.maskTelefono}" 
-                            #telefono = "ngModel" 
-                            [(ngModel)]="elementoLista.numero" 
+                            #telefonoModel = "ngModel" 
+                            [(ngModel)]="telefono.numero" 
                             name="Telefono" 
                             required
                             minlength="2" 
                             maxlength="32" 
                             placeholder="(000) 000-0000"/>
-                        <app-input-validation [input]="telefono"></app-input-validation>
+                        <app-input-validation [input]="telefonoModel"></app-input-validation>
                     </div>
 
                     <div [ngClass]="(tipoTelefonoModel.invalid && tipoTelefonoModel.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
@@ -95,7 +95,7 @@
                             required
                             #tipoTelefonoModel = "ngModel"
                             (change)="onTipoTelefonoChange($event)"
-                            [(ngModel)]="elementoLista.tipoTelefonoId">
+                            [(ngModel)]="telefono.tipoTelefonoId">
                             <ng-template ng-option-tmp let-item="item">
                                 {{item.descripcion}}
                             </ng-template>

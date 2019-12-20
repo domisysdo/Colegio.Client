@@ -1,0 +1,95 @@
+﻿
+<app-consulta-estudiante [selected]="estudiante"></app-consulta-estudiante>
+
+<div class="page-content fade-in-up" >
+    <div class="col-md-8 offset-md-2">
+        <div class="ibox ibox-body">
+
+            <div class="ibox-head">
+                <div class="ibox-title">{{l("Calificación")}}</div>
+            </div>
+
+            <div #content>
+                
+                <form class="form-horizontal" #calificacionForm="ngForm" method="post" novalidate (ngSubmit)="save(calificacionForm)">
+                    <div class="ibox-body">   
+
+                        <div [ngClass]="(grupoModel.invalid && grupoModel.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">
+                                <label>{{l("Grupo")}}<span class="text-danger"> *</span> </label>                            
+                                <ng-select [items]="grupos"
+                                    name="grupoSelect"
+                                    bindLabel="identificador"
+                                    bindValue="id"
+                                    required
+                                    #grupoModel="ngModel"
+                                    [(ngModel)]="calificacion.grupoId">
+                                    <ng-template ng-option-tmp let-item="item">
+                                        {{item.identificador}}
+                                    </ng-template>
+                                </ng-select>
+                                <app-input-validation [input]="grupoModel"></app-input-validation>
+                        </div>
+    
+                        <div [ngClass]="(materia.invalid && materia.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">
+                                <label>{{l("Materia")}}<span class="text-danger"> *</span> </label>                            
+                                <ng-select [items]="materias"
+                                    name="materiasSelect"
+                                    bindLabel="nombre"
+                                    bindValue="id"
+                                    required
+                                    (change)="onMateriaChange($event)"
+                                    #materia="ngModel"
+                                    [(ngModel)]="calificacion.materiaId">
+                                    <ng-template ng-option-tmp let-item="item">
+                                        {{item.nombre}}
+                                    </ng-template>
+                                </ng-select>
+                                <app-input-validation [input]="materia"></app-input-validation>
+                        </div>
+
+                        <div [ngClass]="(metodoEvaluacionModel.invalid && metodoEvaluacionModel.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">
+                                <label>{{l("Método evaluación")}}<span class="text-danger"> *</span> </label>                            
+                                <ng-select [items]="metodosEvaluacion"
+                                    name="metodoEvaluacionSelect"
+                                    bindLabel="descripcion"
+                                    bindValue="id"
+                                    required
+                                    (change)="onDetalleMetodoEvaluacionChange($event)"
+                                    #metodoEvaluacionModel="ngModel"
+                                    [(ngModel)]="calificacion.detalleMetodoEvaluacionId">
+                                    <ng-template ng-option-tmp let-item="item">
+                                        {{item.descripcion}}
+                                    </ng-template>
+                                </ng-select>
+                                <app-input-validation [input]="metodoEvaluacionModel"></app-input-validation>
+                        </div>
+
+                        <div [ngClass]="(puntuacionModel.invalid && puntuacionModel.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">
+                                <label>{{l("Puntuación")}}<span class="text-danger"> *</span> </label>
+                                    <span *ngIf="puntuacionModel.invalid && puntuacionModel.touched" class="input-icon input-icon-right text-danger"></span>
+                                    <input 
+                                        id="puntuacionModel" 
+                                        class="form-control no-shadow" 
+                                        type="text"
+                                        #puntuacionModel = "ngModel" 
+                                        [(ngModel)]="calificacion.puntuacion" 
+                                        name="Nombre" 
+                                        required
+                                        minlength="2" 
+                                        maxlength="32" 
+                                        placeholder="Nombre"/>
+                                    <app-input-validation [input]="puntuacionModel"></app-input-validation>
+                            </div>
+
+                        <div class="ibox-footer row">
+                            <div class="col-sm-12 ml-sm-auto">
+                                <button type="submit" class="btn btn-primary mr-2">{{l("Registrar")}}</button>
+                                <button [disabled]="saving" [routerLink]="['../../incidencia-estudiante']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

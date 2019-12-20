@@ -1,26 +1,26 @@
 import { Component, ViewChild, Injector, Output, EventEmitter, ElementRef, OnInit } from '@angular/core';
-import { TipoIncidenciaDto, TipoIncidenciaServiceProxy, MunicipioDto, MunicipioServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AulaDto, AulaServiceProxy, MunicipioDto, MunicipioServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { finalize } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'app-edit-tipo-incidencia',
-    templateUrl: './edit-tipo-incidencia.component.html'
+    selector: 'app-edit-aula',
+    templateUrl: './edit-aula.component.html'
 })
-export class EditTipoIncidenciaComponent extends AppComponentBase implements OnInit {
+export class EditAulaComponent extends AppComponentBase implements OnInit {
 
     @ViewChild('content') content: ElementRef;
 
     active = false;
     saving = false;
-    tipoIncidencia: TipoIncidenciaDto = new TipoIncidenciaDto();
+    aula: AulaDto = new AulaDto();
 
     constructor(
         injector: Injector,
         private _route: ActivatedRoute,
         private _router: Router,
-        private _tipoIncidenciaService: TipoIncidenciaServiceProxy
+        private _aulaService: AulaServiceProxy
     ) {
         super(injector);
     }
@@ -28,10 +28,10 @@ export class EditTipoIncidenciaComponent extends AppComponentBase implements OnI
     ngOnInit(): void {
         const id = this._route.snapshot.params['id'];
 
-        this._tipoIncidenciaService.get(id)
+        this._aulaService.get(id)
             .subscribe(
             (result) => {
-                this.tipoIncidencia = result;
+                this.aula = result;
                 this.active = true;
             }
         );
@@ -41,7 +41,7 @@ export class EditTipoIncidenciaComponent extends AppComponentBase implements OnI
     save(): void {
 
         this.saving = true;
-        this._tipoIncidenciaService.update(this.tipoIncidencia)
+        this._aulaService.update(this.aula)
             .pipe(finalize(() => { this.saving = false; }))
             .subscribe(() => {
                 this.notify.info(this.l('Modificado exitosamente'), this.l('Completado'));
@@ -51,6 +51,6 @@ export class EditTipoIncidenciaComponent extends AppComponentBase implements OnI
 
     close(): void {
         this.active = false;
-        this._router.navigate(['app/generales/tipo-incidencia'])
+        this._router.navigate(['app/generales/aula'])
     }
 }

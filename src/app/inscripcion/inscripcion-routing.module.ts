@@ -33,8 +33,8 @@ const routes: Routes = [
         component: CreateEstudianteComponent
       },
       {
-        path: 'inscripcion/estudiante/edit-estudiante/:id',
-        component: EditEstudianteComponent
+        path: 'inscripcion/estudiante/create-estudiante/:id',
+        component: CreateEstudianteComponent
       },
       {
         path: 'inscripcion/grupo',

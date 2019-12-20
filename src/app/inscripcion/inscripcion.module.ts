@@ -25,6 +25,8 @@ import { FamiliarEstudianteComponent } from './estudiante/familiar-estudiante/fa
 import { PeriodoComponent } from './periodo/periodo.component';
 import { CreatePeriodoComponent } from './periodo/create-periodo/create-periodo.component';
 import { EditPeriodoComponent } from './periodo/edit-periodo/edit-periodo.component';
+import { PadecimientoEstudianteComponent } from './estudiante/padecimiento-estudiante/padecimiento-estudiante.component';
+import { ConsultaEstudianteComponent } from './estudiante/consulta-estudiante/consulta-estudiante.component';
 import { InscripcionComponent } from './inscripcion/inscripcion.component';
 import { MateriaComponent } from './materia/materia.component';
 import { CreateMateriaComponent } from './materia/create-materia/create-materia.component';
@@ -63,6 +65,7 @@ import { PagoComponent } from './pago/pago.component';
         PeriodoComponent,
         CreatePeriodoComponent,
         EditPeriodoComponent,
+        PadecimientoEstudianteComponent,
         InscripcionComponent,
         MateriaComponent,
         CreateMateriaComponent,

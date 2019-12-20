@@ -28,43 +28,49 @@
                                     <app-input-validation [input]="identificador"></app-input-validation>
                         </div>
   
-                        <div [ngClass]="(dp.invalid && dp.touched)?'form-group mb-4 has-error ':'form-group mb-4'">                        
-                            <label class="col-form-label">Fecha de inicio</label>
-                            <div class="input-group-icon input-group-icon-left">
-                                <span (click)="dp.show()" style="cursor:pointer" class="input-icon input-icon-left"><i class="fa fa-calendar"></i></span>
-                                <input 
-                                    placeholder="Datepicker"  
-                                    placement="bottom left" 
-                                    [bsConfig]="{ containerClass: 'theme-dark-blue' }" 
-                                    [(ngModel)]="periodo.fechaInicio" 
-                                    name="fechaInicio" 
-                                    type="text" 
-                                    placeholder="Ingrese una fecha"
-                                    class="form-control" 
-                                    bsDatepicker 
-                                    #dp="bsDatepicker">
-                                    <app-input-validation [input]="dp"></app-input-validation>
-                            </div>
+                        <div [ngClass]="(dp.invalid && dp.touched)?'col-sm-6 form-group mb-4 has-error ':'col-sm-6 form-group mb-4'">                        
+                                <label class="col-form-label">Fecha de inicio</label>
+                                <div class="input-group-icon input-group-icon-left">
+                                    <span (click)="dp.show()" style="cursor:pointer" class="input-icon input-icon-left"><i class="fa fa-calendar"></i></span>
+                                    <input 
+                                        placeholder="Datepicker"  
+                                        placement="bottom left" 
+                                        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
+                                        [(bsValue)]="periodo.fechaInicio"
+                                        value="{{ periodo.fechaInicio | date:'dd/MM/yyyy'}}"
+                                        name="fecha" 
+                                        autocomplete="off"
+                                        type="text" 
+                                        placeholder="Ingrese una fecha"
+                                        class="form-control no-shadow" 
+                                        bsDatepicker 
+                                        #dp="bsDatepicker">
+                                        <app-input-validation [input]="dp"></app-input-validation>
+                                </div>
                         </div>
 
-                        <div [ngClass]="(dp.invalid && dp.touched)?'form-group mb-4 has-error ':'form-group mb-4'">                        
-                            <label class="col-form-label">Fecha de fin</label>
-                            <div class="input-group-icon input-group-icon-left">
-                                <span (click)="dp.show()" style="cursor:pointer" class="input-icon input-icon-left"><i class="fa fa-calendar"></i></span>
-                                <input 
-                                    placeholder="Datepicker"  
-                                    placement="bottom left" 
-                                    [bsConfig]="{ containerClass: 'theme-dark-blue' }" 
-                                    [(ngModel)]="periodo.fechaFin" 
-                                    name="fechaFin" 
-                                    type="text" 
-                                    placeholder="Ingrese una fecha"
-                                    class="form-control" 
-                                    bsDatepicker 
-                                    #dp="bsDatepicker">
-                                    <app-input-validation [input]="dp"></app-input-validation>
-                            </div>
+
+                        <div [ngClass]="(dp.invalid && dp.touched)?'col-sm-6 form-group mb-4 has-error ':'col-sm-6 form-group mb-4'">                        
+                                <label class="col-form-label">Fecha de fin</label>
+                                <div class="input-group-icon input-group-icon-left">
+                                    <span (click)="dp.show()" style="cursor:pointer" class="input-icon input-icon-left"><i class="fa fa-calendar"></i></span>
+                                    <input 
+                                        placeholder="Datepicker"  
+                                        placement="bottom left" 
+                                        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
+                                        [(bsValue)]="periodo.fechaFin"
+                                        value="{{ periodo.fechaFin | date:'dd/MM/yyyy'}}"
+                                        name="fecha" 
+                                        autocomplete="off"
+                                        type="text" 
+                                        placeholder="Ingrese una fecha"
+                                        class="form-control no-shadow" 
+                                        bsDatepicker 
+                                        #dp="bsDatepicker">
+                                        <app-input-validation [input]="dp"></app-input-validation>
+                                </div>
                         </div>
+
 
 
                         <div class="ibox-footer row">

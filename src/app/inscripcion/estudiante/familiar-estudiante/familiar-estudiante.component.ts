@@ -1,8 +1,10 @@
-import { OnInit, Component, Input, Injector } from '@angular/core';
-import { FamiliarEstudianteDto, TelefonoFamiliarEstudianteDto,
-         EmailFamiliarEstudianteDto, DireccionFamiliarEstudianteDto,
-         ParentescoDto, ParentescoServiceProxy, ProfesionServiceProxy, ProfesionDto,
-         NacionalidadDto, NacionalidadServiceProxy } from '@shared/service-proxies/service-proxies';
+import { OnInit, Component, Input, Injector, AfterViewChecked, AfterContentChecked } from '@angular/core';
+import {
+    FamiliarEstudianteDto, TelefonoFamiliarEstudianteDto,
+    EmailFamiliarEstudianteDto, DireccionFamiliarEstudianteDto,
+    ParentescoDto, ParentescoServiceProxy, ProfesionServiceProxy, ProfesionDto,
+    NacionalidadDto, NacionalidadServiceProxy, TipoIdentificacionDto, TipoIdentificacionServiceProxy
+} from '@shared/service-proxies/service-proxies';
 
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalHelper } from '@shared/helpers/ModalHelper';
@@ -11,50 +13,63 @@ import { NgxDatatableHelper } from '@shared/helpers/NgxDatatableHelper';
 import { AppComponentBase } from '@shared/app-component-base';
 import { EMAIL_PATTERN } from '@shared/helpers/constantes-globales';
 import { SexoArray } from '@app/inscripcion/shared/inscripcion-arrays';
-import * as moment from 'moment';
-
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { defineLocale, esDoLocale } from 'ngx-bootstrap';
 
 @Component({
-  selector: 'app-familiar-estudiante',
-  templateUrl: './familiar-estudiante.component.html'
+    selector: 'app-familiar-estudiante',
+    templateUrl: './familiar-estudiante.component.html'
 })
-export class FamiliarEstudianteComponent extends AppComponentBase implements OnInit {
-  indexElementoSeleccionado = -1;
-  elementoLista: any;
-  parentescoSelect: any;
+export class FamiliarEstudianteComponent extends AppComponentBase implements OnInit, AfterContentChecked {
 
-  sexo = SexoArray.Sexo;
-  estadoCivil = SexoArray.EstadoCivil;
-  ngxDatatableHelper = NgxDatatableHelper;
-  telefonosFamiliar: TelefonoFamiliarEstudianteDto[] = [];
-  emailsFamiliar: EmailFamiliarEstudianteDto[] = [];
-  direccionesFamiliar: DireccionFamiliarEstudianteDto[] = [];
-  parentescos: ParentescoDto[] = [];
-  profesiones: ProfesionDto[] = [];
-  nacionalidades: NacionalidadDto[] = [];
+    familiar: FamiliarEstudianteDto;
+    parentescoSelect: any;
+    telefonosFamiliar: TelefonoFamiliarEstudianteDto[] = [];
+    emailsFamiliar: EmailFamiliarEstudianteDto[] = [];
+    direccionesFamiliar: DireccionFamiliarEstudianteDto[] = [];
+    parentescos: ParentescoDto[] = [];
+    profesiones: ProfesionDto[] = [];
+    nacionalidades: NacionalidadDto[] = [];
+    tiposIdentificacion: TipoIdentificacionDto[] = [];
+    listaVisualizacionFamiliares: FamiliarEstudianteDto[] = []
+    modal: NgbModalRef;
 
-  emailPattern = EMAIL_PATTERN;
-  public modal: NgbModalRef;
+    indexElementoSeleccionado = -1;
+    emailPattern = EMAIL_PATTERN;
+    sexo = SexoArray.Sexo;
+    estadoCivil = SexoArray.EstadoCivil;
+    ngxDatatableHelper = NgxDatatableHelper;
 
-  @Input() familiares: FamiliarEstudianteDto[] = [];
+    @Input() familiares: FamiliarEstudianteDto[];
 
-  constructor(
-    injector: Injector,
-    private _parentescoService: ParentescoServiceProxy,
-    private _profesionService: ProfesionServiceProxy,
-    private _nacionalidadService: NacionalidadServiceProxy,
-    private modalHelper: ModalHelper
-  ) {
-      super(injector)
-  }
+    constructor(
+        injector: Injector,
+        private _parentescoService: ParentescoServiceProxy,
+        private _profesionService: ProfesionServiceProxy,
+        private _nacionalidadService: NacionalidadServiceProxy,
+        private _tipoIdentificacaionService: TipoIdentificacionServiceProxy,
+        private localeService: BsLocaleService,
+        private modalHelper: ModalHelper
+    ) {
+        super(injector)
+    }
 
     ngOnInit(): void {
+
         this.obtenerParentescos();
         this.obtenerProfesiones();
         this.obtenerNacionalidades();
+        this.obtenerTipoIdentificacion();
+        this.obtenerValoresDefecto();
+    }
+
+
+    ngAfterContentChecked(): void {
+        this.listaVisualizacionFamiliares = [...this.familiares];
     }
 
     obtenerParentescos() {
+
         this._parentescoService.getAllForSelect()
             .subscribe((result: ParentescoDto[]) => {
                 this.parentescos = result;
@@ -62,6 +77,7 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
     }
 
     obtenerNacionalidades() {
+
         this._nacionalidadService.getAllForSelect()
             .subscribe((result: NacionalidadDto[]) => {
                 this.nacionalidades = result;
@@ -69,55 +85,83 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
     }
 
     obtenerProfesiones() {
+
         this._profesionService.getAllForSelect()
             .subscribe((result: ProfesionDto[]) => {
                 this.profesiones = result;
             });
     }
 
+    obtenerTipoIdentificacion() {
+
+        this._tipoIdentificacaionService.getAllForSelect()
+            .subscribe((result: TipoIdentificacionDto[]) => {
+                this.tiposIdentificacion = result;
+            });
+    }
+
     agregarFamiliar(content) {
+
         this.indexElementoSeleccionado = -1;
-        this.elementoLista = new FamiliarEstudianteDto();
+        this.familiar = new FamiliarEstudianteDto();
         this.modal = this.modalHelper.getLargeModal(content);
     }
 
     editarFamiliar(familiar: FamiliarEstudianteDto, content) {
+
         this.indexElementoSeleccionado = this.familiares.indexOf(familiar);
-        this.elementoLista = JSON.parse(JSON.stringify(familiar));
-        console.log(this.elementoLista);
+        this.familiar = JSON.parse(JSON.stringify(familiar));
         this.modal = this.modalHelper.getLargeModal(content);
     }
 
     registrarFamiliares() {
-        if (!this.familiarExisteDetalle()) {
-            this.elementoLista.nombreCompleto = this.elementoLista.nombres + ' ' +
-            this.elementoLista.primerApellido + ' ' + this.elementoLista.segundoApellido;
-            this.elementoLista.parentescoNombre = this.parentescoSelect.descripcion;
 
-            // const date = new Date(this.elementoLista.fechaNacimiento);
-            // console.log(date);
-            // this.elementoLista.fechaNacimiento = new Date(moment(this.elementoLista.fechaNacimient).format('YYYY/MM/DD'));
-            // console.log(this.elementoLista.fechaNacimiento);
-            // this.elementoLista.fechaNacimiento = moment(this.elementoLista.fechaNacimiento); // .format('YYYY/MM/DD');
+        if (!this.familiarExisteDetalle()) {
+
+            if (this.parentescoSelect) {
+                this.familiar.parentescoNombre = this.parentescoSelect.descripcion;
+            }
+
+            this.familiar.nombreCompleto = this.familiar.nombres + ' ' +
+            this.familiar.primerApellido + ' ' + this.familiar.segundoApellido;
+
+            const familiarAgregar = new FamiliarEstudianteDto({
+                estudianteId: this.familiar.estudianteId,
+                estadoCivil: this.familiar.estadoCivil,
+                fechaNacimiento: this.familiar.fechaNacimiento,
+                identificador: this.familiar.identificador,
+                nacionalidadId: this.familiar.nacionalidadId,
+                nombreCompleto: this.familiar.nombreCompleto,
+                nombres: this.familiar.nombres,
+                parentescoId: this.familiar.parentescoId,
+                parentescoNombre: this.familiar.parentescoNombre,
+                primerApellido: this.familiar.primerApellido,
+                profesionId: this.familiar.profesionId,
+                segundoApellido: this.familiar.segundoApellido,
+                sexo: this.familiar.sexo,
+                tipoIdentificacionId: this.familiar.tipoIdentificacionId,
+                numeroIdentificacion: this.familiar.numeroIdentificacion,
+                id: 0
+            })
+
 
             if (this.indexElementoSeleccionado >= 0) {
-                this.familiares[this.indexElementoSeleccionado] = this.elementoLista;
+                this.familiares[this.indexElementoSeleccionado] = familiarAgregar;
             } else {
-                this.familiares.push(this.elementoLista);
+                this.familiares.push(familiarAgregar);
             }
-            console.log(this.familiares);
-            this.familiares = [...this.familiares];
-            this.indexElementoSeleccionado = -1;
-            this.elementoLista = null;
+
+            this.listaVisualizacionFamiliares = [...this.familiares];
             this.modal.close();
         }
     }
 
     familiarExisteDetalle(): boolean {
+        console.log(this.familiares);
         for (const item of this.familiares) {
             if (this.familiares.indexOf(item) !== this.indexElementoSeleccionado &&
-                item.identificador === this.elementoLista.identificador
-                ) {
+                item.identificador === this.familiar.identificador
+            ) {
                 MessageHelper.show('El familiar ya existe en el detalle', 'Ya existe');
                 return true;
             }
@@ -129,6 +173,11 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
         this.parentescoSelect = event;
     }
 
+    obtenerValoresDefecto() {
+        defineLocale('es', esDoLocale);
+        this.localeService.use('es');
+    }
+
     eliminarElementoLista(lista: any[], row) {
         console.log(lista);
         MessageHelper.confirm(
@@ -136,6 +185,7 @@ export class FamiliarEstudianteComponent extends AppComponentBase implements OnI
             '¿Desea borrarlo?',
             () => {
                 lista.splice(lista.indexOf(row), 1);
+                this.listaVisualizacionFamiliares.splice(this.listaVisualizacionFamiliares.indexOf(row), 1);
             }
         );
     }

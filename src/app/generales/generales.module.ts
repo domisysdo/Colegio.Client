@@ -35,14 +35,18 @@ import { CreateTipoIdentificacionComponent } from './tipo-identificacion/create-
 import { EditTipoIdentificacionComponent } from './tipo-identificacion/edit-tipo-identificacion/edit-tipo-identificacion.component';
 import { TipoIdentificacionComponent } from './tipo-identificacion/tipo-identificacion.component';
 import { CreateTipoIncidenciaComponent } from './tipo-incidencia/create-tipo-incidencia/create-tipo-incidencia.component';
-import { EditTipoIncidenciaComponent } from './tipo-incidencia/edit-tipo-incidencia/edit-tipo-incidencia.component';
 import { TipoIncidenciaComponent } from './tipo-incidencia/tipo-incidencia.component';
 import { CreateTipoPadecimientoComponent } from './tipo-padecimiento/create-tipo-padecimiento/create-tipo-padecimiento.component';
 import { EditTipoPadecimientoComponent } from './tipo-padecimiento/edit-tipo-padecimiento/edit-tipo-padecimientocomponent';
 import { TipoPadecimientoComponent } from './tipo-padecimiento/tipo-padecimiento.component';
+import { IncidenciaEstudianteComponent } from './incidencia-estudiante/incidencia-estudiante.component';
+import { CreateIncidenciaEstudianteComponent } from './incidencia-estudiante/create-incidencia/create-incidencia-estudiante.component';
 import { CreateNacionalidadComponent } from './nacionalidad/create-nacionalidad/create-nacionalidad.component';
 import { EditNacionalidadComponent } from './nacionalidad/edit-nacionalidad/edit-nacionalidad.component';
 import { NacionalidadComponent } from './nacionalidad/nacionalidad.component';
+import { CreateAulaComponent } from './aula/create-aula/create-aula.component';
+import { EditAulaComponent } from './aula/edit-aula/edit-aula.component';
+import { AulaComponent } from './aula/aula.component';
 
 @NgModule({
 
@@ -88,14 +92,19 @@ import { NacionalidadComponent } from './nacionalidad/nacionalidad.component';
         EditTipoIdentificacionComponent,
         TipoIdentificacionComponent,
         CreateTipoIncidenciaComponent,
-        EditTipoIncidenciaComponent,
         TipoIncidenciaComponent,
         CreateTipoPadecimientoComponent,
         EditTipoPadecimientoComponent,
         TipoPadecimientoComponent,
+        IncidenciaEstudianteComponent,
+        CreateIncidenciaEstudianteComponent,
+        TipoPadecimientoComponent,
         CreateNacionalidadComponent,
         EditNacionalidadComponent,
-        NacionalidadComponent
+        NacionalidadComponent,
+        CreateAulaComponent,
+        EditAulaComponent,
+        AulaComponent
     ]
 })
 export class GeneralesModule {}

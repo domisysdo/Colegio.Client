@@ -25,7 +25,6 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.GrupoServiceProxy,
         ApiServiceProxies.MateriaServiceProxy,
         ApiServiceProxies.TipoTelefonoServiceProxy,
-        ApiServiceProxies.EmailEstudianteServiceProxy,
         ApiServiceProxies.TipoEmailServiceProxy,
         ApiServiceProxies.SectorServiceProxy,
         ApiServiceProxies.ParentescoServiceProxy,
@@ -36,6 +35,10 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.ProfesorServiceProxy,
         ApiServiceProxies.PeriodoServiceProxy,
         ApiServiceProxies.InscripcionServiceProxy,
+        ApiServiceProxies.IncidenciaEstudianteServiceProxy,
+        ApiServiceProxies.AulaServiceProxy,
+        ApiServiceProxies.MetodoEvaluacionServiceProxy,
+        ApiServiceProxies.CalificacionServiceProxy,
         ApiServiceProxies.PagoServiceProxy,
         ApiServiceProxies.CuotaServiceProxy,
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }

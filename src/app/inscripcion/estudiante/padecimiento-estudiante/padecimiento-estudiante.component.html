@@ -1,0 +1,129 @@
+
+<!-- Detalle de padecimientos -->
+<div class="ibox-body">
+    <form class="form-horizontal" id="form-sample-1" method="post" novalidate="novalidate">
+
+        <ngx-datatable
+            class="bootstrap"
+            [columnMode]="ngxDatatableHelper.columnMode"
+            [headerHeight]="ngxDatatableHelper.headerHeight"
+            [footerHeight]="0"
+            [rowHeight]="ngxDatatableHelper.rowHeight"
+            [rows]="listaVisualizacionPadecimientos" 
+            [selectionType]="ngxDatatableHelper.selectionType"
+            [selectAllRowsOnPage]="ngxDatatableHelper.selectAllRowsOnPage"
+            [reorderable]="ngxDatatableHelper.reorderable"
+            [messages]="ngxDatatableHelper.ngxDatatableMesagges">
+            
+            <ngx-datatable-column 
+                name="Descripción" 
+                prop="descripcion">
+            </ngx-datatable-column>
+                        
+            <ngx-datatable-column 
+                name="Tipo" 
+                prop="tipoPadecimientoDescripcion">
+            </ngx-datatable-column>
+
+            <ngx-datatable-column  >
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <div class="text-center">
+                        <a class="text-light mr-3 font-16" href="javascript:;"><i (click)="editarPadecimiento(row, padecimientoForm)" class="ti-pencil"></i></a>
+                        <a class="text-light font-16" href="javascript:;"><i (click)="eliminarElementoLista(padecimientos, row)" class="ti-trash"></i></a>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+        
+        <div class="flexbox mb-4"><div class="flexbox"></div></div>
+        <div class="flexbox mb-4">
+            <div class="flexbox">
+            </div>
+            <div class="flexbox">                            
+                <a class="btn btn-primary btn-block"  (click)="agregarPadecimiento(padecimientoForm)" href="javascript:;">
+                    <span class="btn-icon"><i class="la la-plus"></i>Agregar nuevo</span>
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Fin de detalle de padecimiento -->
+
+<!-- Inicio modal de padecimientos -->
+<ng-template #padecimientoForm let-c="close" let-d="dismiss">
+
+    <div class="modal-header">
+        <h4 class="modal-title">NUEVO PADECIMIENTO</h4>
+        <button type = "button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true"> &times;</span>
+        </button>
+    </div>
+
+    <form #formAgregarPadecimiento="ngForm" (ngSubmit)="registrarPadecimientos()">
+        <div class="modal-body">
+            <div class="inbox">
+                <div class="inbox-body">
+
+                    <div [ngClass]="(tipoPadecimientoModel.invalid && tipoPadecimientoModel.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
+                        <label class="col-form-label">{{l("Tipo")}}<span class="text-danger"> *</span> </label>                            
+                        <ng-select [items]="tiposPadecimiento"
+                            name="nacionalidadSelect"
+                            bindLabel="descripcion"
+                            bindValue="id"
+                            required
+                            #tipoPadecimientoModel = "ngModel"
+                            (change)="onTipoPadecimientoChange($event)"
+                            [(ngModel)]="padecimiento.tipoPadecimientoId">
+                            <ng-template ng-option-tmp let-item="item">
+                                {{item.descripcion}}
+                            </ng-template>
+                        </ng-select>
+                        <app-input-validation [input]="tipoPadecimientoModel"></app-input-validation>
+                    </div>
+
+                    <div [ngClass]="(descripcion.invalid && descripcion.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
+                        <label class="col-form-label">{{l("Descripción")}}<span class="text-danger"> *</span> </label>
+                        <span *ngIf="descripcion.invalid && descripcion.touched" class="input-icon input-icon-right text-danger"></span>
+                        <input 
+                            id="descripcion" 
+                            class="form-control no-shadow" 
+                            type="descripcion"
+                            #descripcion = "ngModel" 
+                            [(ngModel)]="padecimiento.descripcion" 
+                            name="Descripcion" 
+                            required
+                            minlength="2" 
+                            maxlength="32" 
+                            placeholder="Descripción"/>
+                        <app-input-validation [input]="descripcion"></app-input-validation>
+                    </div>
+
+                    <div [ngClass]="(nota.invalid && nota.touched)?' col-sm-12 form-group mb-4 has-error ':' col-sm-12 form-group mb-4'">
+                            <label class="col-form-label">{{l("Nota")}}<span class="text-danger"> *</span> </label>
+                            <span *ngIf="nota.invalid && nota.touched" class="input-icon input-icon-right text-danger"></span>
+                            <textarea 
+                                id="nota" 
+                                class="form-control no-shadow" 
+                                type="nota"
+                                #nota = "ngModel" 
+                                [(ngModel)]="padecimiento.nota" 
+                                name="Nota" 
+                                required
+                                minlength="2" 
+                                cols="6"
+                                maxlength="100" 
+                                placeholder="Nota"></textarea>
+                            <app-input-validation [input]="nota"></app-input-validation>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary ripple light" [disabled]="!formAgregarPadecimiento.valid">Agregar</button>
+            <button type="button" class="btn btn-inverse btn-outline-inverse ripple light" (click)="d('Cross click')">Cancelar</button>
+        </div>
+
+    </form>
+</ng-template>
+<!-- Fin modal de padecimientos -->

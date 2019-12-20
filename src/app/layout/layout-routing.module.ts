@@ -30,6 +30,11 @@ const routes: Routes = [
   {
     path: '',
     component: MainComponent,
+    loadChildren: '../../app/notas/notas.module#NotasModule',
+  },
+  {
+    path: '',
+    component: MainComponent,
     children: [
       {
         path: 'dashboard',

@@ -1,0 +1,75 @@
+﻿<div class="page-content fade-in-up" >
+    <div class="col-md-8 offset-md-2">
+        <div class="ibox ibox-body">
+
+            <div class="ibox-head">
+                <div class="ibox-title">{{l("Editar aula")}}</div>
+            </div>
+
+            <div #content>
+                <form class="form-horizontal" #aulaForm="ngForm" method="post" novalidate (ngSubmit)="save(aulaForm)">
+                    <div class="ibox-body">   
+                            <div [ngClass]="(identificador.invalid && identificador.touched)?'col-sm-4 form-group has-error mb-4':'col-sm-4 form-group mb-4'">                        
+                                    <label>{{l("identificador")}}<span class="text-danger"> *</span></label>
+                                        <span *ngIf = "identificador.invalid && identificador.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                        <input 
+                                            id="identificador" 
+                                            class="form-control no-shadow" 
+                                            type="text" 
+                                            #identificador = "ngModel"
+                                            [(ngModel)]="aula.identificador" 
+                                            name="Identificador" 
+                                            required
+                                            minlength="2" 
+                                            maxlength="32" 
+                                            placeholder="Identificador"/>
+                                            <app-input-validation [input]="identificador"></app-input-validation>
+                            </div>
+
+                            <div [ngClass]="(descripcion.invalid && descripcion.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">                        
+                                    <label>{{l("Descripción")}}<span class="text-danger"> *</span></label>
+                                        <span *ngIf = "descripcion.invalid && descripcion.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                        <input 
+                                            id="descripcion" 
+                                            class="form-control no-shadow" 
+                                            type="text" 
+                                            #descripcion = "ngModel"
+                                            [(ngModel)]="aula.descripcion" 
+                                            name="Descripcion" 
+                                            required
+                                            minlength="2" 
+                                            maxlength="32" 
+                                            placeholder="Descripción"/>
+                                            <app-input-validation [input]="descripcion"></app-input-validation>
+                                </div>
+
+                        <div [ngClass]="(ubicacion.invalid && ubicacion.touched)?'col-sm-12 form-group has-error mb-4':'col-sm-12 form-group mb-4'">                        
+                            <label>{{l("Ubicacion")}}<span class="text-danger"> *</span></label>
+                                <span *ngIf = "ubicacion.invalid && ubicacion.touched" class="input-icon input-icon-right text-danger"></span>                                
+                                <input 
+                                    id="ubicacion" 
+                                    class="form-control no-shadow" 
+                                    type="text" 
+                                    #ubicacion = "ngModel"
+                                    [(ngModel)]="aula.ubicacion" 
+                                    name="Ubicacion" 
+                                    required
+                                    minlength="2" 
+                                    maxlength="32" 
+                                    placeholder="Ubicacion"/>
+                                    <app-input-validation [input]="ubicacion"></app-input-validation>
+                        </div>
+
+                            
+                        <div class="ibox-footer row">
+                            <div class="col-sm-12 ml-sm-auto">
+                                <button type="submit" class="btn btn-primary mr-2">{{l("Registrar")}}</button>
+                                <button [disabled]="saving" [routerLink]="['../../../aula']" type="button" class="btn btn-secondary">{{l("Atras")}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

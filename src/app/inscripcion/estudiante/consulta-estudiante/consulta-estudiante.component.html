@@ -1,0 +1,192 @@
+
+<!-- Consulta de estudiantes -->
+<div class="page-content fade-in-up">
+    <div class="col-md-8 offset-md-2">
+        <div class="ibox">
+        
+            <div class="ibox-head">
+                <div class="ibox-title">{{l("Estudiante")}}</div>
+            </div>
+    
+            <div class="ibox-body">        
+                <div [ngClass]="(nombres.invalid && nombres.touched)?' form-group mb-4 has-error ':' form-group mb-4'">
+                        <label class="col-form-label">{{l("Nombres")}}<span class="text-danger"> *</span> </label>
+                        <span *ngIf="nombres.invalid && nombres.touched" class="input-icon input-icon-right text-danger"></span>
+                        <input 
+                        id="nombres" 
+                        class="form-control no-shadow" 
+                        type="text"
+                        #nombres = "ngModel" 
+                        [(ngModel)]="estudiante.nombres" 
+                        name="Nombres" 
+                        [disabled]="true"
+                        required
+                        minlength="2" 
+                        maxlength="32" 
+                        placeholder="Nombres"/>
+                        <app-input-validation [input]="nombres"></app-input-validation>
+                </div>
+
+                <div class="row"> 
+                    <div [ngClass]="(primerApellido.invalid && primerApellido.touched)?'col-sm-6 form-group has-error mb-4':'col-sm-6 form-group mb-4'">                        
+                        <label class="col-form-label">{{l("Primer apellido")}}<span class="text-danger"> *</span></label>
+                        <span *ngIf = "primerApellido.invalid && primerApellido.touched" class="input-icon input-icon-right text-danger"></span>                                
+                        <input 
+                        id="primerApellido" 
+                        class="form-control no-shadow" 
+                        type="text" 
+                        #primerApellido = "ngModel"
+                        [(ngModel)]="estudiante.primerApellido" 
+                        name="PrimerApellido" 
+                        required
+                        [disabled]="true"
+                        minlength="2" 
+                        maxlength="32" 
+                        placeholder="Primer apellido"/>
+                        <app-input-validation [input]="primerApellido"></app-input-validation>
+                    </div>
+
+                    <div [ngClass]="(segundoApellido.invalid && segundoApellido.touched)?'col-sm-6 form-group mb-4 has-error ':'col-sm-6 form-group mb-4'">                        
+                        <label class="col-form-label" for="segundoapellido">{{l("Segundo apellido")}}<span class="text-danger"> *</span></label>            
+                        <span *ngIf = "(segundoApellido.invalid && segundoApellido.touched)" class="input-icon input-icon-right text-danger"></span>                                
+                        <input 
+                        id="segundoapellido"
+                        class="form-control no-shadow" 
+                        type="text" 
+                        #segundoApellido = "ngModel"
+                        [(ngModel)]="estudiante.segundoApellido" 
+                        name="SegundoApellido" 
+                        required
+                        [disabled]="true"
+                        minlength="2" 
+                        maxlength="32" 
+                        placeholder="Segundo apellido"/>
+                        <app-input-validation [input]="segundoApellido"></app-input-validation>
+
+                    </div>
+                </div>
+                
+                <div class="flexbox mb-4"><div class="flexbox"></div></div>
+                <div class="flexbox mb-4">
+                    <div class="flexbox">
+                    </div>
+                    <div class="flexbox">                            
+                        <a class="btn btn-primary btn-block"  (click)="abrirConsulta(consultaEstudianteForm)" href="javascript:;">
+                            <span class="btn-icon"><i class="la la-plus"></i>Seleccionar estudiante</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin consulta estudiantes -->
+
+<!--Consulta de estudiantes -->
+<ng-template #consultaEstudianteForm let-c="close" let-d="dismiss"> 
+    <div class="modal-header">
+        <h4 class="modal-title">CONSULTA DE ESTUDIANTES</h4>
+        <button type = "button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true"> &times;</span>
+        </button>
+    </div>
+
+
+    <div class="ibox">
+        <div class="ibox-body">            
+            <div class="flexbox mb-4">
+                <div class="flexbox">
+                    <div class="input-group-icon input-group-icon-left mr-3">
+                        <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
+                        <input #searchBox class="form-control form-control-rounded form-control-solid no-shadow" id="key-search" (input)="searchData(searchBox.value)" type="text" placeholder="Buscar...">
+                    </div>
+                </div>
+            </div>
+
+            <form #consultaEstudianteForm="ngForm" (ngSubmit)="seleccionarEstudiante()">
+                <ngx-datatable
+                    class="bootstrap"
+                    [columnMode]="ngxDatatableHelper.columnMode"
+                    [headerHeight]="ngxDatatableHelper.headerHeight"
+                    [footerHeight]="ngxDatatableHelper.footerHeight"
+                    [rowHeight]="ngxDatatableHelper.rowHeight"
+                    [selected]="selected"
+                    [rows]="estudiantees" 
+                    [selectionType]="ngxDatatableHelper.selectionType"
+                    [selectAllRowsOnPage]="ngxDatatableHelper.selectAllRowsOnPage"
+                    [reorderable]="ngxDatatableHelper.reorderable"
+                    [externalPaging]="ngxDatatableHelper.externalPaging"
+                    [externalSorting]="ngxDatatableHelper.externalSorting"
+                    [count]= "(filter==='')? totalItems: totalCount"
+                    [offset]="0"
+                    [messages]="ngxDatatableHelper.ngxDatatableMesagges"
+                    [limit]="pageSize"
+                    (sort)= 'onSort($event)'
+                    (page)='onPageChange($event)'
+                    (select)='onSelect($event)'>
+                    
+                    <ngx-datatable-column
+                        [width]="50"
+                        [sortable]="false"
+                        [canAutoResize]="false"
+                        [draggable]="false"
+                        [resizeable]="false"
+                        [headerCheckboxable]="true"
+                        [checkboxable]="false">
+
+                        <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                            <label class="checkbox checkbox-primary">
+                                <input 
+                                    type="checkbox"
+                                    [checked]="allRowsSelected"
+                                    (change)="selectFn(!allRowsSelected)"/>
+                                    <span class="input-span"></span>
+                            </label>
+                        </ng-template>
+
+                        <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                            <label class="checkbox checkbox-primary">
+                                <input 
+                                    type="checkbox"
+                                    [checked]="isSelected"
+                                    (change)="onCheckboxChangeFn($event)"/>
+                                    <span class="input-span"></span>
+                            </label>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column 
+                        [width]="20"
+                        name="Identificador" 
+                        prop="identificador">
+                    </ngx-datatable-column>
+                    
+                    <ngx-datatable-column 
+                        [width]="20"
+                        name="Nombres" 
+                        prop="nombres">
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column 
+                        [width]="10"
+                        name="Primer apellido" 
+                        prop="primerApellido">
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column 
+                        [width]="10"
+                        name="Segundo apellido" 
+                        prop="segundoApellido">
+                    </ngx-datatable-column>
+
+                </ngx-datatable>
+            </form>   
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary ripple light" (click)="seleccionarEstudiante()">Seleccionar</button>
+                <button type="button" class="btn btn-inverse btn-outline-inverse ripple light" (click)="d('Cross click')">Cancelar</button>
+            </div>              
+        </div>
+    </div>
+</ng-template>
+<!-- Fin de consulta de estudiantes -->
