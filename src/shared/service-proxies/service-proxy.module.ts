@@ -36,6 +36,8 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.ProfesorServiceProxy,
         ApiServiceProxies.PeriodoServiceProxy,
         ApiServiceProxies.InscripcionServiceProxy,
+        ApiServiceProxies.PagoServiceProxy,
+        ApiServiceProxies.CuotaServiceProxy,
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]
 })

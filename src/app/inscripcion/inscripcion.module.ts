@@ -29,6 +29,7 @@ import { InscripcionComponent } from './inscripcion/inscripcion.component';
 import { MateriaComponent } from './materia/materia.component';
 import { CreateMateriaComponent } from './materia/create-materia/create-materia.component';
 import { EditMateriaComponent } from './materia/edit-materia/edit-materia.component';
+import { PagoComponent } from './pago/pago.component';
 
 @NgModule({
 
@@ -66,6 +67,7 @@ import { EditMateriaComponent } from './materia/edit-materia/edit-materia.compon
         MateriaComponent,
         CreateMateriaComponent,
         EditMateriaComponent,
+        PagoComponent,
     ],
     providers: [
         ScriptLoaderService
